@@ -370,9 +370,15 @@
             margin: 0 auto 50px auto;
         }
 
-        .property-featured {
-            max-width: 700px;
+        .properties-featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 900px;
             margin: 0 auto 40px auto;
+        }
+
+        .property-featured {
             background: #0a0a0a;
             border: 1px solid #222;
             border-left: 4px solid #FF6200;
@@ -793,46 +799,76 @@
         <div class="container">
             <h2>Completed Projects</h2>
             <div class="portfolio-grid">
+                <!-- To use a video instead of a photo for any project, replace the <img> tag with:
+                     <video src="images/your-video.mp4" autoplay muted loop playsinline></video> -->
                 <div class="portfolio-item">
                     <div class="portfolio-item-image">
-                        <img src="images/kitchen-before.jpg" alt="Kitchen Before" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <img src="images/exterior-before.jpg" alt="Exterior Before" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="img-fallback">🏡 Before</div>
                     </div>
                     <div class="portfolio-item-info">
-                        <h4>Kitchen Renovation</h4>
-                        <p>Los Angeles Project - 2024</p>
+                        <h4>Full Exterior Remodel</h4>
+                        <p>Before - North Hills Project</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-item-image">
+                        <img src="images/exterior-after.jpg" alt="Exterior After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">✨ After</div>
+                    </div>
+                    <div class="portfolio-item-info">
+                        <h4>Full Exterior Remodel</h4>
+                        <p>After - Fresh Paint & Finish</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
                     <div class="portfolio-item-image">
                         <img src="images/kitchen-after.jpg" alt="Kitchen After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">✨ After</div>
+                        <div class="img-fallback">🍳 After</div>
                     </div>
                     <div class="portfolio-item-info">
-                        <h4>Modern Kitchen</h4>
-                        <p>Full Transformation - Premium Design</p>
+                        <h4>Kitchen Renovation</h4>
+                        <p>Modern Cabinets & Marble Finishes</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
                     <div class="portfolio-item-image">
-                        <img src="images/bathroom-before.jpg" alt="Bathroom Before" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🏠 Before</div>
+                        <img src="images/living-room-after.jpg" alt="Living Room After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🛋️ After</div>
                     </div>
                     <div class="portfolio-item-info">
-                        <h4>Bathroom Renovation</h4>
-                        <p>Winnetka Project - 2024</p>
+                        <h4>Living Room Renovation</h4>
+                        <p>New Flooring & Fireplace Finish</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <!-- To use a video instead of a photo for any project, replace the <img> tag with:
-                         <video src="images/your-video.mp4" autoplay muted loop playsinline></video> -->
                     <div class="portfolio-item-image">
-                        <img src="images/bathroom-after.jpg" alt="Bathroom After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🎨 After</div>
+                        <img src="images/bedroom-after.jpg" alt="Bedroom After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🛏️ After</div>
                     </div>
                     <div class="portfolio-item-info">
-                        <h4>Luxury Bathroom</h4>
-                        <p>Top-Quality Finishes</p>
+                        <h4>Bedroom Renovation</h4>
+                        <p>New Flooring & Finishes</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-item-image">
+                        <img src="images/deck-after.jpg" alt="Deck After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🌳 After</div>
+                    </div>
+                    <div class="portfolio-item-info">
+                        <h4>Covered Deck & Patio</h4>
+                        <p>Custom Outdoor Living Space</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-item-image">
+                        <img src="images/bonus-room-after.jpg" alt="Bonus Room After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🚪 After</div>
+                    </div>
+                    <div class="portfolio-item-info">
+                        <h4>Additional Room</h4>
+                        <p>New Flooring & Finish Work</p>
                     </div>
                 </div>
             </div>
@@ -843,18 +879,29 @@
         <div class="container">
             <h2>Properties</h2>
             <p class="properties-intro">Buying, selling, or renting — check out our current listings and let us help you find the right property.</p>
-            <div class="property-featured">
-                <div class="property-featured-image">🏡</div>
-                <div class="property-featured-info">
-                    <span class="property-tag">For Sale</span>
-                    <h3>9327 Woodley Ave, North Hills, CA 91343</h3>
-                    <p>Featured listing — view full details, photos, and pricing on Zillow.</p>
-                    <a href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" class="cta-button" target="_blank" rel="noopener noreferrer">View on Zillow</a>
+            <div class="properties-featured-grid">
+                <div class="property-featured">
+                    <div class="property-featured-image">🏷️</div>
+                    <div class="property-featured-info">
+                        <span class="property-tag">For Sale</span>
+                        <h3>15627 Vintage St, North Hills, CA 91343</h3>
+                        <p>Featured listing — view full details, photos, and pricing on Zillow.</p>
+                        <a href="https://www.zillow.com/homedetails/15627-Vintage-St-North-Hills-CA-91343/20138792_zpid/" class="cta-button" target="_blank" rel="noopener noreferrer">View on Zillow</a>
+                    </div>
+                </div>
+                <div class="property-featured">
+                    <div class="property-featured-image">🏡</div>
+                    <div class="property-featured-info">
+                        <span class="property-tag">For Rent</span>
+                        <h3>9327 Woodley Ave, North Hills, CA 91343</h3>
+                        <p>Featured listing — view full details, photos, and pricing on Zillow.</p>
+                        <a href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" class="cta-button" target="_blank" rel="noopener noreferrer">View on Zillow</a>
+                    </div>
                 </div>
             </div>
             <div class="properties-buttons">
-                <a href="https://www.zillow.com/los-angeles-ca/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See More Homes For Sale</a>
-                <a href="https://www.zillow.com/los-angeles-ca/rentals/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See Homes For Rent</a>
+                <a href="https://www.zillow.com/homedetails/15627-Vintage-St-North-Hills-CA-91343/20138792_zpid/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See Homes For Sale</a>
+                <a href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See Homes For Rent</a>
             </div>
         </div>
     </section>
