@@ -4,6 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DLCAO - Elite Construction & Real Estate | Los Angeles & Winnetka</title>
+
+    <!-- SEO: helps Google understand and rank the page -->
+    <meta name="description" content="DLCAO - Elite construction and real estate company serving Los Angeles & Winnetka. General construction, additions, repairs, fix & flip, home buying/selling, and rental properties. Class B License, since 2018.">
+    <meta name="keywords" content="DLCAO, construction Los Angeles, contractor Winnetka, fix and flip, home renovation, real estate Los Angeles, rental properties, general contractor">
+    <link rel="canonical" href="https://t0ny75.github.io/dlcao-website/">
+
+    <!-- Open Graph: controls how the link looks when shared on Facebook, WhatsApp, Instagram bio, iMessage, etc. -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="DLCAO - Elite Construction & Real Estate | Los Angeles & Winnetka">
+    <meta property="og:description" content="General construction, additions, repairs, fix & flip, home buying/selling, and rental properties in Los Angeles & Winnetka.">
+    <meta property="og:url" content="https://t0ny75.github.io/dlcao-website/">
+
+    <!-- Twitter/X card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="DLCAO - Elite Construction & Real Estate">
+    <meta name="twitter:description" content="General construction, additions, repairs, fix & flip, home buying/selling, and rental properties in Los Angeles & Winnetka.">
+
+    <!-- Google Analytics (GA4) — replace G-XXXXXXXXXX below with your own Measurement ID, see instructions in chat -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
     <style>
         * {
             margin: 0;
@@ -36,6 +64,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -48,16 +77,72 @@
             color: #FF6200;
         }
 
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
         nav a {
             color: #fff;
             text-decoration: none;
             margin: 0 20px;
             font-size: 14px;
             transition: color 0.3s;
+            white-space: nowrap;
         }
 
         nav a:hover {
             color: #FF6200;
+        }
+
+        .nav-social {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 6px;
+        }
+
+        .nav-social svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+            transition: fill 0.3s;
+        }
+
+        .nav-social:hover svg {
+            fill: #FF6200;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: #FF6200;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
         }
 
         .hero {
@@ -516,9 +601,73 @@
             margin: 10px 0;
         }
 
+        .footer-social {
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #FF6200;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: #FF6200;
+        }
+
+        .footer-social svg {
+            width: 20px;
+            height: 20px;
+            fill: #FF6200;
+            transition: fill 0.3s;
+        }
+
+        .footer-social a:hover svg {
+            fill: #000;
+        }
+
         @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
             nav {
-                display: none;
+                position: absolute;
+                top: calc(100% + 20px);
+                left: -20px;
+                right: -20px;
+                background: #000;
+                flex-direction: column;
+                align-items: flex-start;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                border-bottom: 0 solid #FF6200;
+            }
+
+            nav.nav-open {
+                max-height: 400px;
+                padding: 10px 20px 25px;
+                border-bottom: 3px solid #FF6200;
+            }
+
+            nav a {
+                margin: 12px 0;
+                font-size: 16px;
+                width: 100%;
+            }
+
+            .nav-social {
+                margin: 8px 0 0 0;
+            }
+
+            .hero {
+                padding: 90px 0 70px;
             }
 
             .hero h1 {
@@ -526,16 +675,48 @@
             }
 
             .hero-tagline {
-                font-size: 15px;
+                font-size: 14px;
                 letter-spacing: 2px;
             }
 
             .hero p {
-                font-size: 18px;
+                font-size: 17px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-buttons .cta-button,
+            .hero-buttons .cta-button-outline {
+                text-align: center;
+                padding: 16px 20px;
+            }
+
+            .services, .portfolio, .properties, .testimonials, .appointment {
+                padding: 60px 0;
             }
 
             .services h2, .portfolio h2, .testimonials h2, .properties h2, .appointment h2 {
-                font-size: 32px;
+                font-size: 30px;
+                margin-bottom: 35px;
+            }
+
+            .service-card {
+                padding: 28px;
+            }
+
+            .property-featured-info {
+                padding: 22px;
+            }
+
+            .properties-buttons {
+                flex-direction: column;
+            }
+
+            .properties-buttons a {
+                text-align: center;
             }
         }
     </style>
@@ -545,12 +726,20 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">DL<span>C</span>AO</div>
-                <nav>
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav id="mainNav">
                     <a href="#services">Services</a>
                     <a href="#portfolio">Projects</a>
                     <a href="#properties">Properties</a>
                     <a href="#appointment">Book Now</a>
                     <a href="#contact">Contact</a>
+                    <a href="https://www.instagram.com/dlcaoholding" class="nav-social" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.065.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2zm0 1.802c-2.67 0-2.987.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.684-.747 1.15-.137.353-.3.882-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.398.8.748 1.15.35.35.684.566 1.15.747.352.137.881.3 1.857.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 0 0-.748-1.15 3.098 3.098 0 0 0-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.594a5.604 5.604 0 1 1 0 11.208 5.604 5.604 0 0 1 0-11.208zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5.883-9.87a1.31 1.31 0 1 1-2.62 0 1.31 1.31 0 0 1 2.62 0z"/></svg>
+                    </a>
                 </nav>
             </div>
         </div>
@@ -561,7 +750,7 @@
             <div class="hero-content">
                 <h1>DL<span>C</span>AO</h1>
                 <p class="hero-tagline">Elite Construction & Real Estate</p>
-                <p>General Construction • Home Buying & Selling • Property Rentals • Fix &amp; Flip<br>Class B License • Since 2018</p>
+                <p>General Construction • Home Buying & Selling • Rental Properties • Fix &amp; Flip<br>Class B License • Since 2018</p>
                 <div class="hero-buttons">
                     <a href="https://wa.me/17473674447?text=Hi%20DLCAO%2C%20I%27d%20like%20to%20request%20a%20free%20quote" class="cta-button" target="_blank" rel="noopener noreferrer">📞 Request a Free Quote</a>
                     <a href="#properties" class="cta-button-outline">🏘️ View Properties</a>
@@ -595,7 +784,7 @@
                     <p>Looking to buy or sell? We guide you through every step of the real estate process in Los Angeles &amp; Winnetka.</p>
                 </div>
                 <div class="service-card">
-                    <h3>Property Rentals</h3>
+                    <h3>Rental Properties</h3>
                     <p>Quality rental properties, professionally managed and ready to move in.</p>
                 </div>
             </div>
@@ -713,7 +902,7 @@
                         <option value="Repair">Repair</option>
                         <option value="Fix & Flip">Fix &amp; Flip</option>
                         <option value="Buy/Sell a Home">Buy/Sell a Home</option>
-                        <option value="Property Rental">Property Rental</option>
+                        <option value="Rental Property">Rental Property</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
@@ -735,7 +924,12 @@
             <div class="footer-contact">📞 (747) 367-4447</div>
             <div class="footer-contact">📧 DLCAO@mail.com</div>
             <div class="footer-contact">📍 Los Angeles & Winnetka</div>
-            <p style="margin-top: 30px; color: #666;">Licensed Class B · Since 2018</p>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.065.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2zm0 1.802c-2.67 0-2.987.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.684-.747 1.15-.137.353-.3.882-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.398.8.748 1.15.35.35.684.566 1.15.747.352.137.881.3 1.857.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 0 0-.748-1.15 3.098 3.098 0 0 0-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.594a5.604 5.604 0 1 1 0 11.208 5.604 5.604 0 0 1 0-11.208zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5.883-9.87a1.31 1.31 0 1 1-2.62 0 1.31 1.31 0 0 1 2.62 0z"/></svg>
+                </a>
+            </div>
+            <p style="margin-top: 20px; color: #666;">Licensed Class B · Since 2018</p>
         </div>
     </footer>
 
@@ -778,6 +972,14 @@
             window.location.href = `mailto:DLCAO@mail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
 
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mainNav.classList.toggle('nav-open');
+        });
+
         // Smooth scroll for links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -786,6 +988,9 @@
                 if (target) {
                     target.scrollIntoView({behavior: 'smooth'});
                 }
+                // Close mobile menu after clicking a link
+                menuToggle.classList.remove('active');
+                mainNav.classList.remove('nav-open');
             });
         });
     </script>
