@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DLCAO - Construction & Contracting | Los Angeles & Winnetka</title>
+    <title>DLCAO - Elite Construction & Real Estate | Los Angeles & Winnetka</title>
     <style>
         * {
             margin: 0;
@@ -61,7 +61,7 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            background: #000;
             padding: 120px 0;
             text-align: center;
             position: relative;
@@ -85,8 +85,8 @@
         }
 
         .hero h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
+            font-size: 64px;
+            margin-bottom: 10px;
             font-weight: 700;
             letter-spacing: 1px;
         }
@@ -95,13 +95,29 @@
             color: #FF6200;
         }
 
+        .hero-tagline {
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #FF6200;
+            margin-bottom: 25px;
+        }
+
         .hero p {
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 40px;
             color: #ccc;
-            max-width: 600px;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .cta-button {
@@ -120,6 +136,26 @@
 
         .cta-button:hover {
             background: #ff7a1f;
+            transform: scale(1.05);
+        }
+
+        .cta-button-outline {
+            display: inline-block;
+            background: transparent;
+            color: #FF6200;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            border: 2px solid #FF6200;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .cta-button-outline:hover {
+            background: #FF6200;
+            color: #000;
             transform: scale(1.05);
         }
 
@@ -142,8 +178,9 @@
         }
 
         .service-card {
-            background: #1a1a1a;
+            background: #000;
             padding: 40px;
+            border: 1px solid #222;
             border-left: 4px solid #FF6200;
             transition: transform 0.3s;
             cursor: pointer;
@@ -151,7 +188,7 @@
 
         .service-card:hover {
             transform: translateY(-10px);
-            background: #252525;
+            background: #111;
         }
 
         .service-card h3 {
@@ -169,7 +206,7 @@
 
         .portfolio {
             padding: 100px 0;
-            background: #0a0a0a;
+            background: #000;
         }
 
         .portfolio h2 {
@@ -186,16 +223,32 @@
         }
 
         .portfolio-item {
-            background: #1a1a1a;
+            background: #000;
             overflow: hidden;
             border: 1px solid #FF6200;
         }
 
         .portfolio-item-image {
             width: 100%;
-            height: 200px;
+            height: 220px;
+            position: relative;
+            background: #111;
+            overflow: hidden;
+        }
+
+        .portfolio-item-image img,
+        .portfolio-item-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .portfolio-item-image .img-fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #FF6200 0%, #ff7a1f 100%);
-            display: flex;
             align-items: center;
             justify-content: center;
             font-size: 48px;
@@ -215,6 +268,78 @@
             font-size: 14px;
         }
 
+        .properties {
+            padding: 100px 0;
+            background: #000;
+        }
+
+        .properties h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .properties-intro {
+            text-align: center;
+            color: #ccc;
+            max-width: 650px;
+            margin: 0 auto 50px auto;
+        }
+
+        .property-featured {
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-left: 4px solid #FF6200;
+            overflow: hidden;
+        }
+
+        .property-featured-image {
+            width: 100%;
+            height: 260px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .property-featured-info {
+            padding: 30px;
+        }
+
+        .property-tag {
+            display: inline-block;
+            background: #FF6200;
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 12px;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+
+        .property-featured-info h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .property-featured-info p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .properties-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .testimonials {
             padding: 100px 0;
             background: #000;
@@ -228,9 +353,10 @@
         }
 
         .testimonial {
-            background: #1a1a1a;
+            background: #000;
             padding: 40px;
             margin-bottom: 30px;
+            border: 1px solid #222;
             border-left: 4px solid #FF6200;
             max-width: 600px;
             margin-left: auto;
@@ -249,8 +375,131 @@
             font-weight: bold;
         }
 
+        .appointment {
+            padding: 100px 0;
+            background: #000;
+        }
+
+        .appointment h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .appointment-intro {
+            text-align: center;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+        }
+
+        .appointment-form {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-left: 4px solid #FF6200;
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #FF6200;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            border-radius: 4px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF6200;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .appointment-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-appointment {
+            flex: 1;
+            min-width: 200px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #000;
+        }
+
+        .btn-whatsapp:hover {
+            background: #2fe077;
+            transform: scale(1.02);
+        }
+
+        .btn-email {
+            background: #FF6200;
+            color: #000;
+        }
+
+        .btn-email:hover {
+            background: #ff7a1f;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .appointment-form {
+                padding: 25px;
+            }
+        }
+
         footer {
-            background: #1a1a1a;
+            background: #000;
             padding: 40px 0;
             border-top: 3px solid #FF6200;
             text-align: center;
@@ -273,14 +522,19 @@
             }
 
             .hero h1 {
-                font-size: 36px;
+                font-size: 40px;
+            }
+
+            .hero-tagline {
+                font-size: 15px;
+                letter-spacing: 2px;
             }
 
             .hero p {
                 font-size: 18px;
             }
 
-            .services h2, .portfolio h2, .testimonials h2 {
+            .services h2, .portfolio h2, .testimonials h2, .properties h2, .appointment h2 {
                 font-size: 32px;
             }
         }
@@ -292,9 +546,11 @@
             <div class="header-content">
                 <div class="logo">DL<span>C</span>AO</div>
                 <nav>
-                    <a href="#services">Servicios</a>
-                    <a href="#portfolio">Proyectos</a>
-                    <a href="#contact">Contacto</a>
+                    <a href="#services">Services</a>
+                    <a href="#portfolio">Projects</a>
+                    <a href="#properties">Properties</a>
+                    <a href="#appointment">Book Now</a>
+                    <a href="#contact">Contact</a>
                 </nav>
             </div>
         </div>
@@ -303,28 +559,44 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>DLCAO<br>Construction &amp; Contracting</h1>
-                <p>Renovaciones, Ampliaciones y Reparaciones de Calidad<br>Licencia Class B • Desde 2018</p>
-                <a href="https://wa.me/17473674447?text=Hola%20DLCAO%2C%20me%20interesa%20solicitar%20un%20presupuesto%20gratuito" class="cta-button">📞 Solicitar Presupuesto Gratis</a>
+                <h1>DL<span>C</span>AO</h1>
+                <p class="hero-tagline">Elite Construction & Real Estate</p>
+                <p>General Construction • Home Buying & Selling • Property Rentals • Fix &amp; Flip<br>Class B License • Since 2018</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/17473674447?text=Hi%20DLCAO%2C%20I%27d%20like%20to%20request%20a%20free%20quote" class="cta-button" target="_blank" rel="noopener noreferrer">📞 Request a Free Quote</a>
+                    <a href="#properties" class="cta-button-outline">🏘️ View Properties</a>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="services" id="services">
         <div class="container">
-            <h2>¿Qué Hacemos?</h2>
+            <h2>What We Do</h2>
             <div class="services-grid">
                 <div class="service-card">
-                    <h3>Renovación</h3>
-                    <p>Cocinas, baños y espacios interiores completos. Transformamos tus espacios con diseño y calidad profesional.</p>
+                    <h3>Construction</h3>
+                    <p>General construction, kitchens, bathrooms, and full interior spaces. Professional design and quality from the ground up.</p>
                 </div>
                 <div class="service-card">
-                    <h3>Ampliación</h3>
-                    <p>Expande tu hogar de la manera correcta. Planificación, diseño y ejecución impecable de proyectos de expansión.</p>
+                    <h3>Addition</h3>
+                    <p>Expand your home the right way. Careful planning, design, and flawless execution of expansion projects.</p>
                 </div>
                 <div class="service-card">
-                    <h3>Reparación</h3>
-                    <p>Arreglos rápidos, confiables y de calidad. Nuestro equipo está listo para resolver cualquier problema.</p>
+                    <h3>Repair</h3>
+                    <p>Fast, reliable, quality fixes. Our team is ready to solve any problem.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Fix &amp; Flip</h3>
+                    <p>We buy, renovate, and resell properties for maximum value — turning distressed homes into standout investments.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Buy &amp; Sell Homes</h3>
+                    <p>Looking to buy or sell? We guide you through every step of the real estate process in Los Angeles &amp; Winnetka.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Property Rentals</h3>
+                    <p>Quality rental properties, professionally managed and ready to move in.</p>
                 </div>
             </div>
         </div>
@@ -332,66 +604,181 @@
 
     <section class="portfolio" id="portfolio">
         <div class="container">
-            <h2>Proyectos Realizados</h2>
+            <h2>Completed Projects</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <div class="portfolio-item-image">🏡 Antes</div>
+                    <div class="portfolio-item-image">
+                        <img src="images/kitchen-before.jpg" alt="Kitchen Before" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🏡 Before</div>
+                    </div>
                     <div class="portfolio-item-info">
-                        <h4>Renovación de Cocina</h4>
-                        <p>Proyecto en Los Angeles - 2024</p>
+                        <h4>Kitchen Renovation</h4>
+                        <p>Los Angeles Project - 2024</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <div class="portfolio-item-image">✨ Después</div>
+                    <div class="portfolio-item-image">
+                        <img src="images/kitchen-after.jpg" alt="Kitchen After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">✨ After</div>
+                    </div>
                     <div class="portfolio-item-info">
-                        <h4>Cocina Moderna</h4>
-                        <p>Transformación completa - Diseño Premium</p>
+                        <h4>Modern Kitchen</h4>
+                        <p>Full Transformation - Premium Design</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <div class="portfolio-item-image">🏠 Antes</div>
+                    <div class="portfolio-item-image">
+                        <img src="images/bathroom-before.jpg" alt="Bathroom Before" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🏠 Before</div>
+                    </div>
                     <div class="portfolio-item-info">
-                        <h4>Baño Renovado</h4>
-                        <p>Proyecto en Winnetka - 2024</p>
+                        <h4>Bathroom Renovation</h4>
+                        <p>Winnetka Project - 2024</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <div class="portfolio-item-image">🎨 Después</div>
+                    <!-- To use a video instead of a photo for any project, replace the <img> tag with:
+                         <video src="images/your-video.mp4" autoplay muted loop playsinline></video> -->
+                    <div class="portfolio-item-image">
+                        <img src="images/bathroom-after.jpg" alt="Bathroom After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="img-fallback">🎨 After</div>
+                    </div>
                     <div class="portfolio-item-info">
-                        <h4>Baño de Lujo</h4>
-                        <p>Acabados de primera calidad</p>
+                        <h4>Luxury Bathroom</h4>
+                        <p>Top-Quality Finishes</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="properties" id="properties">
+        <div class="container">
+            <h2>Properties</h2>
+            <p class="properties-intro">Buying, selling, or renting — check out our current listings and let us help you find the right property.</p>
+            <div class="property-featured">
+                <div class="property-featured-image">🏡</div>
+                <div class="property-featured-info">
+                    <span class="property-tag">For Sale</span>
+                    <h3>9327 Woodley Ave, North Hills, CA 91343</h3>
+                    <p>Featured listing — view full details, photos, and pricing on Zillow.</p>
+                    <a href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" class="cta-button" target="_blank" rel="noopener noreferrer">View on Zillow</a>
+                </div>
+            </div>
+            <div class="properties-buttons">
+                <a href="https://www.zillow.com/los-angeles-ca/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See More Homes For Sale</a>
+                <a href="https://www.zillow.com/los-angeles-ca/rentals/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See Homes For Rent</a>
             </div>
         </div>
     </section>
 
     <section class="testimonials" id="testimonials">
         <div class="container">
-            <h2>Testimonios</h2>
+            <h2>Testimonials</h2>
             <div class="testimonial">
-                <p>"Excelente trabajo de principio a fin. El equipo de DLCAO fue profesional, puntual y dejaron todo impecable. Recomiendo 100%."</p>
-                <div class="testimonial-author">— María García, Los Angeles</div>
+                <p>"Excellent work from start to finish. The DLCAO team was professional, punctual, and left everything spotless. I recommend them 100%."</p>
+                <div class="testimonial-author">— Maria Garcia, Los Angeles</div>
             </div>
             <div class="testimonial">
-                <p>"La mejor decisión fue contratar a DLCAO. Transformaron mi baño en un espacio de lujo. ¡Muchas gracias!"</p>
-                <div class="testimonial-author">— Carlos Rodríguez, Winnetka</div>
+                <p>"Hiring DLCAO was the best decision. They transformed my bathroom into a luxury space. Thank you so much!"</p>
+                <div class="testimonial-author">— Carlos Rodriguez, Winnetka</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="appointment" id="appointment">
+        <div class="container">
+            <h2>Book an Appointment</h2>
+            <p class="appointment-intro">Fill in your details and pick a date and time. Send your request straight to us by WhatsApp or email — we'll confirm shortly after.</p>
+            <div class="appointment-form">
+                <div class="form-group">
+                    <label for="apptName">Full Name</label>
+                    <input type="text" id="apptName" placeholder="Your name">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apptDate">Date</label>
+                        <input type="date" id="apptDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="apptTime">Time</label>
+                        <input type="time" id="apptTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apptService">Service Needed</label>
+                    <select id="apptService">
+                        <option value="Construction">Construction</option>
+                        <option value="Addition">Addition</option>
+                        <option value="Repair">Repair</option>
+                        <option value="Fix & Flip">Fix &amp; Flip</option>
+                        <option value="Buy/Sell a Home">Buy/Sell a Home</option>
+                        <option value="Property Rental">Property Rental</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="apptNotes">Additional Notes (optional)</label>
+                    <textarea id="apptNotes" rows="3" placeholder="Tell us more about your project..."></textarea>
+                </div>
+                <div class="appointment-buttons">
+                    <button type="button" class="btn-appointment btn-whatsapp" onclick="bookViaWhatsApp()">💬 Send via WhatsApp</button>
+                    <button type="button" class="btn-appointment btn-email" onclick="bookViaEmail()">📧 Send via Email</button>
+                </div>
             </div>
         </div>
     </section>
 
     <footer id="contact">
         <div class="container">
-            <p style="font-size: 24px; margin-bottom: 20px;">DLCAO</p>
+            <p style="font-size: 24px; margin-bottom: 20px;">DL<span style="color: #FF6200;">C</span>AO</p>
             <div class="footer-contact">📞 (747) 367-4447</div>
             <div class="footer-contact">📧 DLCAO@mail.com</div>
-            <div class="footer-contact">📍 Los Angeles &amp; Winnetka</div>
+            <div class="footer-contact">📍 Los Angeles & Winnetka</div>
             <p style="margin-top: 30px; color: #666;">Licensed Class B · Since 2018</p>
         </div>
     </footer>
 
     <script>
-        // Smooth scroll para los links
+        // Build appointment details from the booking form
+        function getAppointmentDetails() {
+            const name = document.getElementById('apptName').value.trim();
+            const date = document.getElementById('apptDate').value;
+            const time = document.getElementById('apptTime').value;
+            const service = document.getElementById('apptService').value;
+            const notes = document.getElementById('apptNotes').value.trim();
+
+            if (!date || !time) {
+                alert('Please select a date and time for your appointment.');
+                return null;
+            }
+
+            const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            return { name: name || 'Not provided', date: formattedDate, time, service, notes };
+        }
+
+        function bookViaWhatsApp() {
+            const d = getAppointmentDetails();
+            if (!d) return;
+            let msg = `Hi DLCAO, I'd like to book an appointment.\n\nName: ${d.name}\nService: ${d.service}\nDate: ${d.date}\nTime: ${d.time}`;
+            if (d.notes) msg += `\nNotes: ${d.notes}`;
+            window.open(`https://wa.me/17473674447?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+        }
+
+        function bookViaEmail() {
+            const d = getAppointmentDetails();
+            if (!d) return;
+            const subject = `Appointment Request - ${d.name}`;
+            let body = `Hi DLCAO,\n\nI'd like to book an appointment.\n\nName: ${d.name}\nService: ${d.service}\nDate: ${d.date}\nTime: ${d.time}`;
+            if (d.notes) body += `\nNotes: ${d.notes}`;
+            body += `\n\nThank you!`;
+            window.location.href = `mailto:DLCAO@mail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        // Smooth scroll for links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
