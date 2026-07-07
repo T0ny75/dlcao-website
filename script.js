@@ -347,3 +347,16 @@ document.addEventListener("DOMContentLoaded", () => {
     a.addEventListener("click", () => menu?.classList.remove("show"));
   });
 });
+
+
+/* V23 estimate dock smooth scroll */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('a[href="#estimate"]').forEach(a => {
+    a.addEventListener("click", (e) => {
+      const target = document.getElementById("estimate");
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({behavior:"smooth", block:"center"});
+    });
+  });
+});

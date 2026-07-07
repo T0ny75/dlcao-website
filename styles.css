@@ -1177,3 +1177,38 @@ body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 
 .reveal-section{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .reveal-section.revealed{opacity:1;transform:translateY(0)}
+
+
+/* V23 estimate dock fix */
+.dock-estimate{
+  background:linear-gradient(135deg,#111,#050505)!important;
+  color:#efcf7e!important;
+  border-color:rgba(239,207,126,.55)!important;
+}
+.dock-estimate::after{
+  content:"Estimate";
+  position:absolute;
+  right:54px;
+  top:50%;
+  transform:translateY(-50%) translateX(8px);
+  opacity:0;
+  pointer-events:none;
+  background:#050505;
+  color:#fff;
+  border:1px solid rgba(199,154,53,.5);
+  border-radius:999px;
+  padding:8px 12px;
+  white-space:nowrap;
+  font-size:.72rem;
+  font-weight:950;
+  text-transform:uppercase;
+  transition:opacity .2s ease, transform .2s ease;
+  box-shadow:0 12px 32px rgba(0,0,0,.28);
+}
+.dock-estimate:hover::after{
+  opacity:1;
+  transform:translateY(-50%) translateX(0);
+}
+@media(max-width:650px){
+  .dock-estimate::after{display:none}
+}
