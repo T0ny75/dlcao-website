@@ -250,3 +250,47 @@ function setCalc(id, value) {
   const el = document.getElementById(id);
   if (el) el.value = value;
 }
+
+
+/* V17 professional contact rail back-top */
+document.addEventListener("DOMContentLoaded", () => {
+  const topBtn = document.getElementById("backTop");
+  if (!topBtn) return;
+  const toggleTop = () => topBtn.classList.toggle("show", window.scrollY > 500);
+  window.addEventListener("scroll", toggleTop);
+  toggleTop();
+  topBtn.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+});
+
+
+/* DLCAO Enterprise v22 calculator + menu */
+function resetFlipDefaults(){setV22("arv",750000);setV22("purchasePrice",450000);setV22("repairs",85000);setV22("holdingCosts",25000);setV22("sellingPercent",7);setV22("profit",70000);calcFlip();}
+function setV22(id,value){const el=document.getElementById(id);if(el) el.value=value;}
+function calcFlip(){
+  const arv=Number(document.getElementById("arv")?.value||0);
+  const purchase=Number(document.getElementById("purchasePrice")?.value||0);
+  const repairs=Number(document.getElementById("repairs")?.value||0);
+  const holding=Number(document.getElementById("holdingCosts")?.value||0);
+  const sellingPct=Number(document.getElementById("sellingPercent")?.value||0)/100;
+  const target=Number(document.getElementById("profit")?.value||0);
+  const selling=arv*sellingPct;
+  const maxOffer=arv-repairs-holding-selling-target;
+  const profit=arv-purchase-repairs-holding-selling;
+  const rule70=(arv*.70)-repairs;
+  const invested=purchase+repairs+holding;
+  const roi=invested>0?(profit/invested)*100:0;
+  setTextV22("flipResult",money(maxOffer));setTextV22("projectedProfit",money(profit));setTextV22("roiResult",roi.toFixed(1)+"%");setTextV22("rule70Result",money(rule70));
+  const status=document.getElementById("dealStatus"), advice=document.getElementById("dealAdvice");
+  if(status){status.classList.remove("good","warn","bad");
+    if(profit>=target&&roi>=15){status.textContent="Strong Deal";status.classList.add("good");if(advice)advice.textContent="Meets target profit and strong ROI. Verify comps and repair scope.";}
+    else if(profit>0&&roi>=8){status.textContent="Review Deal";status.classList.add("warn");if(advice)advice.textContent="Profitable but margin may be tight. Negotiate price or verify ARV carefully.";}
+    else{status.textContent="Pass / High Risk";status.classList.add("bad");if(advice)advice.textContent="Not enough margin. Consider a lower price or passing on this deal.";}
+  }
+}
+function setTextV22(id,value){const el=document.getElementById(id);if(el)el.textContent=value;}
+document.addEventListener("DOMContentLoaded",()=>{
+  const menu=document.getElementById("navMenu"), btn=document.getElementById("menuBtn");
+  if(btn&&menu){btn.addEventListener("click",()=>menu.classList.toggle("show"));menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>menu.classList.remove("show")));}
+  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id=>{document.getElementById(id)?.addEventListener("input",calcFlip);document.getElementById(id)?.addEventListener("change",calcFlip);});
+  calcFlip();
+});
