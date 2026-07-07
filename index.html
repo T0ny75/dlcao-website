@@ -1,1043 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DLCAO - Elite Construction & Real Estate | Los Angeles & Winnetka</title>
-
-    <!-- SEO: helps Google understand and rank the page -->
-    <meta name="description" content="DLCAO - Elite construction and real estate company serving Los Angeles & Winnetka. General construction, additions, repairs, fix & flip, home buying/selling, and rental properties. Class B License, since 2018.">
-    <meta name="keywords" content="DLCAO, construction Los Angeles, contractor Winnetka, fix and flip, home renovation, real estate Los Angeles, rental properties, general contractor">
-    <link rel="canonical" href="https://t0ny75.github.io/dlcao-website/">
-
-    <!-- Open Graph: controls how the link looks when shared on Facebook, WhatsApp, Instagram bio, iMessage, etc. -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="DLCAO - Elite Construction & Real Estate | Los Angeles & Winnetka">
-    <meta property="og:description" content="General construction, additions, repairs, fix & flip, home buying/selling, and rental properties in Los Angeles & Winnetka.">
-    <meta property="og:url" content="https://t0ny75.github.io/dlcao-website/">
-
-    <!-- Twitter/X card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="DLCAO - Elite Construction & Real Estate">
-    <meta name="twitter:description" content="General construction, additions, repairs, fix & flip, home buying/selling, and rental properties in Los Angeles & Winnetka.">
-
-    <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCKDQJMV3E"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RCKDQJMV3E');
-    </script>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000;
-            color: #fff;
-        }
-
-        header {
-            background: #000;
-            padding: 20px 0;
-            border-bottom: 3px solid #FF6200;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .logo span {
-            color: #FF6200;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 14px;
-            transition: color 0.3s;
-            white-space: nowrap;
-        }
-
-        nav a:hover {
-            color: #FF6200;
-        }
-
-        .nav-social {
-            display: inline-flex;
-            align-items: center;
-            margin-left: 6px;
-        }
-
-        .nav-social svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
-            transition: fill 0.3s;
-        }
-
-        .nav-social:hover svg {
-            fill: #FF6200;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 26px;
-            height: 18px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .menu-toggle span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: #FF6200;
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: translateY(7.5px) rotate(45deg);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: translateY(-7.5px) rotate(-45deg);
-        }
-
-        .hero {
-            background: #000;
-            padding: 120px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="%23FF6200" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 64px;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .hero h1 span {
-            color: #FF6200;
-        }
-
-        .hero-tagline {
-            font-size: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #FF6200;
-            margin-bottom: 25px;
-        }
-
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 40px;
-            color: #ccc;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: #FF6200;
-            color: #000;
-            padding: 16px 40px;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: none;
-        }
-
-        .cta-button:hover {
-            background: #ff7a1f;
-            transform: scale(1.05);
-        }
-
-        .cta-button-outline {
-            display: inline-block;
-            background: transparent;
-            color: #FF6200;
-            padding: 16px 40px;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 4px;
-            border: 2px solid #FF6200;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .cta-button-outline:hover {
-            background: #FF6200;
-            color: #000;
-            transform: scale(1.05);
-        }
-
-        .services {
-            padding: 100px 0;
-            background: #000;
-        }
-
-        .services h2 {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 60px;
-            letter-spacing: 1px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .service-card {
-            background: #000;
-            padding: 40px;
-            border: 1px solid #222;
-            border-left: 4px solid #FF6200;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: #111;
-        }
-
-        .service-card h3 {
-            color: #FF6200;
-            font-size: 24px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .service-card p {
-            color: #ccc;
-            line-height: 1.6;
-        }
-
-        .portfolio {
-            padding: 100px 0;
-            background: #000;
-        }
-
-        .portfolio h2 {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 60px;
-            letter-spacing: 1px;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .portfolio-item {
-            background: #000;
-            overflow: hidden;
-            border: 1px solid #FF6200;
-        }
-
-        .portfolio-item-image {
-            width: 100%;
-            height: 220px;
-            position: relative;
-            background: #111;
-            overflow: hidden;
-        }
-
-        .portfolio-item-image img,
-        .portfolio-item-image video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .portfolio-item-image .img-fallback {
-            display: none;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #FF6200 0%, #ff7a1f 100%);
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-        }
-
-        .portfolio-item-info {
-            padding: 20px;
-        }
-
-        .portfolio-item-info h4 {
-            color: #FF6200;
-            margin-bottom: 10px;
-        }
-
-        .portfolio-item-info p {
-            color: #ccc;
-            font-size: 14px;
-        }
-
-        .properties {
-            padding: 100px 0;
-            background: #000;
-        }
-
-        .properties h2 {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-
-        .properties-intro {
-            text-align: center;
-            color: #ccc;
-            max-width: 650px;
-            margin: 0 auto 50px auto;
-        }
-
-        .properties-featured-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto 40px auto;
-        }
-
-        .property-featured {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-left: 4px solid #FF6200;
-            overflow: hidden;
-        }
-
-        .property-featured-image {
-            width: 100%;
-            height: 260px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-        }
-
-        .property-featured-info {
-            padding: 30px;
-        }
-
-        .property-tag {
-            display: inline-block;
-            background: #FF6200;
-            color: #000;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 5px 12px;
-            border-radius: 3px;
-            margin-bottom: 15px;
-        }
-
-        .property-featured-info h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .property-featured-info p {
-            color: #ccc;
-            margin-bottom: 20px;
-        }
-
-        .properties-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .testimonials {
-            padding: 100px 0;
-            background: #000;
-        }
-
-        .testimonials h2 {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 60px;
-            letter-spacing: 1px;
-        }
-
-        .testimonial {
-            background: #000;
-            padding: 40px;
-            margin-bottom: 30px;
-            border: 1px solid #222;
-            border-left: 4px solid #FF6200;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .testimonial p {
-            color: #ccc;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            color: #FF6200;
-            font-weight: bold;
-        }
-
-        .appointment {
-            padding: 100px 0;
-            background: #000;
-        }
-
-        .appointment h2 {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-
-        .appointment-intro {
-            text-align: center;
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto 50px auto;
-        }
-
-        .appointment-form {
-            max-width: 560px;
-            margin: 0 auto;
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-left: 4px solid #FF6200;
-            padding: 40px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #FF6200;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 14px;
-            background: #000;
-            border: 1px solid #333;
-            color: #fff;
-            font-size: 15px;
-            font-family: inherit;
-            border-radius: 4px;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #FF6200;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .appointment-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .btn-appointment {
-            flex: 1;
-            min-width: 200px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 16px 20px;
-            font-size: 15px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-            color: #000;
-        }
-
-        .btn-whatsapp:hover {
-            background: #2fe077;
-            transform: scale(1.02);
-        }
-
-        .btn-email {
-            background: #FF6200;
-            color: #000;
-        }
-
-        .btn-email:hover {
-            background: #ff7a1f;
-            transform: scale(1.02);
-        }
-
-        @media (max-width: 600px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .appointment-form {
-                padding: 25px;
-            }
-        }
-
-        footer {
-            background: #000;
-            padding: 40px 0;
-            border-top: 3px solid #FF6200;
-            text-align: center;
-        }
-
-        footer p {
-            color: #ccc;
-            margin-bottom: 20px;
-        }
-
-        .footer-contact {
-            color: #FF6200;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .footer-social {
-            margin-top: 20px;
-        }
-
-        .footer-social a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border: 1px solid #FF6200;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-
-        .footer-social a:hover {
-            background: #FF6200;
-        }
-
-        .footer-social svg {
-            width: 20px;
-            height: 20px;
-            fill: #FF6200;
-            transition: fill 0.3s;
-        }
-
-        .footer-social a:hover svg {
-            fill: #000;
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            nav {
-                position: absolute;
-                top: calc(100% + 20px);
-                left: -20px;
-                right: -20px;
-                background: #000;
-                flex-direction: column;
-                align-items: flex-start;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                border-bottom: 0 solid #FF6200;
-            }
-
-            nav.nav-open {
-                max-height: 400px;
-                padding: 10px 20px 25px;
-                border-bottom: 3px solid #FF6200;
-            }
-
-            nav a {
-                margin: 12px 0;
-                font-size: 16px;
-                width: 100%;
-            }
-
-            .nav-social {
-                margin: 8px 0 0 0;
-            }
-
-            .hero {
-                padding: 90px 0 70px;
-            }
-
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .hero-tagline {
-                font-size: 14px;
-                letter-spacing: 2px;
-            }
-
-            .hero p {
-                font-size: 17px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .hero-buttons .cta-button,
-            .hero-buttons .cta-button-outline {
-                text-align: center;
-                padding: 16px 20px;
-            }
-
-            .services, .portfolio, .properties, .testimonials, .appointment {
-                padding: 60px 0;
-            }
-
-            .services h2, .portfolio h2, .testimonials h2, .properties h2, .appointment h2 {
-                font-size: 30px;
-                margin-bottom: 35px;
-            }
-
-            .service-card {
-                padding: 28px;
-            }
-
-            .property-featured-info {
-                padding: 22px;
-            }
-
-            .properties-buttons {
-                flex-direction: column;
-            }
-
-            .properties-buttons a {
-                text-align: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>DLCAO | Belles Elites Construction, Real Estate & Investments</title>
+  <meta name="description" content="DLCAO Belles Elites: construction, remodeling, Fix & Flip, home buying, selling, rental properties, valuation, cash offer and investor project analysis in Los Angeles and San Fernando Valley." />
+  <meta name="keywords" content="DLCAO, Belles Elites, General Contractor Los Angeles, Fix and Flip, Home Valuation, Instant Cash Offer, Sell Home Los Angeles, Buy Home Los Angeles, Rental Properties, ADU, Remodel, San Fernando Valley" />
+
+  <meta property="og:title" content="DLCAO | Belles Elites" />
+  <meta property="og:description" content="Construction + Real Estate + Investment solutions for homeowners and investors." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["GeneralContractor", "RealEstateAgent"],
+    "name": "DLCAO Belles Elites",
+    "telephone": "+17473674447",
+    "email": "DLCAO@mail.com",
+    "areaServed": ["Los Angeles", "Winnetka", "North Hills", "San Fernando Valley"],
+    "url": "https://t0ny75.github.io/dlcao-website/",
+    "description": "Elite construction, real estate and investment services."
+  }
+  </script>
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">DL<span>C</span>AO</div>
-                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <nav id="mainNav">
-                    <a href="#services">Services</a>
-                    <a href="#portfolio">Projects</a>
-                    <a href="#properties">Properties</a>
-                    <a href="#appointment">Book Now</a>
-                    <a href="#contact">Contact</a>
-                    <a href="https://www.instagram.com/dlcaoholding" class="nav-social" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.065.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2zm0 1.802c-2.67 0-2.987.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.684-.747 1.15-.137.353-.3.882-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.398.8.748 1.15.35.35.684.566 1.15.747.352.137.881.3 1.857.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 0 0-.748-1.15 3.098 3.098 0 0 0-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.594a5.604 5.604 0 1 1 0 11.208 5.604 5.604 0 0 1 0-11.208zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5.883-9.87a1.31 1.31 0 1 1-2.62 0 1.31 1.31 0 0 1 2.62 0z"/></svg>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </header>
+  <header class="announcement">
+    <div class="container announce-grid">
+      <span>DLCAO Belles Elites · Construction · Real Estate · Investments</span>
+      <div>
+        <a href="tel:+17473674447">(747) 367-4447</a>
+        <a href="mailto:DLCAO@mail.com">DLCAO@mail.com</a>
+      </div>
+    </div>
+  </header>
 
+  <header class="navbar">
+    <div class="container nav">
+      <a class="brand" href="#home">
+        <span class="brand-logo">DL</span>
+        <span>
+          <strong>DLCAO</strong>
+          <small>Belles Elites</small>
+        </span>
+      </a>
+
+      <button id="menuBtn" class="menu">☰</button>
+
+      <nav id="navMenu">
+        <div class="nav-group">
+          <a href="#buy">Buy</a>
+          <div class="dropdown">
+            <a href="#search">Search Homes</a>
+            <a href="#affordability">Affordability Calculator</a>
+            <a href="#mortgage">Mortgage Calculator</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <a href="#sell">Sell</a>
+          <div class="dropdown">
+            <a href="#cash-offer">Instant Cash Offer</a>
+            <a href="#valuation">Home Valuation</a>
+            <a href="#seller-calculator">Home Sale Calculator</a>
+          </div>
+        </div>
+
+        <a href="#construction">Construction</a>
+        <a href="#communities">Communities</a>
+        <a href="#investors">Investors</a>
+        <a href="#testimonials">Testimonials</a>
+        <a class="pill" href="#book">Book Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>DL<span>C</span>AO</h1>
-                <p class="hero-tagline">Elite Construction & Real Estate</p>
-                <p>General Construction • Home Buying & Selling • Rental Properties • Fix &amp; Flip<br>Class B License • Since 2018</p>
-                <div class="hero-buttons">
-                    <a href="https://wa.me/17473674447?text=Hi%20DLCAO%2C%20I%27d%20like%20to%20request%20a%20free%20quote" class="cta-button" target="_blank" rel="noopener noreferrer">📞 Request a Free Quote</a>
-                    <a href="#properties" class="cta-button-outline">🏘️ View Properties</a>
-                </div>
-            </div>
+      <div class="hero-bg"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Los Angeles · Winnetka · North Hills · San Fernando Valley</p>
+          <h1>Luxury-level construction and real estate strategy.</h1>
+          <p class="lead">
+            DLCAO Belles Elites helps homeowners and investors buy, sell, renovate, rent, flip and build with one connected team.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn gold" href="#cash-offer">Instant Cash Offer</a>
+            <a class="btn white" href="#valuation">Get Home Value</a>
+            <a class="btn glass" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20to%20speak%20with%20your%20team." target="_blank" rel="noopener">WhatsApp DLCAO</a>
+          </div>
+
+          <div class="hero-stats">
+            <div><strong>Buy</strong><span>Search & strategy</span></div>
+            <div><strong>Sell</strong><span>Value & listing prep</span></div>
+            <div><strong>Build</strong><span>Construction & repairs</span></div>
+            <div><strong>Invest</strong><span>Fix & Flip analysis</span></div>
+          </div>
         </div>
+
+        <aside class="lead-box">
+          <div class="badge">Elite Client Intake</div>
+          <h2>Start your project.</h2>
+          <p>Tell us what you need and DLCAO will route your request to construction, real estate or investor services.</p>
+          <form id="heroForm">
+            <input name="Name" placeholder="Full name" required />
+            <input name="Phone" placeholder="Phone" required />
+            <input name="Email" placeholder="Email" />
+            <select name="Main Goal">
+              <option>Buy a home</option>
+              <option>Sell my home</option>
+              <option>Instant cash offer</option>
+              <option>Home valuation</option>
+              <option>Construction / remodel</option>
+              <option>ADU / addition</option>
+              <option>Fix & Flip analysis</option>
+              <option>Rental property</option>
+            </select>
+            <textarea name="Message" placeholder="Address, timeline, budget, questions..."></textarea>
+            <button class="btn gold full" type="submit">Send to WhatsApp</button>
+          </form>
+        </aside>
+      </div>
     </section>
 
-    <section class="services" id="services">
-        <div class="container">
-            <h2>What We Do</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Construction</h3>
-                    <p>General construction, kitchens, bathrooms, and full interior spaces. Professional design and quality from the ground up.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Addition</h3>
-                    <p>Expand your home the right way. Careful planning, design, and flawless execution of expansion projects.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Repair</h3>
-                    <p>Fast, reliable, quality fixes. Our team is ready to solve any problem.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Fix &amp; Flip</h3>
-                    <p>We buy, renovate, and resell properties for maximum value — turning distressed homes into standout investments.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Buy &amp; Sell Homes</h3>
-                    <p>Looking to buy or sell? We guide you through every step of the real estate process in Los Angeles &amp; Winnetka.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Rental Properties</h3>
-                    <p>Quality rental properties, professionally managed and ready to move in.</p>
-                </div>
-            </div>
-        </div>
+    <section class="quick-actions">
+      <div class="container qa-grid">
+        <a href="#search"><span>01</span><strong>Search Homes</strong><small>Find buyer opportunities</small></a>
+        <a href="#valuation"><span>02</span><strong>Home Valuation</strong><small>Know your property value</small></a>
+        <a href="#cash-offer"><span>03</span><strong>Cash Offer</strong><small>Sell faster with options</small></a>
+        <a href="#construction"><span>04</span><strong>Renovation Plan</strong><small>Build value before selling</small></a>
+      </div>
     </section>
 
-    <section class="portfolio" id="portfolio">
-        <div class="container">
-            <h2>Completed Projects</h2>
-            <div class="portfolio-grid">
-                <!-- To use a video instead of a photo for any project, replace the <img> tag with:
-                     <video src="images/your-video.mp4" autoplay muted loop playsinline></video> -->
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/exterior-before.jpg" alt="Exterior Before" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🏡 Before</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Full Exterior Remodel</h4>
-                        <p>Before - North Hills Project</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/exterior-after.jpg" alt="Exterior After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">✨ After</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Full Exterior Remodel</h4>
-                        <p>After - Fresh Paint & Finish</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/kitchen-after.jpg" alt="Kitchen After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🍳 After</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Kitchen Renovation</h4>
-                        <p>Modern Cabinets & Marble Finishes</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/living-room-after.jpg" alt="Living Room After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🛋️ After</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Living Room Renovation</h4>
-                        <p>New Flooring & Fireplace Finish</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/bedroom-after.jpg" alt="Bedroom After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🛏️ After</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Bedroom Renovation</h4>
-                        <p>New Flooring & Finishes</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/deck-after.jpg" alt="Deck After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🌳 After</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Covered Deck & Patio</h4>
-                        <p>Custom Outdoor Living Space</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item-image">
-                        <img src="images/bonus-room-after.jpg" alt="Bonus Room After" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="img-fallback">🚪 After</div>
-                    </div>
-                    <div class="portfolio-item-info">
-                        <h4>Additional Room</h4>
-                        <p>New Flooring & Finish Work</p>
-                    </div>
-                </div>
-            </div>
+    <section id="buy" class="section container">
+      <div class="split">
+        <div>
+          <p class="eyebrow dark">Buy With DLCAO</p>
+          <h2>Buy with construction intelligence.</h2>
+          <p class="section-text">
+            Most buyers only see bedrooms and price. DLCAO also looks at repairs, upgrade potential, ADU possibilities, rental potential and future resale strategy.
+          </p>
+          <div class="feature-list">
+            <span>✓ Search homes</span>
+            <span>✓ Estimate repairs</span>
+            <span>✓ Analyze value-add potential</span>
+            <span>✓ Compare neighborhoods</span>
+          </div>
         </div>
+        <div id="search" class="tool-card">
+          <h3>Home Search Request</h3>
+          <form id="buyerForm">
+            <input name="Buyer Name" placeholder="Name" required>
+            <input name="Budget" placeholder="Budget range">
+            <input name="Preferred Areas" placeholder="Preferred areas">
+            <select name="Goal">
+              <option>Primary home</option>
+              <option>Investment property</option>
+              <option>Rental property</option>
+              <option>Fix & Flip</option>
+            </select>
+            <button class="btn black full" type="submit">Send Buyer Request</button>
+          </form>
+        </div>
+      </div>
     </section>
 
-    <section class="properties" id="properties">
-        <div class="container">
-            <h2>Properties</h2>
-            <p class="properties-intro">Buying, selling, or renting — check out our current listings and let us help you find the right property.</p>
-            <div class="properties-featured-grid">
-                <div class="property-featured">
-                    <div class="property-featured-image">🏷️</div>
-                    <div class="property-featured-info">
-                        <span class="property-tag">For Sale</span>
-                        <h3>15627 Vintage St, North Hills, CA 91343</h3>
-                        <p>Featured listing — view full details, photos, and pricing on Zillow.</p>
-                        <a href="https://www.zillow.com/homedetails/15627-Vintage-St-North-Hills-CA-91343/20138792_zpid/" class="cta-button" target="_blank" rel="noopener noreferrer">View on Zillow</a>
-                    </div>
-                </div>
-                <div class="property-featured">
-                    <div class="property-featured-image">🏡</div>
-                    <div class="property-featured-info">
-                        <span class="property-tag">For Rent</span>
-                        <h3>9327 Woodley Ave, North Hills, CA 91343</h3>
-                        <p>Featured listing — view full details, photos, and pricing on Zillow.</p>
-                        <a href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" class="cta-button" target="_blank" rel="noopener noreferrer">View on Zillow</a>
-                    </div>
-                </div>
-            </div>
-            <div class="properties-buttons">
-                <a href="https://www.zillow.com/homedetails/15627-Vintage-St-North-Hills-CA-91343/20138792_zpid/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See Homes For Sale</a>
-                <a href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" class="cta-button-outline" target="_blank" rel="noopener noreferrer">See Homes For Rent</a>
-            </div>
+    <section id="sell" class="section black-section">
+      <div class="container">
+        <div class="section-title light">
+          <p class="eyebrow">Sell With DLCAO</p>
+          <h2>Sell smarter: as-is, renovated, listed or investor-ready.</h2>
+          <p>DLCAO combines real estate presentation with construction strategy so sellers can understand whether to sell as-is, repair first or reposition the home for a stronger result.</p>
         </div>
+
+        <div class="sell-grid">
+          <article id="cash-offer" class="sell-card">
+            <span>Instant Option</span>
+            <h3>Instant Cash Offer</h3>
+            <p>For owners who want speed, simplicity or an investor-style exit.</p>
+            <a href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20an%20instant%20cash%20offer%20for%20my%20property." target="_blank" rel="noopener">Request offer →</a>
+          </article>
+          <article id="valuation" class="sell-card premium">
+            <span>Seller Tool</span>
+            <h3>Home Valuation</h3>
+            <p>Find out what your home may be worth before deciding to sell, renovate or rent.</p>
+            <form id="valuationForm">
+              <input name="Property Address" placeholder="Property address" required>
+              <input name="Owner Phone" placeholder="Phone" required>
+              <button class="btn gold full" type="submit">Get My Value</button>
+            </form>
+          </article>
+          <article class="sell-card">
+            <span>Listing Prep</span>
+            <h3>Why List With DLCAO</h3>
+            <p>Construction insight, seller preparation, marketing, photos, repair planning and investor contacts.</p>
+            <a href="#book">Book seller consultation →</a>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2>Testimonials</h2>
-            <div class="testimonial">
-                <p>"Excellent work from start to finish. The DLCAO team was professional, punctual, and left everything spotless. I recommend them 100%."</p>
-                <div class="testimonial-author">— Maria Garcia, Los Angeles</div>
-            </div>
-            <div class="testimonial">
-                <p>"Hiring DLCAO was the best decision. They transformed my bathroom into a luxury space. Thank you so much!"</p>
-                <div class="testimonial-author">— Carlos Rodriguez, Winnetka</div>
-            </div>
-        </div>
+    <section id="construction" class="section container">
+      <div class="section-title">
+        <p class="eyebrow dark">Construction Division</p>
+        <h2>Build value before, during and after the transaction.</h2>
+      </div>
+
+      <div class="services-grid">
+        <article><span>01</span><h3>Remodeling</h3><p>Kitchens, bathrooms, flooring, paint, finish upgrades and full interior improvements.</p></article>
+        <article><span>02</span><h3>Additions & ADUs</h3><p>Expand livable space, increase rental potential and create stronger long-term property value.</p></article>
+        <article><span>03</span><h3>Repairs</h3><p>Repair strategy for owners, sellers, buyers, rentals and investor projects.</p></article>
+        <article><span>04</span><h3>Fix & Flip</h3><p>Scope, budget, timeline and upgrade strategy for investor flips.</p></article>
+        <article><span>05</span><h3>Rental Ready</h3><p>Prepare rental properties with durable improvements and tenant-ready presentation.</p></article>
+        <article><span>06</span><h3>Pre-Sale Prep</h3><p>Choose the repairs and upgrades that make sense before listing your home.</p></article>
+      </div>
     </section>
 
-    <section class="appointment" id="appointment">
-        <div class="container">
-            <h2>Book an Appointment</h2>
-            <p class="appointment-intro">Fill in your details and pick a date and time. Send your request straight to us by WhatsApp or email — we'll confirm shortly after.</p>
-            <div class="appointment-form">
-                <div class="form-group">
-                    <label for="apptName">Full Name</label>
-                    <input type="text" id="apptName" placeholder="Your name">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="apptDate">Date</label>
-                        <input type="date" id="apptDate">
-                    </div>
-                    <div class="form-group">
-                        <label for="apptTime">Time</label>
-                        <input type="time" id="apptTime">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="apptService">Service Needed</label>
-                    <select id="apptService">
-                        <option value="Construction">Construction</option>
-                        <option value="Addition">Addition</option>
-                        <option value="Repair">Repair</option>
-                        <option value="Fix & Flip">Fix &amp; Flip</option>
-                        <option value="Buy/Sell a Home">Buy/Sell a Home</option>
-                        <option value="Rental Property">Rental Property</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="apptNotes">Additional Notes (optional)</label>
-                    <textarea id="apptNotes" rows="3" placeholder="Tell us more about your project..."></textarea>
-                </div>
-                <div class="appointment-buttons">
-                    <button type="button" class="btn-appointment btn-whatsapp" onclick="bookViaWhatsApp()">💬 Send via WhatsApp</button>
-                    <button type="button" class="btn-appointment btn-email" onclick="bookViaEmail()">📧 Send via Email</button>
-                </div>
-            </div>
+    <section id="communities" class="section community-section">
+      <div class="container">
+        <div class="section-title">
+          <p class="eyebrow dark">Explore Communities</p>
+          <h2>Local focus for Los Angeles and the Valley.</h2>
         </div>
+
+        <div class="community-grid">
+          <a href="#book">Winnetka <small>CA</small></a>
+          <a href="#book">North Hills <small>CA</small></a>
+          <a href="#book">Los Angeles <small>CA</small></a>
+          <a href="#book">San Fernando Valley <small>CA</small></a>
+          <a href="#book">Canoga Park <small>CA</small></a>
+          <a href="#book">Reseda <small>CA</small></a>
+        </div>
+      </div>
     </section>
 
-    <footer id="contact">
-        <div class="container">
-            <p style="font-size: 24px; margin-bottom: 20px;">DL<span style="color: #FF6200;">C</span>AO</p>
-            <div class="footer-contact">📞 (747) 367-4447</div>
-            <div class="footer-contact">📧 DLCAO@mail.com</div>
-            <div class="footer-contact">📍 Los Angeles & Winnetka</div>
-            <div class="footer-social">
-                <a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.065.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2zm0 1.802c-2.67 0-2.987.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.684-.747 1.15-.137.353-.3.882-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.987.06 4.04.045.976.207 1.505.344 1.858.181.466.398.8.748 1.15.35.35.684.566 1.15.747.352.137.881.3 1.857.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.976-.045 1.505-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.987-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 0 0-.748-1.15 3.098 3.098 0 0 0-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.594a5.604 5.604 0 1 1 0 11.208 5.604 5.604 0 0 1 0-11.208zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5.883-9.87a1.31 1.31 0 1 1-2.62 0 1.31 1.31 0 0 1 2.62 0z"/></svg>
-                </a>
-            </div>
-            <p style="margin-top: 20px; color: #666;">Licensed Class B · Since 2018</p>
+    <section id="properties" class="section container">
+      <div class="section-title">
+        <p class="eyebrow dark">Featured Properties</p>
+        <h2>Properties, rentals and investor opportunities.</h2>
+      </div>
+
+      <div class="property-grid">
+        <article class="property">
+          <div class="property-media gold-media">For Sale</div>
+          <div class="property-body">
+            <h3>15627 Vintage St, North Hills, CA 91343</h3>
+            <p>Featured property opportunity. Add photos, pricing and active listing link when ready.</p>
+            <a href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20information%20about%2015627%20Vintage%20St." target="_blank" rel="noopener">Ask about this property →</a>
+          </div>
+        </article>
+
+        <article class="property">
+          <div class="property-media green-media">For Rent</div>
+          <div class="property-body">
+            <h3>9327 Woodley Ave, North Hills, CA 91343</h3>
+            <p>Rental property opportunity. Add rental terms, photos and showing availability.</p>
+            <a href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20information%20about%209327%20Woodley%20Ave." target="_blank" rel="noopener">Ask about rental →</a>
+          </div>
+        </article>
+
+        <article class="property elite">
+          <div class="property-media black-media">Investor</div>
+          <div class="property-body">
+            <h3>Send us your deal</h3>
+            <p>We can review repair needs, rent potential, resale strategy and project feasibility.</p>
+            <a href="#investors">Analyze investment →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="investors" class="section investor">
+      <div class="container investor-grid">
+        <div>
+          <p class="eyebrow">Investor Suite</p>
+          <h2>Fix & Flip, rental and value-add analysis.</h2>
+          <p>Use DLCAO before you buy. We help you estimate construction costs, project risk, timeline and value-add opportunities.</p>
+          <div class="mini-grid">
+            <span>Repair estimate</span>
+            <span>ARV strategy</span>
+            <span>Rental readiness</span>
+            <span>Exit plan</span>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        // Build appointment details from the booking form
-        function getAppointmentDetails() {
-            const name = document.getElementById('apptName').value.trim();
-            const date = document.getElementById('apptDate').value;
-            const time = document.getElementById('apptTime').value;
-            const service = document.getElementById('apptService').value;
-            const notes = document.getElementById('apptNotes').value.trim();
+        <div id="seller-calculator" class="calculator">
+          <h3>Home Sale / Flip Calculator</h3>
+          <label>After Repair Value <input id="arv" type="number" value="750000"></label>
+          <label>Repairs / Prep Cost <input id="repairs" type="number" value="85000"></label>
+          <label>Target Profit <input id="profit" type="number" value="70000"></label>
+          <button class="btn gold full" onclick="calcFlip()">Calculate Max Offer</button>
+          <p id="flipResult" class="result">$370,000 estimated offer</p>
+        </div>
+      </div>
+    </section>
 
-            if (!date || !time) {
-                alert('Please select a date and time for your appointment.');
-                return null;
-            }
+    <section id="affordability" class="section container calculators">
+      <div class="section-title">
+        <p class="eyebrow dark">Client Tools</p>
+        <h2>Calculators that generate serious leads.</h2>
+      </div>
 
-            const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
-                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-            });
+      <div class="calc-grid">
+        <div id="mortgage" class="calculator light-calc">
+          <h3>Mortgage Calculator</h3>
+          <label>Home Price <input id="homePrice" type="number" value="650000"></label>
+          <label>Down Payment <input id="downPayment" type="number" value="65000"></label>
+          <label>Interest Rate % <input id="rate" type="number" step="0.01" value="6.75"></label>
+          <label>Years <input id="years" type="number" value="30"></label>
+          <button class="btn black full" onclick="calcMortgage()">Estimate Payment</button>
+          <p id="mortgageResult" class="result">$3,795 estimated principal & interest</p>
+        </div>
 
-            return { name: name || 'Not provided', date: formattedDate, time, service, notes };
-        }
+        <div class="calculator light-calc">
+          <h3>Affordability Calculator</h3>
+          <label>Monthly Income <input id="income" type="number" value="10000"></label>
+          <label>Monthly Debts <input id="debts" type="number" value="800"></label>
+          <label>Target DTI % <input id="dti" type="number" value="43"></label>
+          <button class="btn black full" onclick="calcAffordability()">Calculate Budget</button>
+          <p id="affordResult" class="result">$3,500 estimated max payment</p>
+        </div>
+      </div>
+    </section>
 
-        function bookViaWhatsApp() {
-            const d = getAppointmentDetails();
-            if (!d) return;
-            let msg = `Hi DLCAO, I'd like to book an appointment.\n\nName: ${d.name}\nService: ${d.service}\nDate: ${d.date}\nTime: ${d.time}`;
-            if (d.notes) msg += `\nNotes: ${d.notes}`;
-            window.open(`https://wa.me/17473674447?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
-        }
+    <section id="testimonials" class="section black-section">
+      <div class="container">
+        <div class="section-title light">
+          <p class="eyebrow">What Clients Say</p>
+          <h2>Premium experience, practical results.</h2>
+        </div>
 
-        function bookViaEmail() {
-            const d = getAppointmentDetails();
-            if (!d) return;
-            const subject = `Appointment Request - ${d.name}`;
-            let body = `Hi DLCAO,\n\nI'd like to book an appointment.\n\nName: ${d.name}\nService: ${d.service}\nDate: ${d.date}\nTime: ${d.time}`;
-            if (d.notes) body += `\nNotes: ${d.notes}`;
-            body += `\n\nThank you!`;
-            window.location.href = `mailto:DLCAO@mail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        }
+        <div class="testimonial-grid">
+          <blockquote>
+            “DLCAO helped us understand what repairs mattered before selling. The process felt professional and clear.”
+            <cite>— Seller Client</cite>
+          </blockquote>
+          <blockquote>
+            “The construction and investment perspective helped us look at the property like a real business decision.”
+            <cite>— Investor Client</cite>
+          </blockquote>
+          <blockquote>
+            “Fast communication, clean work and serious attention to detail.”
+            <cite>— Homeowner Client</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
 
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const mainNav = document.getElementById('mainNav');
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            mainNav.classList.toggle('nav-open');
-        });
+    <section id="book" class="section booking">
+      <div class="container booking-grid">
+        <div>
+          <p class="eyebrow dark">Contact DLCAO</p>
+          <h2>Book a consultation or property review.</h2>
+          <p>Call, text, WhatsApp or email DLCAO. Send the address, your goal and your timeline.</p>
 
-        // Smooth scroll for links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({behavior: 'smooth'});
-                }
-                // Close mobile menu after clicking a link
-                menuToggle.classList.remove('active');
-                mainNav.classList.remove('nav-open');
-            });
-        });
-    </script>
+          <div class="contact-stack">
+            <a href="tel:+17473674447">(747) 367-4447</a>
+            <a href="mailto:DLCAO@mail.com">DLCAO@mail.com</a>
+            <span>Los Angeles · Winnetka · North Hills</span>
+            <span>Mon–Fri 8AM–8PM · Sat by appointment</span>
+          </div>
+        </div>
+
+        <form id="appointmentForm" class="appointment">
+          <h3>Appointment Request</h3>
+          <input name="Name" placeholder="Full name" required>
+          <input name="Phone" placeholder="Phone" required>
+          <input name="Email" placeholder="Email">
+          <div class="two">
+            <input name="Preferred Date" type="date">
+            <input name="Preferred Time" type="time">
+          </div>
+          <select name="Request Type">
+            <option>Buy a home</option>
+            <option>Sell my home</option>
+            <option>Home valuation</option>
+            <option>Cash offer</option>
+            <option>Construction estimate</option>
+            <option>Fix & Flip analysis</option>
+            <option>Rental property</option>
+          </select>
+          <textarea name="Message" placeholder="Tell us about the property or project..."></textarea>
+          <div class="two">
+            <button type="button" class="btn gold" onclick="sendAppointmentWhatsApp()">WhatsApp</button>
+            <button type="button" class="btn black" onclick="sendAppointmentEmail()">Email</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>DLCAO Belles Elites</strong>
+        <p>Construction · Real Estate · Investments</p>
+      </div>
+      <div>
+        <h4>Popular Pages</h4>
+        <a href="#cash-offer">Instant Cash Offer</a>
+        <a href="#valuation">Home Valuation</a>
+        <a href="#search">Search Homes</a>
+        <a href="#construction">Construction</a>
+      </div>
+      <div>
+        <h4>Communities</h4>
+        <a href="#communities">Winnetka</a>
+        <a href="#communities">North Hills</a>
+        <a href="#communities">Los Angeles</a>
+        <a href="#communities">San Fernando Valley</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:+17473674447">(747) 367-4447</a>
+        <a href="mailto:DLCAO@mail.com">DLCAO@mail.com</a>
+      </div>
+    </div>
+    <div class="container copyright">© 2026 DLCAO. All rights reserved.</div>
+  </footer>
 </body>
 </html>
