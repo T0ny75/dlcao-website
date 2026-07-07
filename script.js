@@ -196,3 +196,57 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleTop();
   backTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
 });
+
+
+/* V16 compact flip analyzer controls */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-adjust]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const input = document.getElementById(btn.dataset.adjust);
+      if (!input) return;
+      input.value = Math.max(0, Number(input.value || 0) + Number(btn.dataset.step || 0));
+      calcFlip();
+    });
+  });
+
+  document.querySelectorAll(".preset").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".preset").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      if (btn.dataset.preset === "safe") {
+        setCalc("sellingPercent", 8); setCalc("profit", 100000); setCalc("holdingCosts", 35000);
+      } else if (btn.dataset.preset === "fast") {
+        setCalc("sellingPercent", 5); setCalc("profit", 50000); setCalc("holdingCosts", 15000);
+      } else {
+        setCalc("sellingPercent", 7); setCalc("profit", 70000); setCalc("holdingCosts", 25000);
+      }
+      calcFlip();
+    });
+  });
+
+  document.querySelectorAll("[data-set]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      setCalc(btn.dataset.set, btn.dataset.value);
+      calcFlip();
+    });
+  });
+
+  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id => {
+    document.getElementById(id)?.addEventListener("input", calcFlip);
+  });
+
+  calcFlip();
+
+  const backTop = document.getElementById("backTop");
+  if (backTop) {
+    const showTop = () => backTop.classList.toggle("show", window.scrollY > 450);
+    window.addEventListener("scroll", showTop);
+    showTop();
+    backTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+  }
+});
+
+function setCalc(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value;
+}
