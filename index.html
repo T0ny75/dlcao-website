@@ -334,45 +334,114 @@
           <h2>Know the numbers before you buy.</h2>
           <p>Use DLCAO to review repairs, ARV, rental readiness, timelines and exit strategy.</p>
         </div>
-        <div class="calc-card pro-calc">
-          <h3>Fix & Flip Deal Analyzer</h3>
-          <p class="calc-subtitle">Estimate max offer, projected profit and ROI before buying.</p>
+        <div class="calc-card pro-calc flip-pro">
+          <div class="calc-header">
+            <span class="pill">Investor Tool</span>
+            <h3>Fix & Flip Deal Analyzer</h3>
+            <p>Simple for clients. Professional for investors. Adjust the numbers and DLCAO will calculate the deal.</p>
+          </div>
 
-          <label>After Repair Value (ARV)
-            <input id="arv" type="number" value="750000">
-          </label>
+          <div class="calc-tabs">
+            <button type="button" class="tab active" data-preset="conservative">Conservative</button>
+            <button type="button" class="tab" data-preset="balanced">Balanced</button>
+            <button type="button" class="tab" data-preset="aggressive">Aggressive</button>
+          </div>
 
-          <label>Purchase Price / Offer
-            <input id="purchasePrice" type="number" value="450000">
-          </label>
+          <div class="calc-field">
+            <label>After Repair Value (ARV)</label>
+            <div class="field-row">
+              <button type="button" class="step" data-target="arv" data-step="-10000">−</button>
+              <input id="arv" type="number" value="750000">
+              <button type="button" class="step" data-target="arv" data-step="10000">+</button>
+            </div>
+            <small>Estimated resale value after repairs.</small>
+          </div>
 
-          <label>Repair Budget
-            <input id="repairs" type="number" value="85000">
-          </label>
+          <div class="calc-field">
+            <label>Purchase Price / Offer</label>
+            <div class="field-row">
+              <button type="button" class="step" data-target="purchasePrice" data-step="-10000">−</button>
+              <input id="purchasePrice" type="number" value="450000">
+              <button type="button" class="step" data-target="purchasePrice" data-step="10000">+</button>
+            </div>
+            <small>What you expect to pay for the property.</small>
+          </div>
 
-          <label>Closing + Holding Costs
-            <input id="holdingCosts" type="number" value="25000">
-          </label>
+          <div class="calc-field">
+            <label>Repair Budget</label>
+            <div class="field-row">
+              <button type="button" class="step" data-target="repairs" data-step="-5000">−</button>
+              <input id="repairs" type="number" value="85000">
+              <button type="button" class="step" data-target="repairs" data-step="5000">+</button>
+            </div>
+            <div class="quick-buttons">
+              <button type="button" data-set="repairs" data-value="30000">Light</button>
+              <button type="button" data-set="repairs" data-value="75000">Medium</button>
+              <button type="button" data-set="repairs" data-value="125000">Heavy</button>
+            </div>
+          </div>
 
-          <label>Selling Costs %
-            <input id="sellingPercent" type="number" value="7" step="0.1">
-          </label>
+          <div class="calc-field">
+            <label>Closing + Holding Costs</label>
+            <div class="field-row">
+              <button type="button" class="step" data-target="holdingCosts" data-step="-2500">−</button>
+              <input id="holdingCosts" type="number" value="25000">
+              <button type="button" class="step" data-target="holdingCosts" data-step="2500">+</button>
+            </div>
+            <small>Loan fees, utilities, insurance, taxes and carry time.</small>
+          </div>
 
-          <label>Target Profit
-            <input id="profit" type="number" value="70000">
-          </label>
+          <div class="calc-field">
+            <label>Selling Costs (%)</label>
+            <div class="field-row percent-row">
+              <button type="button" class="step" data-target="sellingPercent" data-step="-0.5">−</button>
+              <input id="sellingPercent" type="number" value="7" step="0.5">
+              <button type="button" class="step" data-target="sellingPercent" data-step="0.5">+</button>
+            </div>
+            <div class="quick-buttons">
+              <button type="button" data-set="sellingPercent" data-value="5">5%</button>
+              <button type="button" data-set="sellingPercent" data-value="6">6%</button>
+              <button type="button" data-set="sellingPercent" data-value="7">7%</button>
+              <button type="button" data-set="sellingPercent" data-value="8">8%</button>
+            </div>
+          </div>
 
-          <button class="btn gold full" onclick="calcFlip()">Analyze Deal</button>
+          <div class="calc-field">
+            <label>Target Profit</label>
+            <div class="field-row">
+              <button type="button" class="step" data-target="profit" data-step="-5000">−</button>
+              <input id="profit" type="number" value="70000">
+              <button type="button" class="step" data-target="profit" data-step="5000">+</button>
+            </div>
+            <div class="quick-buttons">
+              <button type="button" data-set="profit" data-value="50000">$50k</button>
+              <button type="button" data-set="profit" data-value="75000">$75k</button>
+              <button type="button" data-set="profit" data-value="100000">$100k</button>
+            </div>
+          </div>
 
-          <div class="calc-results">
-            <div><span>Max Offer</span><strong id="flipResult">$345,500</strong></div>
+          <button class="btn gold full analyze-btn" type="button" onclick="calcFlip()">Analyze Deal</button>
+
+          <div class="calc-results elite-results">
+            <div><span>Maximum Allowable Offer</span><strong id="flipResult">$345,500</strong></div>
             <div><span>Projected Profit</span><strong id="projectedProfit">$87,500</strong></div>
             <div><span>Estimated ROI</span><strong id="roiResult">16.1%</strong></div>
-            <div><span>Deal Status</span><strong id="dealStatus">Review Deal</strong></div>
+            <div><span>70% Rule Offer</span><strong id="rule70Result">$440,000</strong></div>
+            <div><span>Total Investment</span><strong id="totalInvested">$560,000</strong></div>
+            <div><span>Selling Costs</span><strong id="sellingCostResult">$52,500</strong></div>
+          </div>
+
+          <div id="dealInsight" class="deal-insight">
+            <strong>Deal Status: <span id="dealStatus">Review Deal</span></strong>
+            <p id="dealAdvice">Adjust the purchase price or repair budget to improve profit and ROI.</p>
+          </div>
+
+          <div class="calc-note">
+            <strong>How to read this:</strong> A strong deal usually has enough profit after repairs, holding costs, closing costs and selling costs. This is an estimate, not financial advice.
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
 
     <section id="client-portal" class="split-section">
       <div class="container split-grid">
@@ -593,11 +662,13 @@
       <div><h4>Social</h4><a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener">◎ Instagram</a></div>
     </div>
   </footer>
-
-  <div class="floating">
-    <a href="https://wa.me/17473674447" target="_blank" rel="noopener" class="wa">☘</a>
-    <a href="tel:+17473674447" class="call">☎</a>
-    <a href="#contact" class="chat">●</a>
+  <div class="floating premium-floating">
+    <a href="https://wa.me/17473674447" target="_blank" rel="noopener" class="wa attention" aria-label="WhatsApp DLCAO">☘</a>
+    <a href="tel:+17473674447" class="call shine" aria-label="Call DLCAO">☎</a>
+    <a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener" class="insta social-pulse" aria-label="Instagram DLCAO">◎</a>
+    <a href="#estimate" class="estimate-float gold-glow" aria-label="Get free estimate">Estimate</a>
+    <button id="backTop" class="back-top" aria-label="Back to top">↑</button>
   </div>
 </body>
 </html>
+

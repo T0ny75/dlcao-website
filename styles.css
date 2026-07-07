@@ -334,3 +334,215 @@ footer a{display:block;color:#ddd;margin:8px 0}
 .rent-flex-card{background:#050505;color:#fff;border-radius:14px;padding:28px;box-shadow:0 16px 45px rgba(0,0,0,.18)}
 .rent-flex-card p{color:#ddd}
 @media(max-width:900px){.rent-flex-grid{grid-template-columns:1fr}}
+
+
+/* V11 premium cleanup */
+.property-actions .btn.zillow{display:none!important}
+.pro-calc .calc-subtitle{color:#555;margin:0 0 14px;line-height:1.5}
+.calc-results{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.calc-results div{background:#f7f3eb;border:1px solid #ead8ad;border-radius:10px;padding:14px}
+.calc-results span{display:block;color:#666;text-transform:uppercase;font-size:.72rem;font-weight:950;margin-bottom:5px}
+.calc-results strong{font-size:1.2rem;color:#111}
+#dealStatus.good{color:#0b7a33}
+#dealStatus.warn{color:#a66a00}
+#dealStatus.bad{color:#a60000}
+.rent-flex{background:#fff;padding:78px 0}
+.rent-flex-grid{display:grid;grid-template-columns:1fr .45fr;gap:34px;align-items:center;border:1px solid #ead8ad;border-radius:16px;padding:36px;background:linear-gradient(135deg,#fff,#fff7e8)}
+.rent-flex h2{font-size:clamp(2rem,4vw,4.4rem);line-height:.95;text-transform:uppercase}
+.rent-flex p{color:#555;line-height:1.7;margin-top:12px}
+.split-list{list-style:none;margin-top:18px;display:grid;gap:8px}
+.split-list li:before{content:"✓ ";color:var(--gold);font-weight:950}
+.rent-flex-card{background:#050505;color:#fff;border-radius:14px;padding:28px;box-shadow:0 16px 45px rgba(0,0,0,.18)}
+.rent-flex-card p{color:#ddd}
+@media(max-width:900px){.rent-flex-grid,.calc-results{grid-template-columns:1fr}}
+
+
+/* V12 Elite Fix & Flip Calculator */
+.flip-pro{background:#080808!important;color:#fff!important;border:1px solid var(--gold);box-shadow:0 22px 70px rgba(0,0,0,.35)}
+.flip-pro .calc-header h3{font-size:2rem;margin:12px 0 6px}
+.flip-pro .calc-header p{color:#ddd;line-height:1.55;margin-bottom:18px}
+.calc-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.calc-tabs .tab{border:1px solid #3a2a0f;background:#121212;color:#ddd;border-radius:8px;padding:12px;font-weight:950;text-transform:uppercase;font-size:.75rem}
+.calc-tabs .tab.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111}
+.calc-field{margin-bottom:16px}
+.calc-field label{font-weight:950;text-transform:uppercase;font-size:.82rem;color:#f3e5c4}
+.calc-field small{display:block;color:#aaa;margin-top:6px;line-height:1.4}
+.field-row{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;margin-top:8px}
+.field-row input{background:#fff!important;color:#111!important;border:1px solid #ddd!important;text-align:center;font-weight:900;font-size:1rem}
+.step{border:1px solid var(--gold);background:#111;color:var(--gold2);border-radius:8px;font-size:1.2rem;font-weight:950}
+.quick-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.quick-buttons button{background:#151515;border:1px solid #333;color:#ddd;border-radius:999px;padding:8px 12px;font-weight:850;font-size:.78rem}
+.quick-buttons button:hover{border-color:var(--gold);color:var(--gold2)}
+.analyze-btn{margin-top:8px}
+.elite-results{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.elite-results div{background:linear-gradient(180deg,#111,#070707);border:1px solid #3b2a0d;border-radius:12px;padding:16px}
+.elite-results span{display:block;color:#aaa;text-transform:uppercase;font-size:.7rem;font-weight:950;margin-bottom:6px}
+.elite-results strong{display:block;color:#fff;font-size:1.25rem}
+.deal-insight{margin-top:16px;background:#fff;color:#111;border-radius:12px;padding:18px;border-left:6px solid var(--gold)}
+.deal-insight strong{font-size:1.05rem}
+.deal-insight p{color:#555!important;margin-top:8px;line-height:1.55}
+#dealStatus.good{color:#0b7a33}
+#dealStatus.warn{color:#a66a00}
+#dealStatus.bad{color:#a60000}
+.calc-note{margin-top:14px;color:#cfcfcf;line-height:1.55;font-size:.88rem;border-top:1px solid #2c2c2c;padding-top:14px}
+@media(max-width:700px){.elite-results,.calc-tabs{grid-template-columns:1fr}.field-row{grid-template-columns:42px 1fr 42px}}
+
+
+/* V13 Premium Motion + Attention Icons */
+:root{--insta1:#f58529;--insta2:#dd2a7b;--insta3:#8134af;--insta4:#515bd4}
+.premium-floating{
+  right:22px;
+  bottom:22px;
+  gap:12px;
+}
+.premium-floating a,
+.premium-floating button{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-weight:950;
+  box-shadow:0 12px 36px rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.12);
+  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+.premium-floating a:hover,
+.premium-floating button:hover{
+  transform:translateY(-4px) scale(1.06);
+  box-shadow:0 18px 50px rgba(0,0,0,.45);
+}
+.premium-floating .wa{
+  background:#25d366;
+  position:relative;
+}
+.premium-floating .wa::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:2px solid rgba(37,211,102,.45);
+  animation:softPulse 3.2s ease-out infinite;
+}
+.premium-floating .call{
+  background:linear-gradient(135deg,#9a6417,var(--gold),var(--gold2));
+  overflow:hidden;
+  position:relative;
+}
+.premium-floating .call::after{
+  content:"";
+  position:absolute;
+  top:-70%;
+  left:-130%;
+  width:80%;
+  height:240%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);
+  transform:rotate(25deg);
+  animation:metalShine 4.8s ease-in-out infinite;
+}
+.premium-floating .insta{
+  background:linear-gradient(135deg,var(--insta1),var(--insta2),var(--insta3),var(--insta4));
+  position:relative;
+}
+.premium-floating .insta::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--insta1),var(--insta2),var(--insta3),var(--insta4));
+  opacity:.18;
+  z-index:-1;
+  animation:instaGlow 3.8s ease-in-out infinite;
+}
+.estimate-float{
+  width:auto!important;
+  min-width:96px;
+  border-radius:999px!important;
+  padding:0 16px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111!important;
+  text-transform:uppercase;
+  font-size:.75rem;
+  letter-spacing:.04em;
+  position:relative;
+  overflow:hidden;
+}
+.estimate-float::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:55%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.46),transparent);
+  animation:buttonSweep 5s ease-in-out infinite;
+}
+.back-top{
+  display:none!important;
+  background:#111;
+  color:var(--gold2)!important;
+  cursor:pointer;
+}
+.back-top.show{
+  display:grid!important;
+}
+@keyframes softPulse{
+  0%{transform:scale(.82);opacity:.75}
+  70%{transform:scale(1.45);opacity:0}
+  100%{transform:scale(1.45);opacity:0}
+}
+@keyframes metalShine{
+  0%,55%{left:-130%}
+  72%{left:140%}
+  100%{left:140%}
+}
+@keyframes instaGlow{
+  0%,100%{transform:scale(.95);opacity:.14}
+  50%{transform:scale(1.22);opacity:.26}
+}
+@keyframes buttonSweep{
+  0%,65%{left:-100%}
+  82%{left:130%}
+  100%{left:130%}
+}
+
+/* Premium hover polish */
+.btn,.sold-zillow,.property-card,.sold-card,.detail-grid article,.project-grid article{
+  transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease, filter .28s ease;
+}
+.btn:hover,.sold-zillow:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.06);
+}
+.property-card:hover,.sold-card:hover,.detail-grid article:hover,.project-grid article:hover{
+  transform:translateY(-6px);
+  box-shadow:0 28px 80px rgba(0,0,0,.22);
+  border-color:var(--gold);
+}
+.hero{
+  background-attachment:fixed;
+}
+.hero-copy,.lead-card{
+  animation:heroRise .8s ease both;
+}
+.lead-card{animation-delay:.12s}
+@keyframes heroRise{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal-section{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .65s ease, transform .65s ease;
+}
+.reveal-section.revealed{
+  opacity:1;
+  transform:translateY(0);
+}
+@media(max-width:800px){
+  .hero{background-attachment:scroll}
+  .estimate-float{min-width:82px;font-size:.68rem}
+  .premium-floating{right:16px;bottom:16px}
+  .premium-floating a,.premium-floating button{width:50px;height:50px}
+}
