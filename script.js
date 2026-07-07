@@ -169,3 +169,30 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach(item => item.classList.add("revealed"));
   }
 });
+
+
+/* V14 visible floating actions */
+document.addEventListener("DOMContentLoaded", () => {
+  const backTop = document.getElementById("backTop");
+  if (backTop) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 450) backTop.classList.add("show");
+      else backTop.classList.remove("show");
+    });
+    backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  }
+});
+
+
+/* V15 back to top visibility */
+document.addEventListener("DOMContentLoaded", () => {
+  const backTop = document.getElementById("backTop");
+  if (!backTop) return;
+  const toggleTop = () => {
+    if (window.scrollY > 450) backTop.classList.add("show");
+    else backTop.classList.remove("show");
+  };
+  window.addEventListener("scroll", toggleTop);
+  toggleTop();
+  backTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+});

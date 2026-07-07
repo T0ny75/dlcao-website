@@ -546,3 +546,236 @@ footer a{display:block;color:#ddd;margin:8px 0}
   .premium-floating{right:16px;bottom:16px}
   .premium-floating a,.premium-floating button{width:50px;height:50px}
 }
+
+
+/* V14 visible motion confirmation */
+.action-ribbon{
+  position:sticky;
+  top:86px;
+  z-index:90;
+  background:linear-gradient(90deg,#050505,#17110a,#050505);
+  border-bottom:1px solid var(--gold);
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:10px 14px;
+}
+.action-ribbon a{
+  color:#fff;
+  border:1px solid #3b2a0d;
+  border-radius:999px;
+  padding:9px 14px;
+  font-weight:950;
+  font-size:.78rem;
+  text-transform:uppercase;
+  background:rgba(255,255,255,.04);
+}
+.action-ribbon a:hover{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;
+}
+.visible-floating{
+  position:fixed!important;
+  right:20px!important;
+  bottom:22px!important;
+  display:grid!important;
+  gap:12px!important;
+  z-index:9999!important;
+}
+.float-pill{
+  width:auto!important;
+  min-width:138px!important;
+  height:52px!important;
+  border-radius:999px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  padding:0 15px!important;
+  color:#fff!important;
+  font-weight:950!important;
+  text-decoration:none!important;
+  box-shadow:0 14px 42px rgba(0,0,0,.38)!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  transition:transform .25s ease, filter .25s ease!important;
+}
+.float-pill span{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.18);
+}
+.float-pill strong{
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+.float-pill:hover{
+  transform:translateX(-5px) scale(1.04)!important;
+  filter:brightness(1.08)!important;
+}
+.wa-pulse{
+  background:#25d366!important;
+  animation:visiblePulse 2.8s ease-in-out infinite;
+}
+.call-shine{
+  background:linear-gradient(135deg,#9a6417,var(--gold),var(--gold2))!important;
+  color:#111!important;
+  position:relative;
+  overflow:hidden;
+}
+.call-shine::after{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-120%;
+  width:55%;
+  height:220%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);
+  transform:rotate(25deg);
+  animation:visibleShine 3.2s ease-in-out infinite;
+}
+.insta-pulse{
+  background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4)!important;
+  animation:instaBeat 3.4s ease-in-out infinite;
+}
+.back-top-pill{
+  background:#111!important;
+  color:var(--gold2)!important;
+  cursor:pointer!important;
+  display:none!important;
+}
+.back-top-pill.show{
+  display:flex!important;
+}
+@keyframes visiblePulse{
+  0%,100%{box-shadow:0 14px 42px rgba(0,0,0,.38),0 0 0 0 rgba(37,211,102,.55)}
+  50%{box-shadow:0 14px 42px rgba(0,0,0,.38),0 0 0 12px rgba(37,211,102,0)}
+}
+@keyframes visibleShine{
+  0%,50%{left:-120%}
+  72%{left:135%}
+  100%{left:135%}
+}
+@keyframes instaBeat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.045)}
+}
+@media(max-width:720px){
+  .action-ribbon{top:74px}
+  .float-pill{min-width:54px!important;width:54px!important;justify-content:center!important;padding:0!important}
+  .float-pill strong{display:none}
+}
+
+
+/* V15 fixed floating icons - no white invisible circles */
+.fixed-icons{
+  position:fixed!important;
+  right:18px!important;
+  bottom:20px!important;
+  display:grid!important;
+  gap:10px!important;
+  z-index:99999!important;
+}
+.float-action{
+  width:58px!important;
+  height:58px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  color:#fff!important;
+  text-decoration:none!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.36)!important;
+  transition:width .28s ease, border-radius .28s ease, transform .22s ease, filter .22s ease!important;
+  position:relative!important;
+}
+.float-action svg{
+  width:25px!important;
+  height:25px!important;
+  fill:currentColor!important;
+  flex:0 0 auto!important;
+  z-index:2!important;
+}
+.float-action span{
+  opacity:0;
+  width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  font-size:.78rem;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  transition:opacity .2s ease, width .2s ease, margin .2s ease;
+  z-index:2;
+}
+.float-action:hover{
+  width:150px!important;
+  border-radius:999px!important;
+  justify-content:flex-start!important;
+  padding-left:17px!important;
+  transform:translateX(-5px) scale(1.03)!important;
+  filter:brightness(1.07)!important;
+}
+.float-action:hover span{
+  opacity:1;
+  width:auto;
+  margin-left:10px;
+}
+.whatsapp-action{
+  background:#25d366!important;
+  animation:waPulseV15 3.2s ease-in-out infinite;
+}
+.phone-action{
+  background:linear-gradient(135deg,#9a6417,#c79a35,#efcf7e)!important;
+  color:#111!important;
+}
+.phone-action::after{
+  content:"";
+  position:absolute;
+  top:-70%;
+  left:-120%;
+  width:60%;
+  height:240%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);
+  transform:rotate(25deg);
+  animation:phoneShineV15 3.6s ease-in-out infinite;
+}
+.instagram-action{
+  background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4)!important;
+  animation:instaPulseV15 3.8s ease-in-out infinite;
+}
+.top-action{
+  background:#050505!important;
+  color:#efcf7e!important;
+  cursor:pointer!important;
+  display:none!important;
+}
+.top-action.show{
+  display:flex!important;
+}
+@keyframes waPulseV15{
+  0%,100%{box-shadow:0 14px 38px rgba(0,0,0,.36),0 0 0 0 rgba(37,211,102,.45)}
+  50%{box-shadow:0 14px 38px rgba(0,0,0,.36),0 0 0 12px rgba(37,211,102,0)}
+}
+@keyframes phoneShineV15{
+  0%,50%{left:-120%}
+  72%{left:135%}
+  100%{left:135%}
+}
+@keyframes instaPulseV15{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+}
+@media(max-width:720px){
+  .fixed-icons{right:12px!important;bottom:14px!important}
+  .float-action{width:50px!important;height:50px!important}
+  .float-action svg{width:22px!important;height:22px!important}
+  .float-action:hover{width:50px!important;border-radius:50%!important;padding-left:0!important;justify-content:center!important}
+  .float-action:hover span{display:none!important}
+}
