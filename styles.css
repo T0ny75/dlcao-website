@@ -1212,3 +1212,90 @@ body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 @media(max-width:650px){
   .dock-estimate::after{display:none}
 }
+
+
+/* V24 Clean Professional Fix */
+.enterprise-process,
+.enterprise-cta,
+.sold-cta{
+  display:none!important;
+}
+
+.dlcao-proof{
+  background:#f7f3eb;
+  padding:82px 0;
+}
+.proof-inner{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:42px;
+  align-items:center;
+}
+.proof-copy h2{
+  font-size:clamp(2.4rem,4.8vw,5rem);
+  line-height:.92;
+  text-transform:uppercase;
+  letter-spacing:-.05em;
+  margin-bottom:18px;
+}
+.proof-copy p{
+  color:#555;
+  line-height:1.75;
+  max-width:560px;
+}
+.proof-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.proof-cards article{
+  background:#fff;
+  border:1px solid #e6d2a4;
+  border-radius:16px;
+  padding:24px;
+  box-shadow:0 18px 52px rgba(0,0,0,.09);
+  min-height:210px;
+}
+.proof-cards span{
+  display:inline-block;
+  color:#9b6818;
+  font-weight:950;
+  font-size:.8rem;
+  letter-spacing:.12em;
+  margin-bottom:18px;
+}
+.proof-cards h3{
+  font-size:1.28rem;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.proof-cards p{
+  color:#555;
+  line-height:1.65;
+}
+
+/* More premium sold section spacing */
+.sold-section{
+  padding-bottom:78px!important;
+}
+
+/* Keep contact dock clean and discreet */
+.elite-contact-dock{
+  background:rgba(5,5,5,.82)!important;
+  border-color:rgba(199,154,53,.38)!important;
+}
+.dock-estimate svg{
+  width:20px!important;
+  height:20px!important;
+}
+
+/* Avoid giant white empty blocks */
+.section-head p,
+.process-lead{
+  max-width:620px;
+}
+
+@media(max-width:1000px){
+  .proof-inner{grid-template-columns:1fr}
+  .proof-cards{grid-template-columns:1fr}
+}
