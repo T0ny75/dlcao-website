@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://t0ny75.github.io/dlcao-website/sitemap.xml

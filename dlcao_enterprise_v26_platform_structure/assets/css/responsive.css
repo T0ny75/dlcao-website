@@ -1,0 +1,13 @@
+
+/* DLCAO Responsive */
+@media(max-width:1050px){
+  nav{border-top:1px solid #2c2c2c;box-shadow:0 22px 55px rgba(0,0,0,.45)}
+  nav a{width:100%;padding:10px 0}
+}
+@media(max-width:900px){
+  .platform-inner,.platform-grid,.proof-inner,.proof-cards{grid-template-columns:1fr!important}
+}
+@media(max-width:650px){
+  .hero h1{font-size:3rem!important}
+  .elite-contact-dock{top:auto!important;bottom:14px!important;right:50%!important;transform:translateX(50%)!important;flex-direction:row!important}
+}

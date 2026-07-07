@@ -1,0 +1,15 @@
+{
+  "name": "DLCAO",
+  "short_name": "DLCAO",
+  "start_url": "/dlcao-website/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "assets/icons/favicon.svg",
+      "sizes": "120x120",
+      "type": "image/svg+xml"
+    }
+  ]
+}

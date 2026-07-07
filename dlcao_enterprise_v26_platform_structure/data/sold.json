@@ -1,0 +1,22 @@
+[
+  {
+    "address": "3477 Avenida Simi Ave",
+    "city": "Simi Valley, CA 93063",
+    "price": "$999,000"
+  },
+  {
+    "address": "13701 Hubbard St #24",
+    "city": "Sylmar, CA 91342",
+    "price": "$310,000"
+  },
+  {
+    "address": "20322 Cantara St",
+    "city": "Winnetka, CA 91306",
+    "price": "$635,000"
+  },
+  {
+    "address": "20608 Haynes St",
+    "city": "Winnetka, CA 91306",
+    "price": "$995,000"
+  }
+]
