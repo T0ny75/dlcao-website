@@ -134,7 +134,6 @@
               <p>3 Beds · 3 Baths · 1,491 Sq Ft</p>
               <div class="property-actions">
                 <a class="btn black full" href="https://www.zillow.com/homedetails/15627-Vintage-St-North-Hills-CA-91343/20138792_zpid/" target="_blank" rel="noopener">View on Zillow</a>
-                <a class="btn zillow full" href="https://www.zillow.com/homedetails/15627-Vintage-St-North-Hills-CA-91343/20138792_zpid/" target="_blank" rel="noopener">View on Zillow</a>
               </div>
             </div>
           </article>
@@ -149,7 +148,6 @@
               <p>3 Beds · 2 Baths · 1,693 Sq Ft · For Rent</p>
               <div class="property-actions">
                 <a class="btn black full" href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" target="_blank" rel="noopener">View on Zillow</a>
-                <a class="btn zillow full" href="https://www.zillow.com/homedetails/9327-Woodley-Ave-North-Hills-CA-91343/20144293_zpid/" target="_blank" rel="noopener">View on Zillow</a>
               </div>
             </div>
           </article>
@@ -165,7 +163,6 @@
               <p>3 Beds · 2 Baths · 1,100 Sq Ft</p>
               <div class="property-actions">
                 <a class="btn black full" href="https://www.zillow.com/homedetails/18657-Runnymede-St-Reseda-CA-91335/19914946_zpid/" target="_blank" rel="noopener">View on Zillow</a>
-                <a class="btn zillow full" href="https://www.zillow.com/homedetails/18657-Runnymede-St-Reseda-CA-91335/19914946_zpid/" target="_blank" rel="noopener">View on Zillow</a>
               </div>
             </div>
           </article>
@@ -180,7 +177,6 @@
               <p>New Construction ADU · Completed 2021 · For Rent</p>
               <div class="property-actions">
                 <a class="btn black full" href="https://www.zillow.com/homes/18659-Runnymede-St,-Reseda,-CA-91335_rb/" target="_blank" rel="noopener">View on Zillow</a>
-                <a class="btn zillow full" href="https://www.zillow.com/homes/18659-Runnymede-St,-Reseda,-CA-91335_rb/" target="_blank" rel="noopener">View on Zillow</a>
               </div>
             </div>
           </article>
@@ -310,16 +306,21 @@
       </div>
     </section>
 
-    
     <section id="rent-flex" class="rent-flex">
       <div class="container rent-flex-grid">
         <div>
           <p class="eyebrow dark">Rental Payment Option</p>
-          <h2>Flexible rent payment idea</h2>
-          <p>For rental prospects, DLCAO can offer a helpful link to third-party rent payment tools that may let tenants split rent into smaller payments while the landlord still receives payment on time. This is an optional external resource, not a DLCAO financing product.</p>
+          <h2>Flexible rent payment resource</h2>
+          <p>For rental prospects, DLCAO can offer an external resource that may allow tenants to split rent into smaller payments. This keeps your rental page more helpful and modern without DLCAO becoming a lender.</p>
+          <ul class="split-list">
+            <li>Helpful for rental applicants</li>
+            <li>External third-party option</li>
+            <li>Good for marketing rental properties</li>
+          </ul>
         </div>
         <div class="rent-flex-card">
-          <h3>Split rent option</h3>
+          <span class="pill">Third-party rent tool</span>
+          <h3>SplitPay / Rent App Style Option</h3>
           <p>Tenant can review eligibility directly with the provider.</p>
           <a class="btn black full" href="https://splitpay.com/?utm_source=rentapp" target="_blank" rel="noopener">Explore SplitPay</a>
         </div>
@@ -333,13 +334,42 @@
           <h2>Know the numbers before you buy.</h2>
           <p>Use DLCAO to review repairs, ARV, rental readiness, timelines and exit strategy.</p>
         </div>
-        <div class="calc-card">
-          <h3>Fix & Flip Calculator</h3>
-          <label>ARV <input id="arv" type="number" value="750000"></label>
-          <label>Repairs <input id="repairs" type="number" value="85000"></label>
-          <label>Target Profit <input id="profit" type="number" value="70000"></label>
-          <button class="btn gold full" onclick="calcFlip()">Calculate Max Offer</button>
-          <h3 id="flipResult">$370,000 Max Offer</h3>
+        <div class="calc-card pro-calc">
+          <h3>Fix & Flip Deal Analyzer</h3>
+          <p class="calc-subtitle">Estimate max offer, projected profit and ROI before buying.</p>
+
+          <label>After Repair Value (ARV)
+            <input id="arv" type="number" value="750000">
+          </label>
+
+          <label>Purchase Price / Offer
+            <input id="purchasePrice" type="number" value="450000">
+          </label>
+
+          <label>Repair Budget
+            <input id="repairs" type="number" value="85000">
+          </label>
+
+          <label>Closing + Holding Costs
+            <input id="holdingCosts" type="number" value="25000">
+          </label>
+
+          <label>Selling Costs %
+            <input id="sellingPercent" type="number" value="7" step="0.1">
+          </label>
+
+          <label>Target Profit
+            <input id="profit" type="number" value="70000">
+          </label>
+
+          <button class="btn gold full" onclick="calcFlip()">Analyze Deal</button>
+
+          <div class="calc-results">
+            <div><span>Max Offer</span><strong id="flipResult">$345,500</strong></div>
+            <div><span>Projected Profit</span><strong id="projectedProfit">$87,500</strong></div>
+            <div><span>Estimated ROI</span><strong id="roiResult">16.1%</strong></div>
+            <div><span>Deal Status</span><strong id="dealStatus">Review Deal</strong></div>
+          </div>
         </div>
       </div>
     </section>
