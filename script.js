@@ -263,9 +263,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* DLCAO Enterprise v22 calculator + menu */
-function resetFlipDefaults(){setV22("arv",750000);setV22("purchasePrice",450000);setV22("repairs",85000);setV22("holdingCosts",25000);setV22("sellingPercent",7);setV22("profit",70000);calcFlip();}
-function setV22(id,value){const el=document.getElementById(id);if(el) el.value=value;}
+/* Enterprise v20 calculator */
+function resetFlipDefaults(){
+  setV20("arv",750000);
+  setV20("purchasePrice",450000);
+  setV20("repairs",85000);
+  setV20("holdingCosts",25000);
+  setV20("sellingPercent",7);
+  setV20("profit",70000);
+  calcFlip();
+}
+function setV20(id,value){
+  const el=document.getElementById(id);
+  if(el) el.value=value;
+}
 function calcFlip(){
   const arv=Number(document.getElementById("arv")?.value||0);
   const purchase=Number(document.getElementById("purchasePrice")?.value||0);
@@ -279,18 +290,60 @@ function calcFlip(){
   const rule70=(arv*.70)-repairs;
   const invested=purchase+repairs+holding;
   const roi=invested>0?(profit/invested)*100:0;
-  setTextV22("flipResult",money(maxOffer));setTextV22("projectedProfit",money(profit));setTextV22("roiResult",roi.toFixed(1)+"%");setTextV22("rule70Result",money(rule70));
-  const status=document.getElementById("dealStatus"), advice=document.getElementById("dealAdvice");
-  if(status){status.classList.remove("good","warn","bad");
-    if(profit>=target&&roi>=15){status.textContent="Strong Deal";status.classList.add("good");if(advice)advice.textContent="Meets target profit and strong ROI. Verify comps and repair scope.";}
-    else if(profit>0&&roi>=8){status.textContent="Review Deal";status.classList.add("warn");if(advice)advice.textContent="Profitable but margin may be tight. Negotiate price or verify ARV carefully.";}
-    else{status.textContent="Pass / High Risk";status.classList.add("bad");if(advice)advice.textContent="Not enough margin. Consider a lower price or passing on this deal.";}
+  setTxt("flipResult",money(maxOffer));
+  setTxt("projectedProfit",money(profit));
+  setTxt("roiResult",roi.toFixed(1)+"%");
+  setTxt("rule70Result",money(rule70));
+  const status=document.getElementById("dealStatus");
+  const advice=document.getElementById("dealAdvice");
+  if(status){
+    status.classList.remove("good","warn","bad");
+    if(profit>=target && roi>=15){
+      status.textContent="Strong Deal";
+      status.classList.add("good");
+      if(advice) advice.textContent="This deal meets the target profit and shows strong ROI. Verify comps and repair scope before moving forward.";
+    }else if(profit>0 && roi>=8){
+      status.textContent="Review Deal";
+      status.classList.add("warn");
+      if(advice) advice.textContent="The deal has profit, but margin may be tight. Negotiate price, reduce repairs, or confirm ARV carefully.";
+    }else{
+      status.textContent="Pass / High Risk";
+      status.classList.add("bad");
+      if(advice) advice.textContent="The deal does not leave enough margin. Consider a lower purchase price or passing on the opportunity.";
+    }
   }
 }
-function setTextV22(id,value){const el=document.getElementById(id);if(el)el.textContent=value;}
+function setTxt(id,value){
+  const el=document.getElementById(id);
+  if(el) el.textContent=value;
+}
 document.addEventListener("DOMContentLoaded",()=>{
-  const menu=document.getElementById("navMenu"), btn=document.getElementById("menuBtn");
-  if(btn&&menu){btn.addEventListener("click",()=>menu.classList.toggle("show"));menu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>menu.classList.remove("show")));}
-  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id=>{document.getElementById(id)?.addEventListener("input",calcFlip);document.getElementById(id)?.addEventListener("change",calcFlip);});
+  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id=>{
+    document.getElementById(id)?.addEventListener("input",calcFlip);
+    document.getElementById(id)?.addEventListener("change",calcFlip);
+  });
   calcFlip();
+});
+
+
+/* Enterprise v22 polish */
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll(".reveal-section, [data-reveal='true']");
+  if ("IntersectionObserver" in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.12});
+    sections.forEach(s => obs.observe(s));
+  } else {
+    sections.forEach(s => s.classList.add("revealed"));
+  }
+  const menu = document.getElementById("navMenu");
+  document.querySelectorAll("#navMenu a").forEach(a => {
+    a.addEventListener("click", () => menu?.classList.remove("show"));
+  });
 });

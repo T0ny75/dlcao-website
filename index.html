@@ -18,22 +18,6 @@
   <meta property="og:site_name" content="DLCAO" />
   <meta name="twitter:title" content="DLCAO | Construction · Real Estate · Investments" />
   <meta name="twitter:description" content="DLCAO Construction · Real Estate · Investments. Serving Los Angeles, Winnetka, North Hills and surrounding Southern California areas since 2018." />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "GeneralContractor", "RealEstateAgent"],
-    "name": "DLCAO",
-    "description": "DLCAO Construction · Real Estate · Investments. Serving Los Angeles, Winnetka, North Hills and surrounding Southern California areas since 2018.",
-    "telephone": "+1-747-367-4447",
-    "email": "DLCAO@mail.com",
-    "url": "https://t0ny75.github.io/dlcao-website/",
-    "areaServed": ["Los Angeles", "Winnetka", "North Hills", "San Fernando Valley", "Southern California"],
-    "foundingDate": "2018",
-    "sameAs": ["https://www.instagram.com/dlcaoholding"]
-  }
-  </script>
-
 </head>
 
 <body>
@@ -58,7 +42,7 @@
         </span>
       </a>
 
-      <button class="menu-btn premium-menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <button class="menu-btn" id="menuBtn">☰</button>
 
       <nav id="navMenu">
         <a href="#home" class="active">Home</a>
@@ -70,6 +54,7 @@
         <a href="#rental">Rental</a>
         <a href="#sold-properties">Sold Properties</a>
         <a href="#investors">Investors</a>
+        <a href="#enterprise-process">Method</a>
         <a class="portal" href="#client-portal">Client Portal</a>
         <a class="estimate" href="#estimate">Get Estimate</a>
       </nav>
@@ -368,10 +353,26 @@
           </div>
 
           <div class="simple-fields">
-            <label><span>After Repair Value</span><input id="arv" type="number" value="750000"></label>
-            <label><span>Purchase Price</span><input id="purchasePrice" type="number" value="450000"></label>
-            <label><span>Repairs</span><input id="repairs" type="number" value="85000"></label>
-            <label><span>Hold / Closing</span><input id="holdingCosts" type="number" value="25000"></label>
+            <label>
+              <span>After Repair Value</span>
+              <input id="arv" type="number" value="750000">
+            </label>
+
+            <label>
+              <span>Purchase Price</span>
+              <input id="purchasePrice" type="number" value="450000">
+            </label>
+
+            <label>
+              <span>Repairs</span>
+              <input id="repairs" type="number" value="85000">
+            </label>
+
+            <label>
+              <span>Hold / Closing</span>
+              <input id="holdingCosts" type="number" value="25000">
+            </label>
+
             <label>
               <span>Selling Cost %</span>
               <select id="sellingPercent">
@@ -381,6 +382,7 @@
                 <option value="8">8%</option>
               </select>
             </label>
+
             <label>
               <span>Target Profit</span>
               <select id="profit">
@@ -395,10 +397,22 @@
           <button type="button" class="btn gold full" onclick="calcFlip()">Calculate Deal</button>
 
           <div class="executive-results">
-            <div class="result-main"><span>Max Allowable Offer</span><strong id="flipResult">$345,500</strong></div>
-            <div><span>Profit</span><strong id="projectedProfit">$87,500</strong></div>
-            <div><span>ROI</span><strong id="roiResult">16.1%</strong></div>
-            <div><span>70% Rule</span><strong id="rule70Result">$440,000</strong></div>
+            <div class="result-main">
+              <span>Max Allowable Offer</span>
+              <strong id="flipResult">$345,500</strong>
+            </div>
+            <div>
+              <span>Profit</span>
+              <strong id="projectedProfit">$87,500</strong>
+            </div>
+            <div>
+              <span>ROI</span>
+              <strong id="roiResult">16.1%</strong>
+            </div>
+            <div>
+              <span>70% Rule</span>
+              <strong id="rule70Result">$440,000</strong>
+            </div>
           </div>
 
           <div class="deal-summary">
@@ -580,7 +594,38 @@
       </div>
     </section>
 
-<section id="contact" class="contact">
+
+    <section id="enterprise-process" class="enterprise-process reveal-section" data-reveal="true">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow dark">DLCAO Method</p>
+            <h2>Strategy before construction.</h2>
+          </div>
+          <p class="process-lead">Every property decision should create value: better design, cleaner execution, smarter resale, stronger rental performance.</p>
+        </div>
+        <div class="process-grid">
+          <article><span>01</span><h3>Evaluate</h3><p>We review the property, objective, budget, timeline and value-add opportunity.</p></article>
+          <article><span>02</span><h3>Plan</h3><p>We create a practical scope for construction, rental readiness, resale or investment strategy.</p></article>
+          <article><span>03</span><h3>Execute</h3><p>DLCAO coordinates the work with professional standards and clear communication.</p></article>
+          <article><span>04</span><h3>Deliver</h3><p>The goal is not just completion. The goal is value, trust and results.</p></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="enterprise-cta reveal-section" data-reveal="true">
+      <div class="container enterprise-cta-inner">
+        <div>
+          <p class="eyebrow">Ready to build value?</p>
+          <h2>Start with a clear property strategy.</h2>
+          <p>Construction, real estate and investments connected under one DLCAO vision.</p>
+        </div>
+        <a class="btn gold" href="#estimate">Request Free Estimate</a>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
       <div class="container contact-grid">
         <div>
           <p class="eyebrow dark">Contact DLCAO</p>
@@ -612,18 +657,6 @@
     </section>
   </main>
 
-  
-    <section class="enterprise-cta">
-      <div class="container enterprise-cta-grid">
-        <div>
-          <p class="eyebrow">DLCAO Enterprise</p>
-          <h2>Construction intelligence for property decisions.</h2>
-          <p>Build, renovate, sell, rent and invest with one connected strategy.</p>
-        </div>
-        <a class="btn gold" href="#estimate">Start Your Project</a>
-      </div>
-    </section>
-
   <footer>
     <div class="container footer-grid">
       <div>
@@ -642,20 +675,23 @@
       <div><h4>Social</h4><a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener">◎ Instagram</a></div>
     </div>
   </footer>
-
   <div class="elite-contact-dock">
     <a href="https://wa.me/17473674447" target="_blank" rel="noopener" class="dock-btn dock-wa" aria-label="WhatsApp">
       <svg viewBox="0 0 32 32"><path d="M16 3.2A12.8 12.8 0 0 0 5.1 22.6L3.7 28.8l6.35-1.43A12.8 12.8 0 1 0 16 3.2Zm0 23a10.2 10.2 0 0 1-5.2-1.42l-.37-.22-3.76.84.86-3.67-.24-.38A10.2 10.2 0 1 1 16 26.2Zm5.7-7.55c-.31-.16-1.84-.91-2.13-1.02-.29-.1-.5-.16-.71.16-.21.31-.82 1.02-1 1.23-.18.21-.37.24-.68.08-.31-.16-1.32-.49-2.52-1.56-.93-.83-1.56-1.86-1.74-2.17-.18-.31-.02-.48.14-.64.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.22 3.39 5.38 4.75.75.32 1.34.52 1.8.66.76.24 1.45.21 1.99.13.61-.09 1.84-.75 2.1-1.48.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37Z"/></svg>
     </a>
+
     <a href="tel:+17473674447" class="dock-btn dock-phone" aria-label="Call">
       <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.1 15.1 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z"/></svg>
     </a>
+
     <a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener" class="dock-btn dock-ig" aria-label="Instagram">
       <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm8.7 2.1a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8ZM12 7.3a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Z"/></svg>
     </a>
-    <a href="#estimate" class="dock-btn dock-estimate" aria-label="Estimate"><span>$</span></a>
-  </div>
 
+    <a href="#estimate" class="dock-btn dock-estimate" aria-label="Estimate">
+      <span>$</span>
+    </a>
+  </div>
 </body>
 </html>
 
