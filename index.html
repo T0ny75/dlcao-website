@@ -6,18 +6,15 @@
 
   <title>DLCAO | Construction · Real Estate · Investments</title>
   <meta name="description" content="DLCAO provides construction, real estate, rental property, Fix & Flip, home valuation and cash offer services in Los Angeles and surrounding areas. Since 2018." />
-  <meta name="keywords" content="DLCAO, General Contractor Los Angeles, Construction Los Angeles, Real Estate Los Angeles, Rental Properties, Fix and Flip, Home Valuation, Cash Offer, North Hills, Winnetka" />
-  <meta property="og:title" content="DLCAO | Construction · Real Estate · Investments" />
-  <meta property="og:description" content="Building spaces. Creating value. Delivering results. Since 2018." />
-  <meta property="og:type" content="website" />
+  <meta name="keywords" content="DLCAO, General Contractor Los Angeles, Construction, Real Estate, Rental Property, Fix and Flip, North Hills, Winnetka, San Fernando Valley" />
 
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
 </head>
 
 <body>
-  <div class="top-strip">
-    <div class="container top-inner">
+  <div class="topbar">
+    <div class="container topbar-inner">
       <span>Since 2018 · Los Angeles · Winnetka · North Hills · San Fernando Valley</span>
       <div>
         <a href="tel:+17473674447">(747) 367-4447</a>
@@ -27,17 +24,17 @@
     </div>
   </div>
 
-  <header class="nav-wrap">
+  <header class="header">
     <div class="container nav">
-      <a class="brand" href="#home">
-        <span class="mark">DO</span>
-        <span>
+      <a href="index.html" class="logo">
+        <span class="logo-mark">DO</span>
+        <span class="logo-text">
           <strong>DLCAO</strong>
           <small>Construction · Real Estate · Investments</small>
         </span>
       </a>
 
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <button class="menu-btn" id="menuBtn">☰</button>
 
       <nav id="navMenu">
         <a href="#home" class="active">Home</a>
@@ -46,40 +43,38 @@
         <a href="#projects">Projects</a>
         <a href="#buy">Buy</a>
         <a href="#sell">Sell</a>
-        <a href="#rental">Rental Property</a>
+        <a href="#rental">Rental</a>
         <a href="#investors">Investors</a>
-        <a href="#contact">Contact</a>
-        <a class="nav-cta" href="#estimate">Get Estimate</a>
+        <a class="portal" href="#client-portal">Client Portal</a>
+        <a class="estimate" href="#estimate">Get Estimate</a>
       </nav>
     </div>
   </header>
 
   <main id="home">
     <section class="hero">
-      <div class="hero-layer"></div>
+      <div class="hero-overlay"></div>
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Premium construction · Real estate · Investment strategy</p>
-          <h1>Build value.<br><span>Sell smarter.</span><br>Invest better.</h1>
-          <p class="lead">
-            DLCAO helps homeowners and investors renovate, buy, sell, rent and reposition properties with construction intelligence.
-          </p>
+          <p class="eyebrow">Premium property strategy</p>
+          <h1>Building spaces.<br><span>Creating value.</span><br>Delivering results.</h1>
+          <p class="lead">DLCAO helps homeowners and investors renovate, buy, sell, rent, flip and build with one connected construction and real estate team.</p>
 
           <div class="hero-actions">
             <a class="btn gold" href="#estimate">Get Free Estimate</a>
-            <a class="btn glass" href="#properties">View Properties</a>
-            <a class="btn glass" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20information." target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn outline" href="#properties">View Properties</a>
+            <a class="btn outline" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20information." target="_blank" rel="noopener">WhatsApp</a>
           </div>
         </div>
 
-        <aside id="estimate" class="estimate-card">
-          <span class="tag">DLCAO Client Intake</span>
+        <aside id="estimate" class="lead-card">
+          <span>DLCAO Client Intake</span>
           <h2>Start your request</h2>
           <p>Send your project, property or investment request directly to DLCAO.</p>
           <form id="estimateForm">
-            <input name="Name" placeholder="Full name" required />
-            <input name="Phone" placeholder="Phone" required />
-            <input name="Email" placeholder="Email" />
+            <input name="Name" placeholder="Full name" required>
+            <input name="Phone" placeholder="Phone" required>
+            <input name="Email" placeholder="Email">
             <select name="Service">
               <option>Construction / Remodel</option>
               <option>Additions / ADU</option>
@@ -98,64 +93,63 @@
       </div>
     </section>
 
-    <section class="trust-strip">
+    <section class="trust">
       <div class="container trust-grid">
-        <button data-scroll="#about"><span>Since</span><strong>2018</strong><small>Established Company</small></button>
-        <button data-scroll="#construction"><span>Class B</span><strong>Licensed</strong><small>Construction Services</small></button>
-        <button data-scroll="#properties"><span>Real</span><strong>Listings</strong><small>Sale & Rental</small></button>
-        <button data-scroll="#contact"><span>Direct</span><strong>WhatsApp</strong><small>Fast Communication</small></button>
+        <a href="#about"><span>Since</span><strong>2018</strong><small>Established company</small></a>
+        <a href="#construction"><span>Class B</span><strong>Licensed</strong><small>Construction services</small></a>
+        <a href="#properties"><span>DLCAO</span><strong>Properties</strong><small>Sale & rental</small></a>
+        <a href="#contact"><span>Direct</span><strong>WhatsApp</strong><small>Fast communication</small></a>
       </div>
     </section>
 
-    <section class="service-icons">
+    <section class="services-bar">
       <div class="container icon-grid">
-        <button data-scroll="#construction"><span>🏗️</span><strong>Construction</strong><small>Build · Remodel</small></button>
-        <button data-scroll="#adu"><span>🏠</span><strong>Additions / ADU</strong><small>Expand value</small></button>
-        <button data-scroll="#repairs"><span>🔨</span><strong>Repairs</strong><small>Fix it right</small></button>
-        <button data-scroll="#investors"><span>♻️</span><strong>Fix & Flip</strong><small>Analyze deals</small></button>
-        <button data-scroll="#buy"><span>💰</span><strong>Buy & Sell</strong><small>Real estate</small></button>
-        <button data-scroll="#rental"><span>🔑</span><strong>Rental Property</strong><small>Cash flow</small></button>
+        <a href="#construction"><span>🏗️</span><strong>Construction</strong><small>Build · Remodel</small></a>
+        <a href="#adu"><span>🏠</span><strong>Additions / ADU</strong><small>Expand value</small></a>
+        <a href="#repairs"><span>🔨</span><strong>Repairs</strong><small>Fix it right</small></a>
+        <a href="#investors"><span>♻️</span><strong>Fix & Flip</strong><small>Analyze deals</small></a>
+        <a href="#buy"><span>💰</span><strong>Buy & Sell</strong><small>Real estate</small></a>
+        <a href="#rental"><span>🔑</span><strong>Rental Property</strong><small>Cash flow</small></a>
       </div>
     </section>
 
-    <section id="properties" class="properties-section">
+    <section id="properties" class="properties">
       <div class="container">
         <div class="section-head">
           <div>
-            <p class="eyebrow dark">Current DLCAO Properties</p>
-            <h2>Sale and rental opportunities</h2>
+            <p class="eyebrow dark">DLCAO Properties</p>
+            <h2>Current sale and rental opportunities</h2>
           </div>
-          <a href="#contact">Request details →</a>
         </div>
 
         <div class="property-grid">
           <article class="property-card">
-            <div class="property-photo sale-photo">
+            <a href="properties/15627-vintage-st.html" class="property-photo sale-photo">
               <span>For Sale</span>
-            </div>
+            </a>
             <div class="property-body">
               <h3>15627 Vintage St</h3>
               <p>North Hills, CA 91343</p>
-              <button class="btn black full" onclick="openProperty('sale')">View Details</button>
+              <a class="btn black full" href="properties/15627-vintage-st.html">View Details</a>
             </div>
           </article>
 
           <article class="property-card">
-            <div class="property-photo rent-photo">
+            <a href="properties/9327-woodley-ave.html" class="property-photo rent-photo">
               <span>For Rent</span>
-            </div>
+            </a>
             <div class="property-body">
               <h3>9327 Woodley Ave</h3>
               <p>North Hills, CA 91343</p>
-              <button class="btn black full" onclick="openProperty('rent')">View Details</button>
+              <a class="btn black full" href="properties/9327-woodley-ave.html">View Details</a>
             </div>
           </article>
 
-          <article class="property-card dark-card">
+          <article class="property-card investor-card">
             <div class="property-body">
-              <span class="tag">Investor Review</span>
-              <h3>Have a property to analyze?</h3>
-              <p>Send the address and DLCAO can review repair needs, rental potential and Fix & Flip strategy.</p>
+              <span class="pill">Investor Review</span>
+              <h3>Analyze your property</h3>
+              <p>Send an address and DLCAO can review repair needs, rental potential and Fix & Flip strategy.</p>
               <a class="btn gold full" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20to%20analyze%20a%20property." target="_blank" rel="noopener">Analyze Property</a>
             </div>
           </article>
@@ -163,26 +157,25 @@
       </div>
     </section>
 
-    <section id="about" class="about-section">
+    <section id="about" class="about">
       <div class="container about-grid">
         <div class="about-image"></div>
         <div class="about-copy">
           <p class="eyebrow">About DLCAO</p>
-          <h2>Built for owners and investors since 2018.</h2>
-          <p>
-            DLCAO combines construction, real estate and investment strategy to help clients make better property decisions. We focus on professional execution, clear communication and value creation.
-          </p>
+          <h2>Your trusted partner since 2018.</h2>
+          <p>DLCAO combines construction, real estate and investment strategy to help clients make better property decisions. We focus on professional execution, clear communication and value creation.</p>
+
           <div class="values">
-            <div><strong>Quality</strong><span>Clean work and professional standards.</span></div>
-            <div><strong>Transparency</strong><span>Clear scope, timeline and communication.</span></div>
-            <div><strong>Value</strong><span>Construction decisions that support equity and cash flow.</span></div>
+            <div><strong>Quality</strong><span>Professional standards.</span></div>
+            <div><strong>Transparency</strong><span>Clear communication.</span></div>
+            <div><strong>Value</strong><span>Equity and cash flow focus.</span></div>
             <div><strong>Strategy</strong><span>Buy, sell, rent and invest with a plan.</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="construction" class="construction-section">
+    <section id="construction" class="construction">
       <div class="container">
         <div class="section-head light">
           <div>
@@ -194,13 +187,13 @@
         <div class="detail-grid">
           <article><h3>Construction</h3><p>Design, build, remodel and value-add improvements for residential properties.</p><a href="#estimate">Request estimate</a></article>
           <article id="adu"><h3>Additions / ADU</h3><p>Expand usable space and increase property utility with additions or ADU planning.</p><a href="#estimate">Start ADU request</a></article>
-          <article id="repairs"><h3>Repairs</h3><p>Professional repairs for owners, sellers, buyers, rental properties and investment projects.</p><a href="#estimate">Request repair</a></article>
+          <article id="repairs"><h3>Repairs</h3><p>Professional repairs for owners, sellers, buyers, rentals and investment projects.</p><a href="#estimate">Request repair</a></article>
           <article><h3>Pre-Sale Prep</h3><p>Strategic repairs and updates before listing a property for sale.</p><a href="#sell">Sell smarter</a></article>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="projects-section">
+    <section id="projects" class="projects">
       <div class="container">
         <div class="section-head">
           <div>
@@ -208,15 +201,16 @@
             <h2>Project showcase</h2>
           </div>
         </div>
+
         <div class="project-grid">
-          <article><div class="project-img p1"></div><h3>Exterior Remodel</h3><p>Before / after project showcase.</p></article>
+          <article><div class="project-img p1"></div><h3>Exterior Remodel</h3><p>Before and after project showcase.</p></article>
           <article><div class="project-img p2"></div><h3>Kitchen Renovation</h3><p>Cabinets, finishes and modern upgrade.</p></article>
           <article><div class="project-img p3"></div><h3>Living Space Upgrade</h3><p>Flooring, paint and interior finish work.</p></article>
         </div>
       </div>
     </section>
 
-    <section id="buy" class="buy-section split-section">
+    <section id="buy" class="split-section">
       <div class="container split-grid">
         <div>
           <p class="eyebrow dark">Buy With DLCAO</p>
@@ -240,7 +234,7 @@
       </div>
     </section>
 
-    <section id="sell" class="sell-section split-section dark-bg">
+    <section id="sell" class="split-section dark-bg">
       <div class="container split-grid">
         <div>
           <p class="eyebrow">Sell With DLCAO</p>
@@ -255,7 +249,7 @@
       </div>
     </section>
 
-    <section id="rental" class="rental-section split-section">
+    <section id="rental" class="split-section">
       <div class="container split-grid">
         <div>
           <p class="eyebrow dark">Rental Property</p>
@@ -271,12 +265,12 @@
         <div class="rental-card">
           <h3>Current Rental</h3>
           <p><strong>9327 Woodley Ave</strong><br>North Hills, CA 91343</p>
-          <button class="btn black full" onclick="openProperty('rent')">View Rental Details</button>
+          <a class="btn black full" href="properties/9327-woodley-ave.html">View Rental Details</a>
         </div>
       </div>
     </section>
 
-    <section id="investors" class="investor-section">
+    <section id="investors" class="investors">
       <div class="container investor-grid">
         <div>
           <p class="eyebrow">Investor Tools</p>
@@ -294,7 +288,22 @@
       </div>
     </section>
 
-    <section id="contact" class="contact-section">
+    <section id="client-portal" class="split-section">
+      <div class="container split-grid">
+        <div>
+          <p class="eyebrow dark">Client Portal</p>
+          <h2>Private client portal coming soon.</h2>
+          <p>This area will be used for project updates, photos, estimates, invoices, contracts and client communication.</p>
+        </div>
+        <div class="offer-card">
+          <h3>Request Access</h3>
+          <p>Contact DLCAO to request client portal setup.</p>
+          <a class="btn black full" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20need%20client%20portal%20access." target="_blank" rel="noopener">Request Portal Access</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
       <div class="container contact-grid">
         <div>
           <p class="eyebrow dark">Contact DLCAO</p>
@@ -306,6 +315,7 @@
             <a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener">@dlcaoholding</a>
           </div>
         </div>
+
         <form id="contactForm" class="mini-form">
           <h3>Contact Form</h3>
           <input name="Name" placeholder="Full name" required>
@@ -328,40 +338,20 @@
   <footer>
     <div class="container footer-grid">
       <div>
-        <a href="#home" class="brand footer-brand">
-          <span class="mark">DO</span>
-          <span>
+        <a href="index.html" class="logo footer-logo">
+          <span class="logo-mark">DO</span>
+          <span class="logo-text">
             <strong>DLCAO</strong>
             <small>Construction · Real Estate · Investments</small>
           </span>
         </a>
         <p>Since 2018. Building spaces. Creating value. Delivering results.</p>
       </div>
-      <div>
-        <h4>Services</h4>
-        <a href="#construction">Construction</a>
-        <a href="#rental">Rental Property</a>
-        <a href="#investors">Fix & Flip</a>
-      </div>
-      <div>
-        <h4>Real Estate</h4>
-        <a href="#buy">Buy</a>
-        <a href="#sell">Sell</a>
-        <a href="#properties">Properties</a>
-      </div>
-      <div>
-        <h4>Social</h4>
-        <a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener">Instagram @dlcaoholding</a>
-      </div>
+      <div><h4>Services</h4><a href="#construction">Construction</a><a href="#rental">Rental Property</a><a href="#investors">Fix & Flip</a></div>
+      <div><h4>Real Estate</h4><a href="#buy">Buy</a><a href="#sell">Sell</a><a href="#properties">Properties</a></div>
+      <div><h4>Social</h4><a href="https://www.instagram.com/dlcaoholding" target="_blank" rel="noopener">Instagram @dlcaoholding</a></div>
     </div>
   </footer>
-
-  <div id="propertyModal" class="modal">
-    <div class="modal-box">
-      <button class="close" onclick="closeProperty()">×</button>
-      <div id="modalContent"></div>
-    </div>
-  </div>
 
   <div class="floating">
     <a href="https://wa.me/17473674447" target="_blank" rel="noopener" class="wa">☘</a>
