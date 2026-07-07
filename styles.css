@@ -142,3 +142,71 @@ footer a{display:block;color:#ddd;margin:8px 0}
   .hero h1{font-size:3.1rem}
   .section-head{align-items:flex-start;flex-direction:column}
 }
+
+
+/* Zillow + property detail improvements */
+.zillow{background:#006aff;color:#fff}
+.property-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.property-body p strong{color:#111}
+.property-body p:nth-of-type(2){font-weight:850;color:#333}
+.property-detail-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.property-detail-list div{background:#f7f3eb;border-radius:12px;padding:18px}
+.property-detail-list strong{display:block;font-size:1.35rem;color:#111}
+.property-detail-list span{color:#666;text-transform:uppercase;font-size:.75rem;font-weight:900}
+@media(max-width:720px){.property-detail-list{grid-template-columns:1fr}}
+
+
+/* DLCAO v4 property and Instagram refinements */
+.zillow{background:#006aff;color:#fff}
+.property-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.runnymede-main-photo{background-image:linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,.7)),url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85')}
+.adu-photo{background-image:linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,.7)),url('https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1000&q=85')}
+.project-badge{display:inline-block;background:#111;color:var(--gold2);border:1px solid #333;padding:8px 12px;border-radius:999px;text-transform:uppercase;font-size:.72rem;font-weight:950;margin-bottom:14px}
+.property-detail-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.property-detail-list div{background:#f7f3eb;border-radius:12px;padding:18px}
+.property-detail-list strong{display:block;font-size:1.35rem;color:#111}
+.property-detail-list span{color:#666;text-transform:uppercase;font-size:.75rem;font-weight:900}
+.signature-project{background:#050505;color:#fff}
+.signature-project .side-box{background:#111;color:#fff;border:1px solid #2d2d2d}
+.signature-project .side-box p{color:#ddd}
+.signature-project .property-detail h2{color:#111}
+@media(max-width:720px){.property-detail-list{grid-template-columns:1fr}}
+
+
+/* Sold Properties Page */
+.sold-preview{background:#fff;padding:70px 0}
+.sold-preview-grid{display:flex;justify-content:space-between;align-items:center;gap:30px;border:1px solid #ead8ad;border-radius:14px;padding:34px;background:#fffaf0}
+.sold-preview h2{font-size:clamp(2rem,4vw,4.4rem);line-height:.95;text-transform:uppercase}
+.sold-preview p{color:#555;line-height:1.7;max-width:760px;margin-top:12px}
+.sold-properties-page{background:#030303;color:#fff}
+.sold-hero{min-height:460px;background:linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.72)),url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=90') center/cover;display:flex;align-items:center;border-bottom:1px solid #3b2a0d}
+.sold-hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center}
+.sold-hero h1{font-size:clamp(3rem,6vw,6.8rem);line-height:.92;text-transform:uppercase;letter-spacing:-.06em}
+.sold-hero h1 span{color:var(--gold)}
+.sold-hero p{font-size:1.12rem;line-height:1.7;color:#eee;max-width:700px;margin-top:18px}
+.hero-stat-box{border:1px solid var(--gold);border-radius:14px;padding:28px;background:rgba(0,0,0,.66)}
+.hero-stat-box div{border-bottom:1px solid #303030;padding:16px 0}
+.hero-stat-box div:last-child{border-bottom:0}
+.hero-stat-box strong{display:block;font-size:1.55rem}
+.hero-stat-box span{color:#ddd}
+.sold-section{padding:70px 0;background:#050505}
+.sold-section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:34px}
+.sold-section-head h2{font-size:clamp(2.2rem,4vw,4.8rem);text-transform:uppercase;line-height:.95}
+.sold-section-head p{color:#ddd;max-width:640px;line-height:1.7}
+.sold-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.sold-card{background:linear-gradient(180deg,#101010,#050505);border:1px solid #5a4318;border-radius:10px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.sold-image{height:180px;background:center/cover;position:relative}
+.sold-badge{position:absolute;left:10px;top:10px;background:#050505;color:#fff;border:1px solid var(--gold);padding:6px 10px;border-radius:5px;text-transform:uppercase;font-size:.72rem;font-weight:950}
+.sold-body{padding:17px}
+.sold-body h3{font-size:1.08rem;margin-bottom:5px}
+.sold-city{color:#ddd;font-size:.86rem;margin-bottom:10px}
+.sold-meta{display:flex;gap:10px;flex-wrap:wrap;color:#d0a547;font-size:.78rem;margin-bottom:12px}
+.sold-price-label{font-size:.73rem;color:#aaa}
+.sold-price{font-size:1.35rem;font-weight:950;margin-bottom:5px}
+.sold-date{font-size:.8rem;color:#ccc;margin-bottom:14px}
+.sold-zillow{border:1px solid var(--gold);color:var(--gold2);background:transparent;width:100%;border-radius:6px;padding:12px;text-align:center;display:block;text-transform:uppercase;font-weight:950;font-size:.78rem}
+.sold-cta{margin-top:38px;border:1px solid var(--gold);border-radius:12px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(135deg,#070707,#14100a)}
+.sold-cta h3{font-size:1.6rem}
+.sold-cta p{color:#ddd;margin-top:6px}
+@media(max-width:1150px){.sold-grid{grid-template-columns:repeat(3,1fr)}.sold-hero-grid{grid-template-columns:1fr}}
+@media(max-width:750px){.sold-grid{grid-template-columns:1fr}.sold-section-head,.sold-cta,.sold-preview-grid{flex-direction:column;align-items:flex-start}.sold-hero h1{font-size:3rem}}
