@@ -1438,3 +1438,34 @@ img{
     scroll-behavior:auto!important;
   }
 }
+
+
+/* V28 Lead Machine */
+.ai-assistant-section{background:linear-gradient(135deg,#050505,#17110a);color:#fff;padding:84px 0}
+.ai-grid,.estimate-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:42px;align-items:center}
+.ai-copy h2,.smart-estimate-section h2,.investor-center-section h2{font-size:clamp(2.4rem,4.8vw,5rem);line-height:.92;text-transform:uppercase;letter-spacing:-.05em}
+.ai-copy p,.estimate-grid p{color:#ddd;line-height:1.7;max-width:560px}
+.ai-card{background:#fff;color:#111;border-radius:18px;padding:22px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.chat-window{min-height:220px;max-height:320px;overflow:auto;display:grid;gap:10px;align-content:start;background:#f7f3eb;border:1px solid #ead8ad;border-radius:14px;padding:16px}
+.bot-msg,.user-msg{padding:12px 14px;border-radius:14px;line-height:1.5}
+.bot-msg{background:#111;color:#fff;justify-self:start}
+.user-msg{background:linear-gradient(135deg,#c79a35,#efcf7e);color:#111;justify-self:end;font-weight:800}
+.quick-chat{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.quick-chat button{border:1px solid #d7c18b;background:#fffaf0;border-radius:999px;padding:9px 12px;font-weight:900}
+.chat-input{display:grid;grid-template-columns:1fr auto;gap:8px}
+.chat-input input{height:46px;border:1px solid #ddd;border-radius:999px;padding:0 14px}
+.chat-input button{border:0;border-radius:999px;padding:0 18px;background:#111;color:#fff;font-weight:900}
+.smart-estimate-section{background:#fff;padding:84px 0}
+.estimate-grid p{color:#555}
+.smart-form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;background:#0b0b0b;color:#fff;border:1px solid #c79a35;border-radius:18px;padding:24px;box-shadow:0 26px 80px rgba(0,0,0,.18)}
+.smart-form label{font-size:.76rem;text-transform:uppercase;font-weight:950;color:#f3e5c4}
+.smart-form input,.smart-form select,.smart-form textarea{width:100%;margin-top:7px;border:1px solid #2f2f2f;background:#fff;color:#111;border-radius:10px;padding:12px;font-weight:800}
+.smart-form textarea{min-height:110px}
+.smart-form .full{grid-column:1/-1}
+.investor-center-section{background:#060606;color:#fff;padding:84px 0}
+.investor-tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.investor-tools-grid a{color:#fff;text-decoration:none;border:1px solid #3b2a0d;border-radius:16px;padding:24px;background:linear-gradient(180deg,#111,#070707);min-height:180px}
+.investor-tools-grid strong{display:block;color:#efcf7e;text-transform:uppercase;margin-bottom:12px}
+.investor-tools-grid span{color:#ccc;line-height:1.6}
+@media(max-width:1000px){.ai-grid,.estimate-grid,.investor-tools-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.smart-form{grid-template-columns:1fr}}

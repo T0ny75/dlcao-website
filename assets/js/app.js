@@ -390,3 +390,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+/* V28 Lead Machine */
+function addChatMessage(text,type="bot"){
+  const win=document.getElementById("chatWindow");
+  if(!win)return;
+  const div=document.createElement("div");
+  div.className=type==="user"?"user-msg":"bot-msg";
+  div.textContent=text;
+  win.appendChild(div);
+  win.scrollTop=win.scrollHeight;
+}
+function sendAIMessage(){
+  const input=document.getElementById("aiInput");
+  const text=input?.value?.trim();
+  if(!text)return;
+  addChatMessage(text,"user");
+  input.value="";
+  setTimeout(()=>addChatMessage("Great. Please send your property address, timeline, budget range, and best contact. DLCAO can review and follow up directly.","bot"),350);
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("[data-chat]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const input=document.getElementById("aiInput");
+      if(input)input.value=btn.dataset.chat;
+      sendAIMessage();
+    });
+  });
+});
+function submitSmartEstimate(e){
+  e.preventDefault();
+  const msg=[
+    "DLCAO Project Request",
+    "Project: "+document.getElementById("projectType")?.value,
+    "City: "+document.getElementById("projectCity")?.value,
+    "Budget: "+document.getElementById("budgetRange")?.value,
+    "Timeline: "+document.getElementById("timeline")?.value,
+    "Address: "+document.getElementById("propertyAddress")?.value,
+    "Contact: "+document.getElementById("contactInfo")?.value,
+    "Details: "+document.getElementById("projectDetails")?.value
+  ].join("\n");
+  window.open("https://wa.me/17473674447?text="+encodeURIComponent(msg),"_blank");
+}

@@ -704,6 +704,103 @@
       </div>
     </section>
 
+    
+    <section id="ai-assistant" class="ai-assistant-section">
+      <div class="container ai-grid">
+        <div class="ai-copy">
+          <p class="eyebrow">DLCAO AI Assistant</p>
+          <h2>Tell us what you want to build, buy, sell or invest in.</h2>
+          <p>This assistant helps qualify your project and sends your request directly to DLCAO through WhatsApp.</p>
+        </div>
+        <div class="ai-card">
+          <div class="chat-window" id="chatWindow">
+            <div class="bot-msg">Hi, I’m DLCAO Assistant. What do you need help with today?</div>
+          </div>
+          <div class="quick-chat">
+            <button type="button" data-chat="I want to build an ADU">ADU</button>
+            <button type="button" data-chat="I want a remodel estimate">Remodel</button>
+            <button type="button" data-chat="I want to sell my property">Sell</button>
+            <button type="button" data-chat="I want to analyze a Fix & Flip">Fix & Flip</button>
+          </div>
+          <div class="chat-input">
+            <input id="aiInput" placeholder="Type your project..." />
+            <button type="button" onclick="sendAIMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="smart-estimate" class="smart-estimate-section">
+      <div class="container estimate-grid">
+        <div>
+          <p class="eyebrow dark">Smart Estimate Center</p>
+          <h2>Get a faster project review.</h2>
+          <p>Answer a few questions and DLCAO will receive a clean project summary.</p>
+        </div>
+        <form class="smart-form" onsubmit="submitSmartEstimate(event)">
+          <label>Project Type
+            <select id="projectType">
+              <option>ADU / Garage Conversion</option>
+              <option>Kitchen Remodel</option>
+              <option>Bathroom Remodel</option>
+              <option>Full Renovation</option>
+              <option>Repair</option>
+              <option>Fix & Flip</option>
+              <option>Buy / Sell / Rental Property</option>
+            </select>
+          </label>
+          <label>City
+            <input id="projectCity" placeholder="Los Angeles, Winnetka, North Hills..." />
+          </label>
+          <label>Budget Range
+            <select id="budgetRange">
+              <option>$10k - $25k</option>
+              <option>$25k - $50k</option>
+              <option>$50k - $100k</option>
+              <option>$100k - $250k</option>
+              <option>$250k+</option>
+            </select>
+          </label>
+          <label>Timeline
+            <select id="timeline">
+              <option>ASAP</option>
+              <option>30 days</option>
+              <option>60-90 days</option>
+              <option>Planning stage</option>
+            </select>
+          </label>
+          <label>Property Address
+            <input id="propertyAddress" placeholder="Property address" />
+          </label>
+          <label>Contact
+            <input id="contactInfo" placeholder="Name, phone, email" />
+          </label>
+          <label class="full">Project Details
+            <textarea id="projectDetails" placeholder="Tell us what you want to do..."></textarea>
+          </label>
+          <button class="btn gold full" type="submit">Send Project Summary to DLCAO</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="investor-center" class="investor-center-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Investor Center</p>
+            <h2>Tools for smarter property decisions.</h2>
+          </div>
+          <p>Built for owners, investors and clients who want to understand the numbers before moving forward.</p>
+        </div>
+        <div class="investor-tools-grid">
+          <a href="#investors"><strong>Fix & Flip Analyzer</strong><span>ARV, MAO, ROI and profit.</span></a>
+          <a href="#smart-estimate"><strong>Construction Estimate</strong><span>Project scope and budget intake.</span></a>
+          <a href="#properties"><strong>Property Review</strong><span>Buy, sell and rental opportunities.</span></a>
+          <a href="#contact"><strong>Book Consultation</strong><span>Start with a DLCAO review.</span></a>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="contact">
       <div class="container contact-grid">
         <div>
