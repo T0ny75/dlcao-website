@@ -29,46 +29,32 @@
   <meta name="dlcao-version" content="Enterprise v26 Platform Structure" />
   <meta name="theme-color" content="#050505" />
   <link rel="canonical" href="https://t0ny75.github.io/dlcao-website/" />
-  <script type="application/ld+json">
+<meta name="dlcao-release" content="Enterprise v27 Production Release" />
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://t0ny75.github.io/dlcao-website/#organization",
       "name": "DLCAO",
       "url": "https://t0ny75.github.io/dlcao-website/",
       "sameAs": [
         "https://www.instagram.com/dlcaoholding"
       ],
-      "foundingDate": "2018-05-18",
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+17473674447",
-          "contactType": "customer service",
-          "areaServed": "US"
-        }
-      ]
+      "foundingDate": "2018-05-18"
     },
     {
       "@type": "LocalBusiness",
-      "@id": "https://t0ny75.github.io/dlcao-website/#localbusiness",
       "name": "DLCAO",
       "url": "https://t0ny75.github.io/dlcao-website/",
       "telephone": "+17473674447",
       "email": "DLCAO@mail.com",
-      "description": "DLCAO Construction \u00b7 Real Estate \u00b7 Investments. General contractor, ADU, remodeling, rentals, fix and flip, and investment strategy serving Los Angeles, Winnetka, North Hills and Southern California since 2018.",
       "areaServed": [
         "Los Angeles",
         "Winnetka",
         "North Hills",
-        "San Fernando Valley",
-        "Southern California"
+        "Canoga Park"
       ],
-      "parentOrganization": {
-        "@id": "https://t0ny75.github.io/dlcao-website/#organization"
-      },
       "serviceType": [
         "Construction",
         "Real Estate",
@@ -80,17 +66,12 @@
     },
     {
       "@type": "WebSite",
-      "@id": "https://t0ny75.github.io/dlcao-website/#website",
       "url": "https://t0ny75.github.io/dlcao-website/",
-      "name": "DLCAO | Construction \u00b7 Real Estate \u00b7 Investments",
-      "publisher": {
-        "@id": "https://t0ny75.github.io/dlcao-website/#organization"
-      }
+      "name": "DLCAO | Construction \u00b7 Real Estate \u00b7 Investments"
     }
   ]
 }
-  </script>
-  <meta name="dlcao-release" content="Enterprise v27 Production Release" />
+</script>
 </head>
 
 <body>
@@ -704,33 +685,35 @@
       </div>
     </section>
 
-    
-    <section id="ai-assistant" class="ai-assistant-section">
+    <section id="ai-assistant" class="ai-assistant-section elite-ai">
       <div class="container ai-grid">
         <div class="ai-copy">
           <p class="eyebrow">DLCAO AI Assistant</p>
-          <h2>Tell us what you want to build, buy, sell or invest in.</h2>
-          <p>This assistant helps qualify your project and sends your request directly to DLCAO through WhatsApp.</p>
+          <h2>Your construction and investment intake assistant.</h2>
+          <p>Choose a goal, answer guided questions, and send a complete project summary to DLCAO through WhatsApp.</p>
+          <div class="ai-mini-stats">
+            <div><strong>24/7</strong><span>Lead Intake</span></div>
+            <div><strong>6-Step</strong><span>Project Review</span></div>
+            <div><strong>CRM Ready</strong><span>Future Integration</span></div>
+          </div>
         </div>
-        <div class="ai-card">
-          <div class="chat-window" id="chatWindow">
-            <div class="bot-msg">Hi, I’m DLCAO Assistant. What do you need help with today?</div>
-          </div>
+        <div class="ai-card advanced-ai-card">
+          <div class="ai-progress"><span id="aiStepLabel">Step 1 of 6</span><div><i id="aiProgressBar"></i></div></div>
+          <div class="chat-window" id="chatWindow"><div class="bot-msg">Welcome to DLCAO AI. What are you working on today?</div></div>
           <div class="quick-chat">
-            <button type="button" data-chat="I want to build an ADU">ADU</button>
-            <button type="button" data-chat="I want a remodel estimate">Remodel</button>
-            <button type="button" data-chat="I want to sell my property">Sell</button>
-            <button type="button" data-chat="I want to analyze a Fix & Flip">Fix & Flip</button>
+            <button type="button" data-flow="adu">ADU</button>
+            <button type="button" data-flow="remodel">Remodel</button>
+            <button type="button" data-flow="sell">Sell</button>
+            <button type="button" data-flow="flip">Fix & Flip</button>
+            <button type="button" data-flow="rental">Rental</button>
           </div>
-          <div class="chat-input">
-            <input id="aiInput" placeholder="Type your project..." />
-            <button type="button" onclick="sendAIMessage()">Send</button>
-          </div>
+          <div class="chat-input"><input id="aiInput" placeholder="Type your answer..." /><button type="button" onclick="sendAIMessage()">Send</button></div>
+          <button class="btn gold full ai-report-btn" type="button" onclick="sendAIReport()">Send AI Summary to DLCAO</button>
         </div>
       </div>
     </section>
 
-    <section id="smart-estimate" class="smart-estimate-section">
+<section id="smart-estimate" class="smart-estimate-section">
       <div class="container estimate-grid">
         <div>
           <p class="eyebrow dark">Smart Estimate Center</p>
@@ -797,6 +780,30 @@
           <a href="#smart-estimate"><strong>Construction Estimate</strong><span>Project scope and budget intake.</span></a>
           <a href="#properties"><strong>Property Review</strong><span>Buy, sell and rental opportunities.</span></a>
           <a href="#contact"><strong>Book Consultation</strong><span>Start with a DLCAO review.</span></a>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="trust-center" class="trust-center-section">
+      <div class="container">
+        <div class="section-head"><div><p class="eyebrow dark">Trust Center</p><h2>Built for confidence.</h2></div><p>DLCAO is structured to help homeowners, investors and property owners make confident decisions.</p></div>
+        <div class="trust-cards">
+          <article><strong>Since 2018</strong><span>Founded May 18, 2018</span></article>
+          <article><strong>Southern California</strong><span>Los Angeles · Winnetka · North Hills</span></article>
+          <article><strong>Construction + Real Estate</strong><span>Strategy before execution</span></article>
+          <article><strong>Direct Contact</strong><span>WhatsApp, phone and project intake</span></article>
+        </div>
+      </div>
+    </section>
+    <section id="dashboard-preview" class="dashboard-preview-section">
+      <div class="container dashboard-grid">
+        <div><p class="eyebrow">DLCAO Operations</p><h2>Future dashboard ready.</h2><p>This website is structured for CRM, client portal, investor dashboard, project tracking, documents, appointments and automation.</p></div>
+        <div class="dashboard-card">
+          <div><span>New Leads</span><strong>CRM Ready</strong></div>
+          <div><span>Projects</span><strong>Portal Ready</strong></div>
+          <div><span>Investors</span><strong>Tools Ready</strong></div>
+          <div><span>Automation</span><strong>Next Phase</strong></div>
         </div>
       </div>
     </section>
