@@ -13,11 +13,9 @@ function money(value) {
 }
 
 function openWhatsApp(message) {
-  window.open(
-    `https://wa.me/${DLCAO_PHONE}?text=${encodeURIComponent(message)}`,
-    "_blank",
-    "noopener"
-  );
+  const url = `https://wa.me/${DLCAO_PHONE}?text=${encodeURIComponent(message)}`;
+  const popup = window.open(url, "_blank", "noopener");
+  if (!popup) window.location.href = url;
 }
 
 function formMessage(form, heading = "DLCAO Request") {
@@ -185,67 +183,108 @@ function analyzeFlip(text, address) {
 }
 
 function analyzeRental(text, address) {
-  const monthlyRent = numberNearKeywords(text, ["monthly rent", "rent"]) ?? 3_500;
-  const propertyValue = numberNearKeywords(text, ["property value", "purchase", "price", "value"]) ?? 750_000;
-  const vacancyRate = 0.05;
-  const operatingRate = 0.30;
-  const grossAnnual = monthlyRent * 12;
-  const vacancy = grossAnnual * vacancyRate;
-  const operating = grossAnnual * operatingRate;
-  const noi = grossAnnual - vacancy - operating;
-  const capRate = propertyValue > 0 ? noi / propertyValue * 100 : 0;
+  const monthlyRent = numberNearKeywords(text, ["monthly rent", "rent"]) ?? 3500;
+  const propertyValue = numberNearKeywords(text, ["property value", "purchase", "price", "value"]) ?? 750000;
+  const mortgage = numberNearKeywords(text, ["mortgage", "loan payment", "debt service", "payment"]) ?? 0;
+  const taxes = numberNearKeywords(text, ["property taxes", "taxes", "tax"]) ?? Math.round(propertyValue * 0.0125 / 12);
+  const insurance = numberNearKeywords(text, ["insurance"]) ?? 175;
+  const hoa = numberNearKeywords(text, ["hoa"]) ?? 0;
+  const utilities = numberNearKeywords(text, ["utilities"]) ?? 0;
+  const vacancy = monthlyRent * 0.05;
+  const maintenance = monthlyRent * 0.08;
+  const management = monthlyRent * 0.08;
+  const monthlyNOI = monthlyRent - vacancy - maintenance - management - taxes - insurance - hoa - utilities;
+  const cashFlow = monthlyNOI - mortgage;
+  const annualNOI = monthlyNOI * 12;
+  const capRate = propertyValue > 0 ? annualNOI / propertyValue * 100 : 0;
 
   return [
     ...analysisHeader("DLCAO RENTAL PROPERTY ANALYSIS", address),
     `Monthly rent assumption: ${money(monthlyRent)}`,
-    `Annual gross rent: ${money(grossAnnual)}`,
-    `Vacancy allowance (5%): ${money(vacancy)}`,
-    `Operating expenses (30%): ${money(operating)}`,
-    `Estimated NOI before debt service: ${money(noi)}`,
-    `Property value assumption: ${money(propertyValue)}`,
+    `Vacancy reserve (5%): ${money(vacancy)}`,
+    `Maintenance reserve (8%): ${money(maintenance)}`,
+    `Management reserve (8%): ${money(management)}`,
+    `Property taxes monthly: ${money(taxes)}`,
+    `Insurance monthly: ${money(insurance)}`,
+    `HOA monthly: ${money(hoa)}`,
+    `Utilities paid by owner: ${money(utilities)}`,
+    `Mortgage / debt service: ${money(mortgage)}`,
+    "",
+    `Estimated NOI before debt: ${money(monthlyNOI)}/month`,
+    `Estimated cash flow after debt: ${money(cashFlow)}/month`,
     `Illustrative cap rate: ${capRate.toFixed(2)}%`,
     "",
-    "Cash flow cannot be finalized without mortgage payment, taxes, insurance, HOA, utilities, maintenance and management costs.",
-    "Confirm actual rent/comps and all expenses before making an investment or listing decision."
+    "Confirm actual rent comps, loan payment, taxes, insurance, HOA, utilities, repairs and management before making a decision."
   ].join("\n");
 }
 
 function analyzeADU(text, address) {
-  const budget = numberNearKeywords(text, ["budget", "cost"]) ?? 220_000;
+  const sqft = numberNearKeywords(text, ["square feet", "sqft", "sf"]) ?? 750;
+  const costPerSqft = numberNearKeywords(text, ["cost per sqft", "per sqft"]) ?? 300;
+  const construction = sqft * costPerSqft;
+  const softCosts = construction * 0.15;
+  const contingency = construction * 0.10;
+  const total = construction + softCosts + contingency;
+  const rent = numberNearKeywords(text, ["monthly rent", "rent"]) ?? 2500;
+  const annualGrossRent = rent * 12;
+  const grossYield = total > 0 ? annualGrossRent / total * 100 : 0;
+
   return [
-    ...analysisHeader("DLCAO ADU PRELIMINARY REVIEW", address),
-    `Planning budget assumption: ${money(budget)}`,
-    "Illustrative construction range: $120,000–$350,000+",
-    "Typical variables: size, attached/detached design, site access, utilities, grading, plans, permits and finish level.",
+    ...analysisHeader("DLCAO ADU PRELIMINARY ANALYSIS", address),
+    `Size assumption: ${sqft.toLocaleString()} sq ft`,
+    `Construction assumption: ${money(costPerSqft)} per sq ft`,
+    `Construction subtotal: ${money(construction)}`,
+    `Plans, permits and soft costs (15%): ${money(softCosts)}`,
+    `Contingency reserve (10%): ${money(contingency)}`,
+    `Illustrative total project budget: ${money(total)}`,
     "",
-    "Required verification: zoning, lot dimensions, setbacks, utility capacity, fire access, parking rules and city plan-check requirements.",
-    "Next step: send property address, desired square footage, photos and budget to DLCAO."
+    `Monthly rent assumption: ${money(rent)}`,
+    `Annual gross rent: ${money(annualGrossRent)}`,
+    `Illustrative gross yield on project cost: ${grossYield.toFixed(1)}%`,
+    "",
+    "Confirm zoning, lot dimensions, setbacks, utility capacity, access, parking, fire requirements and city plan-check rules."
   ].join("\n");
 }
 
 function analyzeRemodel(text, address) {
+  const sqft = numberNearKeywords(text, ["square feet", "sqft", "sf"]) ?? 1000;
+  const baseBudget = numberNearKeywords(text, ["budget", "cost"]) ?? Math.round(sqft * 125);
+  const contingency = baseBudget * 0.12;
+  const total = baseBudget + contingency;
+  const timeline = sqft <= 500 ? "4–8 weeks" : sqft <= 1500 ? "8–16 weeks" : "16–28+ weeks";
+
   return [
-    ...analysisHeader("DLCAO REMODEL PRELIMINARY REVIEW", address),
-    "Illustrative ranges:",
-    "Bathroom: $12,000–$35,000+",
-    "Kitchen: $25,000–$75,000+",
-    "Full renovation: scope-dependent",
+    ...analysisHeader("DLCAO REMODEL PRELIMINARY ANALYSIS", address),
+    `Scope-size assumption: ${sqft.toLocaleString()} sq ft`,
+    `Base budget assumption: ${money(baseBudget)}`,
+    `Contingency reserve (12%): ${money(contingency)}`,
+    `Illustrative project budget: ${money(total)}`,
+    `Illustrative timeline: ${timeline}`,
     "",
-    "Major cost drivers: demolition, structural changes, electrical, plumbing, HVAC, permits, finish selections and access.",
-    "Send photos, approximate square footage, desired finish level, timeline and budget for a closer review."
+    "Likely cost drivers: demolition, structural work, electrical, plumbing, HVAC, permits, finish selections, occupancy and site access.",
+    "Confirm photos, exact scope, finish level, permit requirements, timeline and budget before receiving a contractor proposal."
   ].join("\n");
 }
 
 function analyzeSale(text, address) {
+  const salePrice = numberNearKeywords(text, ["sale price", "sell price", "expected price", "price", "value"]) ?? 750000;
+  const repairs = numberNearKeywords(text, ["repairs", "repair", "renovation"]) ?? 15000;
+  const mortgagePayoff = numberNearKeywords(text, ["mortgage payoff", "payoff", "loan balance"]) ?? 0;
+  const commission = salePrice * 0.05;
+  const closingCosts = salePrice * 0.02;
+  const estimatedNet = salePrice - repairs - commission - closingCosts - mortgagePayoff;
+
   return [
-    ...analysisHeader("DLCAO SALE STRATEGY REVIEW", address),
-    "DLCAO can evaluate:",
-    "• As-is sale versus renovation before listing",
-    "• Repair priorities and likely buyer objections",
-    "• Rental or investor alternatives",
-    "• Timeline, carrying cost and preparation strategy",
+    ...analysisHeader("DLCAO SELLER STRATEGY REVIEW", address),
+    `Sale price assumption: ${money(salePrice)}`,
+    `Pre-sale repairs assumption: ${money(repairs)}`,
+    `Commission assumption (5%): ${money(commission)}`,
+    `Other closing costs assumption (2%): ${money(closingCosts)}`,
+    `Mortgage payoff entered: ${money(mortgagePayoff)}`,
+    `Illustrative net proceeds: ${money(estimatedNet)}`,
     "",
-    "A market value or net-proceeds estimate requires current comparable sales, liens/mortgage payoff, commissions, closing costs and confirmed property condition."
+    "Compare three strategies: sell as-is, complete targeted improvements before listing, or evaluate rental/investor alternatives.",
+    "Confirm current comparable sales, title/liens, taxes, commissions, payoff amount and property condition."
   ].join("\n");
 }
 
@@ -278,7 +317,7 @@ function analyzeBuy(text, address) {
     `Estimated cash needed: ${money(downPayment + closing)}`,
     "",
     "This is not a loan quote. Confirm credit, income, reserves, HOA, lender fees, taxes and insurance with licensed professionals."
-  ].join("\\n");
+  ].join("\n");
 }
 
 function analyzeGeneral(text) {
@@ -299,6 +338,7 @@ function analyzeGeneral(text) {
     "• [address] — ADU",
     "• [address] — Remodel",
     "• [address] — Sell",
+    "• [address] — Buy",
     "",
     "Add known numbers—purchase price, ARV, repairs, rent or budget—for a more useful preliminary model."
   ].join("\n");

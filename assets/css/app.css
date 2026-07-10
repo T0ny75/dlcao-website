@@ -1555,3 +1555,33 @@ img{
 .quick-chat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 @media(max-width:900px){.capability-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.capability-grid,.quick-chat{grid-template-columns:1fr}}
+
+
+/* Delivery 1 production corrections */
+.ai-status{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom:14px;
+  padding:12px 14px;
+  border:1px solid #ead8ad;
+  border-radius:12px;
+  background:#fffaf0;
+}
+.ai-status strong{color:#6f4d0f;text-transform:uppercase;font-size:.78rem}
+.ai-status span{color:#555;font-size:.78rem;line-height:1.45}
+.analysis-disclaimer{
+  margin-top:36px;
+  padding:14px 18px;
+  border-left:4px solid #c79a35;
+  background:#fff8df;
+  color:#3b2a0d;
+  line-height:1.55;
+  font-size:.84rem;
+}
+.external-disclaimer{
+  margin:10px 0 14px;
+  font-size:.78rem;
+  line-height:1.5;
+  color:#666;
+}

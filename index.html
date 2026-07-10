@@ -58,7 +58,10 @@
         "Investments",
         "ADU",
         "Fix and Flip",
-        "Rental Property"
+        "Rental Property",
+        "Home Remodeling",
+        "Property Buying",
+        "Property Selling"
       ]
     },
     {
@@ -155,7 +158,7 @@
     <section class="trust">
       <div class="container trust-grid">
         <a href="#about"><span>Since</span><strong>2018</strong><small>Established company</small></a>
-        <a href="#construction"><span>Class B</span><strong>Licensed</strong><small>Construction services</small></a>
+        <a href="#construction"><span>Since</span><strong>2018</strong><small>Construction experience</small></a>
         <a href="#properties"><span>DLCAO</span><strong>Properties</strong><small>Sale & rental</small></a>
         <a href="#contact"><span>Direct</span><strong>WhatsApp</strong><small>Fast communication</small></a>
       </div>
@@ -378,9 +381,9 @@
         </div>
         <div class="rent-flex-card">
           <span class="pill">Third-party rent tool</span>
-          <h3>SplitPay / Rent App Style Option</h3>
+          <h3>External Rent Payment Resource</h3>
           <p>Tenant can review eligibility directly with the provider.</p>
-          <a class="btn black full" href="https://splitpay.com/?utm_source=rentapp" target="_blank" rel="noopener">Explore SplitPay</a>
+          <p class="external-disclaimer">Third-party service. DLCAO does not operate, approve, guarantee or provide this product.</p><a class="btn black full" href="https://splitpay.com/?utm_source=rentapp" target="_blank" rel="noopener">Visit External Resource</a>
         </div>
       </div>
     </section>
@@ -479,7 +482,7 @@
       <div class="container split-grid">
         <div>
           <p class="eyebrow dark">Client Portal</p>
-          <h2>Private client portal coming soon.</h2>
+          <h2>Client portal access by approval.</h2>
           <p>This area will be used for project updates, photos, estimates, invoices, contracts and client communication.</p>
         </div>
         <div class="offer-card">
@@ -670,13 +673,13 @@
         <div class="platform-copy">
           <p class="eyebrow dark">DLCAO Platform</p>
           <h2>More than a website. A business system.</h2>
-          <p>DLCAO is being built as a client and investor platform: lead capture, project intake, rental requests, deal analysis and future portal access in one connected system.</p>
+          <p>DLCAO connects lead capture, project intake, rental requests and preliminary deal analysis. Approved clients can request portal access for active projects.</p>
         </div>
 
         <div class="platform-grid">
           <article><span>01</span><h3>Lead Intake</h3><p>Estimate, rental, seller, buyer and investor requests routed to WhatsApp now and CRM later.</p></article>
           <article><span>02</span><h3>Investor Tools</h3><p>Fix & Flip and rental analysis tools designed to help clients understand the numbers.</p></article>
-          <article><span>03</span><h3>Client Portal</h3><p>A future private area for project updates, documents, invoices, photos and communication.</p></article>
+          <article><span>03</span><h3>Client Portal</h3><p>Approved-client access request for active projects, with secure account features planned for the authenticated platform.</p></article>
           <article><span>04</span><h3>Growth Ready</h3><p>Built to expand into Google Sheets, CRM, Calendly, dashboards, maps and admin tools.</p></article>
         </div>
       </div>
@@ -695,7 +698,7 @@
           </div>
         </div>
         <div class="ai-card advanced-ai-card">
-          <div class="ai-progress"><span id="aiStepLabel">Step 1 of 6</span><div><i id="aiProgressBar"></i></div></div>
+          <div class="ai-status"><strong>DLCAO Preliminary Analysis</strong><span>Enter an address, goal and any numbers you already know.</span></div>
           <div class="chat-window" id="chatWindow"><div class="bot-msg">Welcome to DLCAO AI. What are you working on today?</div></div>
           <div class="quick-chat">
             <button type="button" data-flow="remodel">Remodel</button>
@@ -705,12 +708,13 @@
             <button type="button" data-flow="rental">Rental</button>
             <button type="button" data-flow="adu">ADU</button>
           </div>
-          <div class="chat-input"><input id="aiInput" placeholder="Type your answer..." /><button type="button" onclick="sendAIMessage()">Send</button></div>
+          <div class="chat-input"><input id="aiInput" placeholder="Example: 7024 Eton Ave — Fix & Flip, purchase 650k, ARV 850k, repairs 85k" /><button type="button" onclick="sendAIMessage()">Send</button></div>
           <button class="btn gold full ai-report-btn" type="button" onclick="sendAIReport()">Send AI Summary to DLCAO</button>
         </div>
       </div>
     </section>
 
+    <div class="container analysis-disclaimer"><strong>Important:</strong> Website analyses are preliminary educational models, not appraisals, contractor bids, loan offers, legal advice or verified property reports.</div>
     <section id="analysis-center" class="ai-capabilities-section">
       <div class="container">
         <div class="section-head">
