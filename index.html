@@ -23,10 +23,10 @@
   <link rel="dns-prefetch" href="https://images.unsplash.com">
 <link rel="manifest" href="site.webmanifest">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <meta name="dlcao-version" content="Enterprise 1.0 Stable" />
+  <meta name="dlcao-version" content="DLCAO Stable" />
   <meta name="theme-color" content="#050505" />
   <link rel="canonical" href="https://t0ny75.github.io/dlcao-website/" />
-<meta name="dlcao-release" content="Stable Platform Update" />
+<meta name="dlcao-release" content="Phase 2" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -685,49 +685,118 @@
       </div>
     </section>
 
-    <section id="ai-assistant" class="ai-assistant-section elite-ai">
-      <div class="container ai-grid">
-        <div class="ai-copy">
-          <p class="eyebrow">DLCAO AI Assistant</p>
-          <h2>Your construction and investment intake assistant.</h2>
-          <p>Enter an address and your goal—Fix & Flip, rental, ADU, remodel, buy or sell—to receive a preliminary analysis with clearly labeled assumptions.</p>
-          <div class="ai-mini-stats">
-            <div><strong>24/7</strong><span>Lead Intake</span></div>
-            <div><strong>Instant</strong><span>Preliminary Analysis</span></div>
-            <div><strong>CRM Ready</strong><span>Future Integration</span></div>
-          </div>
-        </div>
-        <div class="ai-card advanced-ai-card">
-          <div class="ai-status"><strong>DLCAO Preliminary Analysis</strong><span>Enter an address, goal and any numbers you already know.</span></div>
-          <div class="chat-window" id="chatWindow"><div class="bot-msg">Welcome to DLCAO AI. What are you working on today?</div></div>
-          <div class="quick-chat">
-            <button type="button" data-flow="remodel">Remodel</button>
-            <button type="button" data-flow="sell">Sell</button>
-            <button type="button" data-flow="buy">Buy</button>
-            <button type="button" data-flow="flip">Fix & Flip</button>
-            <button type="button" data-flow="rental">Rental</button>
-            <button type="button" data-flow="adu">ADU</button>
-          </div>
-          <div class="chat-input"><input id="aiInput" placeholder="Example: 7024 Eton Ave — Fix & Flip, purchase 650k, ARV 850k, repairs 85k" /><button type="button" onclick="sendAIMessage()">Send</button></div>
-          <button class="btn gold full ai-report-btn" type="button" onclick="sendAIReport()">Send AI Summary to DLCAO</button>
-        </div>
-      </div>
-    </section>
+    <section id="analysis" class="dlcao-analysis-section">
+      <div class="container analysis-layout">
+        <div class="analysis-intro">
+          <p class="eyebrow">DLCAO</p>
+          <h2>Describe your project.</h2>
+          <p>Enter an address, your objective and any numbers you already know. DLCAO will organize the information into a preliminary project review.</p>
 
-    <div class="container analysis-disclaimer"><strong>Important:</strong> Website analyses are preliminary educational models, not appraisals, contractor bids, loan offers, legal advice or verified property reports.</div>
-    <section id="analysis-center" class="ai-capabilities-section">
-      <div class="container">
-        <div class="section-head">
-          <div><p class="eyebrow dark">DLCAO Analysis Center</p><h2>Six business paths. One connected platform.</h2></div>
-          <p>Preliminary analysis based on client information and clearly labeled assumptions.</p>
+          <div class="analysis-paths" aria-label="Analysis types">
+            <button type="button" data-analysis-prompt="remodel">Remodel</button>
+            <button type="button" data-analysis-prompt="sell">Sell</button>
+            <button type="button" data-analysis-prompt="buy">Buy</button>
+            <button type="button" data-analysis-prompt="flip">Fix & Flip</button>
+            <button type="button" data-analysis-prompt="rental">Rental</button>
+            <button type="button" data-analysis-prompt="adu">ADU</button>
+          </div>
+
+          <label class="analysis-input-label" for="analysisInput">Project information</label>
+          <textarea id="analysisInput" class="analysis-input" rows="7" placeholder="Example: 7024 Eton Ave, Canoga Park CA 91303. Fix & Flip. Purchase $650,000. ARV $850,000. Repairs $85,000."></textarea>
+
+          <div class="analysis-actions">
+            <button type="button" class="btn gold" id="runAnalysisBtn">Create Preliminary Review</button>
+            <button type="button" class="btn outline-dark" id="clearAnalysisBtn">Clear</button>
+          </div>
+
+          <p class="analysis-legal">Preliminary educational model only. Not an appraisal, contractor proposal, MLS/Zillow report, loan offer, legal opinion or guarantee.</p>
         </div>
-        <div class="capability-grid">
-          <article><span>01</span><h3>Remodel</h3><p>Budget, timeline, scope and permit considerations.</p><a href="#ai-assistant" data-ai-jump="remodel">Start analysis</a></article>
-          <article><span>02</span><h3>Sell</h3><p>As-is versus repair-and-list strategy and estimated net inputs.</p><a href="#ai-assistant" data-ai-jump="sell">Start review</a></article>
-          <article><span>03</span><h3>Buy</h3><p>Down payment, payment estimate, reserves and closing costs.</p><a href="#ai-assistant" data-ai-jump="buy">Start review</a></article>
-          <article><span>04</span><h3>Fix & Flip</h3><p>ARV, rehab, MAO, profit, ROI and risk rating.</p><a href="#ai-assistant" data-ai-jump="flip">Analyze deal</a></article>
-          <article><span>05</span><h3>Rental</h3><p>Rent, expenses, NOI, cash flow and cap rate.</p><a href="#ai-assistant" data-ai-jump="rental">Analyze rental</a></article>
-          <article><span>06</span><h3>ADU</h3><p>Project budget, rent potential and site checklist.</p><a href="#ai-assistant" data-ai-jump="adu">Review ADU</a></article>
+
+        <div class="project-report" id="projectReport" aria-live="polite">
+          <div class="report-empty" id="reportEmpty">
+            <span class="report-mark">DO</span>
+            <h3>Your project review will appear here.</h3>
+            <p>Start with an address and one goal: Remodel, Sell, Buy, Fix & Flip, Rental or ADU.</p>
+          </div>
+
+          <div class="report-content" id="reportContent" hidden>
+            <header class="report-header">
+              <div>
+                <span class="report-kicker">DLCAO Preliminary Review</span>
+                <h3 id="reportTitle">Project Review</h3>
+              </div>
+              <div class="report-reference">
+                <small>Reference</small>
+                <strong id="projectReference">DL-000000</strong>
+              </div>
+            </header>
+
+            <div class="report-summary-grid">
+              <article><span>Project</span><strong id="reportProjectType">—</strong></article>
+              <article><span>Address</span><strong id="reportAddress">—</strong></article>
+              <article><span>Status</span><strong>Preliminary Review</strong></article>
+              <article><span>Confidence</span><strong id="reportConfidence">—</strong></article>
+            </div>
+
+            <section class="report-section">
+              <h4>Executive Summary</h4>
+              <p id="reportExecutiveSummary"></p>
+            </section>
+
+            <div class="report-two-column">
+              <section class="report-section">
+                <h4>Client-Provided Data</h4>
+                <div id="reportProvidedData" class="report-list"></div>
+              </section>
+
+              <section class="report-section">
+                <h4>Assumptions Used</h4>
+                <div id="reportAssumptions" class="report-list"></div>
+              </section>
+            </div>
+
+            <section class="report-section">
+              <h4>Preliminary Financial Model</h4>
+              <div id="reportMetrics" class="report-metrics"></div>
+            </section>
+
+            <div class="report-two-column">
+              <section class="report-section risk-section">
+                <h4>Risks to Verify</h4>
+                <div id="reportRisks" class="report-list"></div>
+              </section>
+
+              <section class="report-section opportunity-section">
+                <h4>Opportunities</h4>
+                <div id="reportOpportunities" class="report-list"></div>
+              </section>
+            </div>
+
+            <section class="report-section">
+              <h4>Information Needed for Higher Confidence</h4>
+              <div id="reportMissing" class="report-list"></div>
+            </section>
+
+            <section class="next-step-card">
+              <span>Recommended Next Step</span>
+              <strong id="reportNextStep">Contact DLCAO</strong>
+              <p id="reportNextStepNote"></p>
+            </section>
+
+            <div class="lead-capture-panel">
+              <div>
+                <h4>Continue with DLCAO</h4>
+                <p>Add your contact information to send this project review directly to DLCAO.</p>
+              </div>
+              <div class="lead-capture-grid">
+                <input id="leadName" placeholder="Full name" autocomplete="name">
+                <input id="leadPhone" placeholder="Phone" autocomplete="tel">
+                <input id="leadEmail" placeholder="Email" autocomplete="email">
+              </div>
+              <button type="button" class="btn gold full" id="sendProjectBtn">Send Project Review to DLCAO</button>
+              <p class="lead-privacy">Do not send passwords, Social Security numbers, banking credentials or other sensitive information.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -817,12 +886,12 @@
     </section>
     <section id="dashboard-preview" class="dashboard-preview-section">
       <div class="container dashboard-grid">
-        <div><p class="eyebrow">DLCAO Operations</p><h2>Future dashboard ready.</h2><p>This website is structured for CRM, client portal, investor dashboard, project tracking, documents, appointments and automation.</p></div>
+        <div><p class="eyebrow">DLCAO Operations</p><h2>Operations-ready foundation.</h2><p>This website is structured for CRM, client portal, investor dashboard, project tracking, documents, appointments and automation.</p></div>
         <div class="dashboard-card">
-          <div><span>New Leads</span><strong>CRM Ready</strong></div>
-          <div><span>Projects</span><strong>Portal Ready</strong></div>
-          <div><span>Investors</span><strong>Tools Ready</strong></div>
-          <div><span>Automation</span><strong>Next Phase</strong></div>
+          <div><span>New Leads</span><strong>Lead Ready</strong></div>
+          <div><span>Projects</span><strong>Access Requests</strong></div>
+          <div><span>Investors</span><strong>Analysis Tools</strong></div>
+          <div><span>Automation</span><strong>Structured Growth</strong></div>
         </div>
       </div>
     </section>

@@ -1585,3 +1585,314 @@ img{
   line-height:1.5;
   color:#666;
 }
+
+
+/* DLCAO Phase 2 — Professional Project Review */
+.dlcao-analysis-section{
+  background:linear-gradient(135deg,#050505,#17110a);
+  color:#fff;
+  padding:88px 0;
+}
+.analysis-layout{
+  display:grid;
+  grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:34px;
+  align-items:start;
+}
+.analysis-intro{
+  position:sticky;
+  top:112px;
+}
+.analysis-intro h2{
+  font-size:clamp(2.8rem,5vw,5.4rem);
+  line-height:.9;
+  letter-spacing:-.055em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.analysis-intro>p{
+  color:#d4d4d4;
+  line-height:1.75;
+  max-width:620px;
+}
+.analysis-paths{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:24px 0;
+}
+.analysis-paths button{
+  min-height:44px;
+  border:1px solid #5a4319;
+  border-radius:999px;
+  background:#0f0f0f;
+  color:#f2d58e;
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:.72rem;
+  letter-spacing:.03em;
+}
+.analysis-paths button:hover,
+.analysis-paths button:focus-visible{
+  background:#efcf7e;
+  color:#111;
+}
+.analysis-input-label{
+  display:block;
+  margin-bottom:8px;
+  color:#f2d58e;
+  font-size:.76rem;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.analysis-input{
+  width:100%;
+  resize:vertical;
+  border:1px solid #6c5220;
+  border-radius:16px;
+  background:#fff;
+  color:#111;
+  padding:16px;
+  font:inherit;
+  line-height:1.6;
+  min-height:178px;
+}
+.analysis-actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+.outline-dark{
+  border:1px solid #8b6c2e;
+  color:#fff;
+  background:transparent;
+}
+.analysis-legal{
+  margin-top:14px;
+  font-size:.76rem;
+  color:#aaa!important;
+}
+.project-report{
+  background:#f7f3eb;
+  color:#111;
+  border:1px solid #c79a35;
+  border-radius:22px;
+  min-height:660px;
+  box-shadow:0 34px 100px rgba(0,0,0,.42);
+  overflow:hidden;
+}
+.report-empty{
+  min-height:660px;
+  display:grid;
+  place-content:center;
+  text-align:center;
+  padding:50px;
+}
+.report-mark{
+  width:82px;
+  height:82px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 20px;
+  border:1px solid #c79a35;
+  color:#9b6b14;
+  font-family:Georgia,serif;
+  font-size:1.75rem;
+  font-weight:900;
+  clip-path:polygon(25% 4%,75% 4%,100% 50%,75% 96%,25% 96%,0 50%);
+}
+.report-empty h3{
+  font-size:clamp(1.7rem,3vw,2.8rem);
+  text-transform:uppercase;
+}
+.report-empty p{color:#666;max-width:520px;line-height:1.65}
+.report-content{padding:28px}
+.report-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  padding-bottom:20px;
+  border-bottom:1px solid #d8c493;
+}
+.report-kicker{
+  color:#8a621b;
+  font-weight:950;
+  text-transform:uppercase;
+  font-size:.72rem;
+}
+.report-header h3{
+  font-size:clamp(1.8rem,3.5vw,3.4rem);
+  line-height:.95;
+  text-transform:uppercase;
+  margin-top:6px;
+}
+.report-reference{
+  text-align:right;
+  border:1px solid #d8c493;
+  border-radius:10px;
+  padding:10px 12px;
+  background:#fff;
+}
+.report-reference small{display:block;color:#777;text-transform:uppercase;font-size:.65rem}
+.report-reference strong{color:#7a5310}
+.report-summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin:18px 0;
+}
+.report-summary-grid article{
+  background:#fff;
+  border:1px solid #e2d4ae;
+  border-radius:12px;
+  padding:14px;
+}
+.report-summary-grid span{
+  display:block;
+  color:#777;
+  text-transform:uppercase;
+  font-size:.65rem;
+  font-weight:900;
+}
+.report-summary-grid strong{
+  display:block;
+  margin-top:7px;
+  line-height:1.3;
+}
+.report-section{
+  background:#fff;
+  border:1px solid #e2d4ae;
+  border-radius:14px;
+  padding:18px;
+  margin-top:12px;
+}
+.report-section h4,
+.lead-capture-panel h4{
+  text-transform:uppercase;
+  font-size:.82rem;
+  color:#77500d;
+  margin-bottom:10px;
+}
+.report-section p{line-height:1.65;color:#444}
+.report-two-column{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.report-list{
+  display:grid;
+  gap:8px;
+}
+.report-list div{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  color:#444;
+  line-height:1.45;
+}
+.report-list div::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#c79a35;
+  flex:0 0 auto;
+  margin-top:7px;
+}
+.report-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.report-metric{
+  border:1px solid #ead8ad;
+  border-radius:12px;
+  padding:14px;
+  background:#fffaf0;
+}
+.report-metric span{
+  display:block;
+  color:#777;
+  font-size:.66rem;
+  text-transform:uppercase;
+  font-weight:900;
+}
+.report-metric strong{
+  display:block;
+  margin-top:6px;
+  font-size:1.25rem;
+}
+.risk-section{border-left:4px solid #9f5a38}
+.opportunity-section{border-left:4px solid #6c8d55}
+.next-step-card{
+  margin-top:14px;
+  background:#111;
+  color:#fff;
+  border-radius:14px;
+  padding:20px;
+}
+.next-step-card span{
+  display:block;
+  color:#efcf7e;
+  text-transform:uppercase;
+  font-size:.7rem;
+  font-weight:950;
+}
+.next-step-card strong{
+  display:block;
+  font-size:1.35rem;
+  margin:7px 0;
+}
+.next-step-card p{color:#ccc;line-height:1.55}
+.lead-capture-panel{
+  margin-top:14px;
+  border:1px solid #c79a35;
+  border-radius:14px;
+  padding:20px;
+  background:#fff;
+}
+.lead-capture-panel>div:first-child p{
+  color:#555;
+  line-height:1.55;
+}
+.lead-capture-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:14px 0;
+}
+.lead-capture-grid input{
+  width:100%;
+  border:1px solid #d7c18b;
+  border-radius:10px;
+  padding:12px;
+}
+.lead-privacy{
+  margin-top:9px;
+  color:#777;
+  font-size:.7rem;
+  line-height:1.45;
+}
+.confidence-high{color:#52783d!important}
+.confidence-medium{color:#9b6b14!important}
+.confidence-low{color:#a04438!important}
+
+@media(max-width:1050px){
+  .analysis-layout{grid-template-columns:1fr}
+  .analysis-intro{position:static}
+  .report-summary-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:720px){
+  .dlcao-analysis-section{padding:64px 0}
+  .analysis-paths{grid-template-columns:repeat(2,1fr)}
+  .report-content{padding:16px}
+  .report-header{flex-direction:column}
+  .report-reference{text-align:left}
+  .report-summary-grid,
+  .report-two-column,
+  .report-metrics,
+  .lead-capture-grid{grid-template-columns:1fr}
+  .project-report,.report-empty{min-height:520px}
+}

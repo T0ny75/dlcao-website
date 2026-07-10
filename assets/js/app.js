@@ -446,3 +446,551 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeAI();
   initializeReveals();
 });
+
+
+/* DLCAO Phase 2 — Professional Project Review */
+const DLCAO_PHASE2 = {
+  current: null,
+  prompts: {
+    remodel: "I want to remodel my property. Address: 18657 Runnymede St, Reseda CA 91335. Area: 1,000 sqft. Budget: $125,000.",
+    sell: "I want to sell my property. Address: 18657 Runnymede St, Reseda CA 91335. Expected price: $750,000. Repairs: $15,000. Mortgage payoff: $300,000.",
+    buy: "I want to buy a property. Budget: $750,000. Down payment: 20%. Interest rate: 7%. Term: 30 years.",
+    flip: "7024 Eton Ave, Canoga Park CA 91303. Fix & Flip. Purchase: $650,000. ARV: $850,000. Repairs: $85,000. Holding costs: $30,000.",
+    rental: "18657 Runnymede St, Reseda CA 91335. Rental. Rent: $3,500. Property value: $750,000. Mortgage payment: $2,800. Taxes: $800. Insurance: $175.",
+    adu: "18659 Runnymede St, Reseda CA 91335. ADU. Size: 750 sqft. Cost per sqft: $300. Expected rent: $2,500."
+  }
+};
+
+function p2Money(value) {
+  return new Intl.NumberFormat("en-US", {
+    style:"currency",
+    currency:"USD",
+    maximumFractionDigits:0
+  }).format(Number(value || 0));
+}
+
+function p2Number(text, labels) {
+  const lower = text.toLowerCase();
+  for (const label of labels) {
+    const index = lower.indexOf(label.toLowerCase());
+    if (index < 0) continue;
+    const segment = text.slice(index + label.length, index + label.length + 80);
+    const match = segment.match(/[:\s$]*([0-9][0-9,]*(?:\.[0-9]+)?)\s*(k|m|%)?/i);
+    if (!match) continue;
+    let value = Number(match[1].replace(/,/g,""));
+    const suffix = (match[2] || "").toLowerCase();
+    if (suffix === "k") value *= 1000;
+    if (suffix === "m") value *= 1000000;
+    return value;
+  }
+  return null;
+}
+
+function p2Address(text) {
+  const match = text.match(/\b\d{2,6}\s+[A-Za-z0-9.' -]+?(?:Ave(?:nue)?|St(?:reet)?|Rd|Road|Dr(?:ive)?|Blvd|Way|Ct|Court|Ln|Lane)\b(?:[,\s]+[A-Za-z .'-]+)?(?:[,\s]+CA)?(?:[,\s]+\d{5})?/i);
+  return match ? match[0].trim() : "Address not provided";
+}
+
+function p2ProjectType(text) {
+  const lower = text.toLowerCase();
+  if (/(fix\s*&?\s*flip|\bflip\b|arv|rehab)/.test(lower)) return "Fix & Flip";
+  if (/(rental|rent|cash flow|cap rate)/.test(lower)) return "Rental";
+  if (/(adu|garage conversion)/.test(lower)) return "ADU";
+  if (/(remodel|renovation|kitchen|bathroom|bath|repair)/.test(lower)) return "Remodel";
+  if (/(sell|sale|seller|vender|venta)/.test(lower)) return "Sell";
+  if (/(buy|buyer|purchase|comprar)/.test(lower)) return "Buy";
+  return "General Project";
+}
+
+function p2Reference(text) {
+  const now = new Date();
+  const date = `${String(now.getFullYear()).slice(-2)}${String(now.getMonth()+1).padStart(2,"0")}${String(now.getDate()).padStart(2,"0")}`;
+  let hash = 0;
+  for (let i=0; i<text.length; i++) hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+  return `DL-${date}-${String(Math.abs(hash) % 10000).padStart(4,"0")}`;
+}
+
+function p2Confidence(provided, required) {
+  const count = required.filter(key => provided[key] !== null && provided[key] !== undefined && provided[key] !== "").length;
+  const ratio = required.length ? count / required.length : 0;
+  if (ratio >= .75) return {label:"High", className:"confidence-high"};
+  if (ratio >= .4) return {label:"Medium", className:"confidence-medium"};
+  return {label:"Low", className:"confidence-low"};
+}
+
+function p2Base(text, type) {
+  return {
+    type,
+    address:p2Address(text),
+    reference:p2Reference(text),
+    provided:{},
+    assumptions:[],
+    metrics:[],
+    risks:[],
+    opportunities:[],
+    missing:[],
+    summary:"",
+    nextStep:"",
+    nextStepNote:""
+  };
+}
+
+function p2AnalyzeFlip(text) {
+  const r = p2Base(text, "Fix & Flip");
+  const p = r.provided;
+  p.purchase = p2Number(text, ["purchase", "offer", "buy price", "price"]);
+  p.arv = p2Number(text, ["arv", "after repair value", "resale value"]);
+  p.repairs = p2Number(text, ["repairs", "repair", "rehab", "renovation"]);
+  p.holding = p2Number(text, ["holding costs", "holding", "carrying costs"]);
+  p.targetProfit = p2Number(text, ["target profit", "profit target"]);
+
+  const purchase = p.purchase ?? 650000;
+  const arv = p.arv ?? Math.round(purchase * 1.30);
+  const repairs = p.repairs ?? Math.round(arv * .10);
+  const holding = p.holding ?? Math.round(arv * .035);
+  const targetProfit = p.targetProfit ?? 70000;
+  const selling = Math.round(arv * .07);
+  const maxOffer = arv - repairs - holding - selling - targetProfit;
+  const profit = arv - purchase - repairs - holding - selling;
+  const invested = purchase + repairs + holding;
+  const roi = invested > 0 ? profit / invested * 100 : 0;
+
+  if (p.purchase == null) r.assumptions.push(`Purchase price assumed at ${p2Money(purchase)}.`);
+  if (p.arv == null) r.assumptions.push(`ARV assumed at ${p2Money(arv)}; this is not based on live comparable sales.`);
+  if (p.repairs == null) r.assumptions.push(`Rehab assumed at ${p2Money(repairs)}.`);
+  if (p.holding == null) r.assumptions.push(`Holding and carrying costs assumed at ${p2Money(holding)}.`);
+  if (p.targetProfit == null) r.assumptions.push(`Target profit assumed at ${p2Money(targetProfit)}.`);
+  r.assumptions.push(`Selling costs modeled at 7% of ARV (${p2Money(selling)}).`);
+
+  r.metrics = [
+    ["Purchase / Offer", p2Money(purchase)],
+    ["ARV", p2Money(arv)],
+    ["Repairs", p2Money(repairs)],
+    ["Holding Costs", p2Money(holding)],
+    ["Selling Costs", p2Money(selling)],
+    ["Maximum Offer", p2Money(maxOffer)],
+    ["Projected Profit", p2Money(profit)],
+    ["Estimated ROI", `${roi.toFixed(1)}%`],
+    ["Deal Signal", profit >= targetProfit && roi >= 15 ? "Strong" : profit > 0 && roi >= 8 ? "Review" : "High Risk"]
+  ];
+  r.risks = ["Unverified comparable sales and ARV", "Unknown permit or code issues", "Rehab scope could expand after inspection", "Financing and timeline may change holding costs"];
+  r.opportunities = ["Negotiate below the modeled maximum offer", "Increase value through targeted improvements", "Reduce timeline and carrying costs", "Confirm multiple exit strategies"];
+  r.missing = [
+    ...(p.purchase == null ? ["Actual purchase or offer price"] : []),
+    ...(p.arv == null ? ["Verified comparable sales and ARV"] : []),
+    ...(p.repairs == null ? ["Detailed rehab scope and contractor estimate"] : []),
+    "Financing terms", "Project timeline", "Permit and title review"
+  ];
+  r.summary = `This preliminary model compares acquisition, improvement, carrying and selling costs against the expected resale value. The current assumptions produce an estimated profit of ${p2Money(profit)} and an ROI of ${roi.toFixed(1)}%.`;
+  r.nextStep = "Verify ARV and complete a site-specific scope review";
+  r.nextStepNote = "DLCAO should review comparable sales, property condition, permit requirements and the rehab scope before an investment decision.";
+  r.confidence = p2Confidence(p, ["purchase","arv","repairs","holding"]);
+  return r;
+}
+
+function p2AnalyzeRental(text) {
+  const r = p2Base(text, "Rental");
+  const p = r.provided;
+  p.rent = p2Number(text, ["monthly rent", "rent"]);
+  p.value = p2Number(text, ["property value", "purchase price", "value", "price"]);
+  p.mortgage = p2Number(text, ["mortgage payment", "mortgage", "debt service"]);
+  p.taxes = p2Number(text, ["property taxes", "taxes", "tax"]);
+  p.insurance = p2Number(text, ["insurance"]);
+  p.hoa = p2Number(text, ["hoa"]);
+  p.utilities = p2Number(text, ["utilities"]);
+
+  const rent = p.rent ?? 3500;
+  const value = p.value ?? 750000;
+  const mortgage = p.mortgage ?? 0;
+  const taxes = p.taxes ?? Math.round(value * .0125 / 12);
+  const insurance = p.insurance ?? 175;
+  const hoa = p.hoa ?? 0;
+  const utilities = p.utilities ?? 0;
+  const vacancy = rent * .05;
+  const maintenance = rent * .08;
+  const management = rent * .08;
+  const noi = rent - vacancy - maintenance - management - taxes - insurance - hoa - utilities;
+  const cashFlow = noi - mortgage;
+  const capRate = value > 0 ? noi * 12 / value * 100 : 0;
+
+  if (p.rent == null) r.assumptions.push(`Monthly rent assumed at ${p2Money(rent)}.`);
+  if (p.value == null) r.assumptions.push(`Property value assumed at ${p2Money(value)}.`);
+  if (p.mortgage == null) r.assumptions.push("No mortgage payment was provided; cash flow assumes $0 debt service.");
+  if (p.taxes == null) r.assumptions.push(`Taxes assumed at ${p2Money(taxes)} per month.`);
+  if (p.insurance == null) r.assumptions.push(`Insurance assumed at ${p2Money(insurance)} per month.`);
+  r.assumptions.push("Vacancy modeled at 5%; maintenance and management modeled at 8% each.");
+
+  r.metrics = [
+    ["Monthly Rent", p2Money(rent)],
+    ["Vacancy Reserve", p2Money(vacancy)],
+    ["Maintenance", p2Money(maintenance)],
+    ["Management", p2Money(management)],
+    ["NOI Before Debt", `${p2Money(noi)}/mo`],
+    ["Mortgage", `${p2Money(mortgage)}/mo`],
+    ["Cash Flow", `${p2Money(cashFlow)}/mo`],
+    ["Cap Rate", `${capRate.toFixed(2)}%`],
+    ["Annual Gross Rent", p2Money(rent*12)]
+  ];
+  r.risks = ["Rent may differ from verified local comparables", "Unexpected repairs or turnover", "Vacancy and collection risk", "Insurance, taxes or HOA may increase"];
+  r.opportunities = ["Increase rent after targeted improvements", "Reduce owner-paid utilities", "Improve tenant retention", "Evaluate ADU or additional income potential"];
+  r.missing = [
+    ...(p.rent == null ? ["Verified market rent"] : []),
+    ...(p.mortgage == null ? ["Actual mortgage/debt service"] : []),
+    ...(p.taxes == null ? ["Actual property taxes"] : []),
+    ...(p.insurance == null ? ["Actual insurance"] : []),
+    "Repair history", "Lease terms", "Utility responsibility", "Property-management plan"
+  ];
+  r.summary = `The preliminary rental model estimates NOI before debt at ${p2Money(noi)} per month and cash flow after entered debt service at ${p2Money(cashFlow)} per month.`;
+  r.nextStep = "Confirm market rent and all recurring expenses";
+  r.nextStepNote = "DLCAO should compare actual rent comps, condition, financing, taxes, insurance and owner-paid expenses.";
+  r.confidence = p2Confidence(p, ["rent","value","mortgage","taxes","insurance"]);
+  return r;
+}
+
+function p2AnalyzeADU(text) {
+  const r = p2Base(text, "ADU");
+  const p = r.provided;
+  p.sqft = p2Number(text, ["square feet", "sqft", "size"]);
+  p.costPerSqft = p2Number(text, ["cost per sqft", "per sqft"]);
+  p.rent = p2Number(text, ["expected rent", "monthly rent", "rent"]);
+  p.budget = p2Number(text, ["budget"]);
+
+  const sqft = p.sqft ?? 750;
+  const cpsf = p.costPerSqft ?? 300;
+  const construction = p.budget ?? sqft * cpsf;
+  const soft = construction * .15;
+  const contingency = construction * .10;
+  const total = construction + soft + contingency;
+  const rent = p.rent ?? 2500;
+  const grossYield = total > 0 ? rent*12/total*100 : 0;
+
+  if (p.sqft == null) r.assumptions.push(`ADU size assumed at ${sqft} sq ft.`);
+  if (p.costPerSqft == null && p.budget == null) r.assumptions.push(`Construction assumed at ${p2Money(cpsf)} per sq ft.`);
+  if (p.rent == null) r.assumptions.push(`Monthly rent assumed at ${p2Money(rent)}.`);
+  r.assumptions.push("Soft costs modeled at 15% and contingency at 10%.");
+
+  r.metrics = [
+    ["Size", `${sqft.toLocaleString()} sq ft`],
+    ["Construction", p2Money(construction)],
+    ["Plans / Soft Costs", p2Money(soft)],
+    ["Contingency", p2Money(contingency)],
+    ["Total Budget", p2Money(total)],
+    ["Expected Rent", `${p2Money(rent)}/mo`],
+    ["Annual Gross Rent", p2Money(rent*12)],
+    ["Gross Yield", `${grossYield.toFixed(1)}%`]
+  ];
+  r.risks = ["Zoning or setback restrictions", "Utility capacity and connection cost", "Site access or grading complexity", "Plan-check and permitting delays"];
+  r.opportunities = ["Create new rental income", "Increase property utility and value", "House family members or staff", "Improve long-term property flexibility"];
+  r.missing = [
+    ...(p.sqft == null ? ["Desired ADU size"] : []),
+    "Lot dimensions and zoning", "Attached or detached design", "Utility locations", "Site photographs", "Finish level", "Verified rental comparables"
+  ];
+  r.summary = `The preliminary ADU model estimates a total project budget of ${p2Money(total)} and annual gross rent of ${p2Money(rent*12)} under the current assumptions.`;
+  r.nextStep = "Complete a zoning and site-feasibility review";
+  r.nextStepNote = "DLCAO should review lot dimensions, access, utilities, desired size, finish level and city requirements.";
+  r.confidence = p2Confidence(p, ["sqft","costPerSqft","rent"]);
+  return r;
+}
+
+function p2AnalyzeRemodel(text) {
+  const r = p2Base(text, "Remodel");
+  const p = r.provided;
+  p.sqft = p2Number(text, ["square feet", "sqft", "area"]);
+  p.budget = p2Number(text, ["budget", "cost"]);
+  const sqft = p.sqft ?? 1000;
+  const base = p.budget ?? sqft * 125;
+  const contingency = base * .12;
+  const total = base + contingency;
+  const timeline = sqft <= 500 ? "4–8 weeks" : sqft <= 1500 ? "8–16 weeks" : "16–28+ weeks";
+
+  if (p.sqft == null) r.assumptions.push(`Scope size assumed at ${sqft} sq ft.`);
+  if (p.budget == null) r.assumptions.push(`Base construction budget assumed at ${p2Money(base)}.`);
+  r.assumptions.push("Contingency modeled at 12%.");
+
+  r.metrics = [
+    ["Scope Size", `${sqft.toLocaleString()} sq ft`],
+    ["Base Budget", p2Money(base)],
+    ["Contingency", p2Money(contingency)],
+    ["Total Budget", p2Money(total)],
+    ["Timeline", timeline]
+  ];
+  r.risks = ["Hidden damage after demolition", "Structural or code upgrades", "Material lead times", "Scope changes during construction"];
+  r.opportunities = ["Improve functionality", "Increase market appeal", "Correct deferred maintenance", "Coordinate value-focused finish selections"];
+  r.missing = [
+    ...(p.sqft == null ? ["Approximate project area"] : []),
+    "Rooms and scope", "Photos and existing conditions", "Finish level", "Permit requirements", "Desired completion date"
+  ];
+  r.summary = `The preliminary remodel model estimates a total working budget of ${p2Money(total)} and an illustrative timeline of ${timeline}.`;
+  r.nextStep = "Schedule a scope and site-condition review";
+  r.nextStepNote = "DLCAO should inspect the property, confirm dimensions, define finishes and determine permit requirements.";
+  r.confidence = p2Confidence(p, ["sqft","budget"]);
+  return r;
+}
+
+function p2AnalyzeSell(text) {
+  const r = p2Base(text, "Sell");
+  const p = r.provided;
+  p.price = p2Number(text, ["expected price", "sale price", "sell price", "value"]);
+  p.repairs = p2Number(text, ["repairs", "repair", "renovation"]);
+  p.payoff = p2Number(text, ["mortgage payoff", "payoff", "loan balance"]);
+
+  const price = p.price ?? 750000;
+  const repairs = p.repairs ?? 15000;
+  const payoff = p.payoff ?? 0;
+  const commission = price * .05;
+  const closing = price * .02;
+  const net = price - repairs - commission - closing - payoff;
+
+  if (p.price == null) r.assumptions.push(`Sale price assumed at ${p2Money(price)}.`);
+  if (p.repairs == null) r.assumptions.push(`Pre-sale repairs assumed at ${p2Money(repairs)}.`);
+  if (p.payoff == null) r.assumptions.push("Mortgage payoff assumed at $0.");
+  r.assumptions.push("Commission modeled at 5% and other closing costs at 2%.");
+
+  r.metrics = [
+    ["Sale Price", p2Money(price)],
+    ["Repairs", p2Money(repairs)],
+    ["Commission", p2Money(commission)],
+    ["Closing Costs", p2Money(closing)],
+    ["Mortgage Payoff", p2Money(payoff)],
+    ["Estimated Net", p2Money(net)]
+  ];
+  r.risks = ["Sale price not supported by current verified comparables", "Repairs may not produce equal value", "Title, tax or payoff adjustments", "Market timing and carrying costs"];
+  r.opportunities = ["Compare as-is and improved-sale strategies", "Complete only high-return repairs", "Evaluate rental or investor alternatives", "Improve presentation and buyer confidence"];
+  r.missing = [
+    ...(p.price == null ? ["Verified comparable sales"] : []),
+    "Property condition", "Title and lien information", "Actual commission agreement", "Taxes and escrow adjustments", "Desired sale timeline"
+  ];
+  r.summary = `The preliminary seller model estimates net proceeds of ${p2Money(net)} before income-tax considerations under the entered and assumed costs.`;
+  r.nextStep = "Compare as-is, improved-sale and rental strategies";
+  r.nextStepNote = "DLCAO should review property condition, current comparables, payoff, timeline and the highest-return repairs.";
+  r.confidence = p2Confidence(p, ["price","repairs","payoff"]);
+  return r;
+}
+
+function p2AnalyzeBuy(text) {
+  const r = p2Base(text, "Buy");
+  const p = r.provided;
+  p.price = p2Number(text, ["purchase price", "budget", "price"]);
+  p.down = p2Number(text, ["down payment"]);
+  p.rate = p2Number(text, ["interest rate", "rate"]);
+  p.term = p2Number(text, ["term"]);
+
+  const price = p.price ?? 750000;
+  let down = p.down ?? 20;
+  if (down <= 100) down = price * down / 100;
+  const rate = p.rate ?? 7;
+  const term = p.term ?? 30;
+  const loan = Math.max(price-down,0);
+  const monthlyRate = rate/100/12;
+  const count = term*12;
+  const pi = monthlyRate > 0 ? loan*monthlyRate*Math.pow(1+monthlyRate,count)/(Math.pow(1+monthlyRate,count)-1) : loan/count;
+  const taxes = price*.0125/12;
+  const insurance = 175;
+  const closing = price*.03;
+  const payment = pi+taxes+insurance;
+
+  if (p.price == null) r.assumptions.push(`Purchase budget assumed at ${p2Money(price)}.`);
+  if (p.down == null) r.assumptions.push("Down payment assumed at 20%.");
+  if (p.rate == null) r.assumptions.push("Interest rate assumed at 7%.");
+  if (p.term == null) r.assumptions.push("Loan term assumed at 30 years.");
+  r.assumptions.push("Taxes assumed at 1.25% annually, insurance at $175/month and closing costs at 3%.");
+
+  r.metrics = [
+    ["Purchase Price", p2Money(price)],
+    ["Down Payment", p2Money(down)],
+    ["Loan Amount", p2Money(loan)],
+    ["Interest Rate", `${rate.toFixed(2)}%`],
+    ["Principal + Interest", `${p2Money(pi)}/mo`],
+    ["Taxes + Insurance", `${p2Money(taxes+insurance)}/mo`],
+    ["Estimated Payment", `${p2Money(payment)}/mo`],
+    ["Closing Costs", p2Money(closing)],
+    ["Cash Needed", p2Money(down+closing)]
+  ];
+  r.risks = ["Not a lender quote or approval", "Taxes, insurance and HOA can vary", "Repairs and reserves may increase cash needed", "Rate or loan program may change"];
+  r.opportunities = ["Compare financing programs", "Negotiate credits or repairs", "Evaluate rental or ADU potential", "Match property condition to available reserves"];
+  r.missing = [
+    "Credit and income qualification", "Actual loan program", "HOA and insurance quote", "Property condition", "Repair budget", "Desired monthly payment"
+  ];
+  r.summary = `The preliminary buyer model estimates a monthly payment of ${p2Money(payment)} and total initial cash of approximately ${p2Money(down+closing)} before reserves and repairs.`;
+  r.nextStep = "Confirm financing and property-specific carrying costs";
+  r.nextStepNote = "Work with licensed financing and real-estate professionals to verify eligibility, payment, taxes, insurance, HOA and closing costs.";
+  r.confidence = p2Confidence(p, ["price","down","rate","term"]);
+  return r;
+}
+
+function p2Analyze(text) {
+  const type = p2ProjectType(text);
+  if (type === "Fix & Flip") return p2AnalyzeFlip(text);
+  if (type === "Rental") return p2AnalyzeRental(text);
+  if (type === "ADU") return p2AnalyzeADU(text);
+  if (type === "Remodel") return p2AnalyzeRemodel(text);
+  if (type === "Sell") return p2AnalyzeSell(text);
+  if (type === "Buy") return p2AnalyzeBuy(text);
+  const r = p2Base(text, "General Project");
+  r.confidence = {label:"Low",className:"confidence-low"};
+  r.summary = "DLCAO needs one clear goal to create a useful project review.";
+  r.assumptions = ["No project type was detected."];
+  r.metrics = [];
+  r.risks = ["Insufficient project information"];
+  r.opportunities = ["Select Remodel, Sell, Buy, Fix & Flip, Rental or ADU"];
+  r.missing = ["Project type", "Property address", "Known budget or financial inputs"];
+  r.nextStep = "Select a project type and add an address";
+  r.nextStepNote = "Use one of the six project buttons to start.";
+  return r;
+}
+
+function p2Label(key) {
+  const labels = {
+    purchase:"Purchase / Offer", arv:"ARV", repairs:"Repairs / Rehab", holding:"Holding Costs", targetProfit:"Target Profit",
+    rent:"Monthly Rent", value:"Property Value", mortgage:"Mortgage / Debt Service", taxes:"Taxes", insurance:"Insurance", hoa:"HOA", utilities:"Utilities",
+    sqft:"Square Footage", costPerSqft:"Cost per Sq Ft", budget:"Budget", price:"Price / Budget", payoff:"Mortgage Payoff", down:"Down Payment", rate:"Interest Rate", term:"Loan Term"
+  };
+  return labels[key] || key;
+}
+
+function p2DisplayValue(key, value) {
+  if (value == null) return "";
+  if (key === "rate") return `${value}%`;
+  if (key === "term") return `${value} years`;
+  if (key === "sqft") return `${Number(value).toLocaleString()} sq ft`;
+  if (key === "down" && value <= 100) return `${value}%`;
+  return p2Money(value);
+}
+
+function p2List(containerId, items, emptyText) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  const values = items && items.length ? items : [emptyText];
+  values.forEach(item => {
+    const div = document.createElement("div");
+    div.textContent = item;
+    container.appendChild(div);
+  });
+}
+
+function p2Render(result) {
+  DLCAO_PHASE2.current = result;
+  document.getElementById("reportEmpty").hidden = true;
+  document.getElementById("reportContent").hidden = false;
+  document.getElementById("reportTitle").textContent = `${result.type} Project Review`;
+  document.getElementById("projectReference").textContent = result.reference;
+  document.getElementById("reportProjectType").textContent = result.type;
+  document.getElementById("reportAddress").textContent = result.address;
+  const confidence = document.getElementById("reportConfidence");
+  confidence.textContent = result.confidence.label;
+  confidence.className = result.confidence.className;
+  document.getElementById("reportExecutiveSummary").textContent = result.summary;
+
+  const provided = Object.entries(result.provided)
+    .filter(([,value]) => value !== null && value !== undefined)
+    .map(([key,value]) => `${p2Label(key)}: ${p2DisplayValue(key,value)}`);
+  p2List("reportProvidedData", provided, "No financial inputs were detected.");
+  p2List("reportAssumptions", result.assumptions, "No assumptions were required.");
+  p2List("reportRisks", result.risks, "No risks listed.");
+  p2List("reportOpportunities", result.opportunities, "No opportunities listed.");
+  p2List("reportMissing", result.missing, "No additional information requested.");
+
+  const metrics = document.getElementById("reportMetrics");
+  metrics.innerHTML = "";
+  result.metrics.forEach(([label,value]) => {
+    const card = document.createElement("div");
+    card.className = "report-metric";
+    const span = document.createElement("span");
+    span.textContent = label;
+    const strong = document.createElement("strong");
+    strong.textContent = value;
+    card.append(span,strong);
+    metrics.appendChild(card);
+  });
+
+  document.getElementById("reportNextStep").textContent = result.nextStep;
+  document.getElementById("reportNextStepNote").textContent = result.nextStepNote;
+  document.getElementById("projectReport").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function p2ProjectMessage() {
+  const r = DLCAO_PHASE2.current;
+  if (!r) return "";
+  const name = document.getElementById("leadName")?.value.trim() || "Not provided";
+  const phone = document.getElementById("leadPhone")?.value.trim() || "Not provided";
+  const email = document.getElementById("leadEmail")?.value.trim() || "Not provided";
+  const metrics = r.metrics.map(([label,value]) => `${label}: ${value}`).join("\n");
+  const missing = r.missing.map(x => `- ${x}`).join("\n");
+  return [
+    "DLCAO Project Review",
+    `Reference: ${r.reference}`,
+    `Project: ${r.type}`,
+    `Address: ${r.address}`,
+    `Confidence: ${r.confidence.label}`,
+    "",
+    `Client: ${name}`,
+    `Phone: ${phone}`,
+    `Email: ${email}`,
+    "",
+    "Executive Summary:",
+    r.summary,
+    "",
+    "Preliminary Metrics:",
+    metrics || "No metrics available.",
+    "",
+    "Information Needed:",
+    missing || "None listed.",
+    "",
+    `Recommended Next Step: ${r.nextStep}`,
+    r.nextStepNote
+  ].join("\n");
+}
+
+function initializePhase2Analysis() {
+  const input = document.getElementById("analysisInput");
+  const run = document.getElementById("runAnalysisBtn");
+  const clear = document.getElementById("clearAnalysisBtn");
+  const send = document.getElementById("sendProjectBtn");
+
+  document.querySelectorAll("[data-analysis-prompt]").forEach(button => {
+    button.addEventListener("click", () => {
+      input.value = DLCAO_PHASE2.prompts[button.dataset.analysisPrompt] || "";
+      input.focus();
+    });
+  });
+
+  run?.addEventListener("click", () => {
+    const text = input?.value.trim();
+    if (!text) {
+      input?.focus();
+      return;
+    }
+    p2Render(p2Analyze(text));
+  });
+
+  clear?.addEventListener("click", () => {
+    if (input) input.value = "";
+    DLCAO_PHASE2.current = null;
+    document.getElementById("reportContent").hidden = true;
+    document.getElementById("reportEmpty").hidden = false;
+    ["leadName","leadPhone","leadEmail"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = "";
+    });
+  });
+
+  input?.addEventListener("keydown", event => {
+    if ((event.metaKey || event.ctrlKey) && event.key === "Enter") run?.click();
+  });
+
+  send?.addEventListener("click", () => {
+    if (!DLCAO_PHASE2.current) return;
+    const phone = document.getElementById("leadPhone")?.value.trim();
+    if (!phone) {
+      document.getElementById("leadPhone")?.focus();
+      return;
+    }
+    const message = p2ProjectMessage();
+    const url = `https://wa.me/17473674447?text=${encodeURIComponent(message)}`;
+    const popup = window.open(url,"_blank","noopener");
+    if (!popup) window.location.href = url;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initializePhase2Analysis);
