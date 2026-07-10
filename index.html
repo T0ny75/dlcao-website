@@ -7,10 +7,7 @@
   <title>DLCAO | Construction · Real Estate · Investments</title>
   <meta name="description" content="DLCAO Construction · Real Estate · Investments. General contractor, ADU, remodeling, rentals, fix and flip, and investment strategy serving Los Angeles, Winnetka, North Hills and Southern California since 2018." />
   <meta name="keywords" content="DLCAO, construction, real estate, investments, general contractor, ADU, remodeling, fix and flip, rental property, Los Angeles, Winnetka, North Hills" />
-
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <link rel="stylesheet" href="assets/css/animations.css" />
-  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="assets/js/app.js"></script>
   <meta name="author" content="DLCAO" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -26,10 +23,10 @@
   <link rel="dns-prefetch" href="https://images.unsplash.com">
 <link rel="manifest" href="site.webmanifest">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <meta name="dlcao-version" content="Enterprise v26 Platform Structure" />
+  <meta name="dlcao-version" content="Enterprise 1.0 Stable" />
   <meta name="theme-color" content="#050505" />
   <link rel="canonical" href="https://t0ny75.github.io/dlcao-website/" />
-<meta name="dlcao-release" content="Enterprise v31 AI Analyzer" />
+<meta name="dlcao-release" content="Stable Platform Update" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -108,7 +105,7 @@
         <a href="#rental">Rental</a>
         <a href="#sold-properties">Sold Properties</a>
         <a href="#investors">Investors</a>
-        <a class="portal" href="#client-portal">Client Portal</a>
+        <a class="portal" href="portal/access.html">Client Portal</a>
         <a class="estimate" href="#estimate">Get Estimate</a>
       </nav>
     </div>
@@ -690,10 +687,10 @@
         <div class="ai-copy">
           <p class="eyebrow">DLCAO AI Assistant</p>
           <h2>Your construction and investment intake assistant.</h2>
-          <p>Choose a goal, answer guided questions, and send a complete project summary to DLCAO through WhatsApp.</p>
+          <p>Enter an address and your goal—Fix & Flip, rental, ADU, remodel, buy or sell—to receive a preliminary analysis with clearly labeled assumptions.</p>
           <div class="ai-mini-stats">
             <div><strong>24/7</strong><span>Lead Intake</span></div>
-            <div><strong>6-Step</strong><span>Project Review</span></div>
+            <div><strong>Instant</strong><span>Preliminary Analysis</span></div>
             <div><strong>CRM Ready</strong><span>Future Integration</span></div>
           </div>
         </div>
@@ -701,14 +698,32 @@
           <div class="ai-progress"><span id="aiStepLabel">Step 1 of 6</span><div><i id="aiProgressBar"></i></div></div>
           <div class="chat-window" id="chatWindow"><div class="bot-msg">Welcome to DLCAO AI. What are you working on today?</div></div>
           <div class="quick-chat">
-            <button type="button" data-flow="adu">ADU</button>
             <button type="button" data-flow="remodel">Remodel</button>
             <button type="button" data-flow="sell">Sell</button>
+            <button type="button" data-flow="buy">Buy</button>
             <button type="button" data-flow="flip">Fix & Flip</button>
             <button type="button" data-flow="rental">Rental</button>
+            <button type="button" data-flow="adu">ADU</button>
           </div>
           <div class="chat-input"><input id="aiInput" placeholder="Type your answer..." /><button type="button" onclick="sendAIMessage()">Send</button></div>
           <button class="btn gold full ai-report-btn" type="button" onclick="sendAIReport()">Send AI Summary to DLCAO</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="analysis-center" class="ai-capabilities-section">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow dark">DLCAO Analysis Center</p><h2>Six business paths. One connected platform.</h2></div>
+          <p>Preliminary analysis based on client information and clearly labeled assumptions.</p>
+        </div>
+        <div class="capability-grid">
+          <article><span>01</span><h3>Remodel</h3><p>Budget, timeline, scope and permit considerations.</p><a href="#ai-assistant" data-ai-jump="remodel">Start analysis</a></article>
+          <article><span>02</span><h3>Sell</h3><p>As-is versus repair-and-list strategy and estimated net inputs.</p><a href="#ai-assistant" data-ai-jump="sell">Start review</a></article>
+          <article><span>03</span><h3>Buy</h3><p>Down payment, payment estimate, reserves and closing costs.</p><a href="#ai-assistant" data-ai-jump="buy">Start review</a></article>
+          <article><span>04</span><h3>Fix & Flip</h3><p>ARV, rehab, MAO, profit, ROI and risk rating.</p><a href="#ai-assistant" data-ai-jump="flip">Analyze deal</a></article>
+          <article><span>05</span><h3>Rental</h3><p>Rent, expenses, NOI, cash flow and cap rate.</p><a href="#ai-assistant" data-ai-jump="rental">Analyze rental</a></article>
+          <article><span>06</span><h3>ADU</h3><p>Project budget, rent potential and site checklist.</p><a href="#ai-assistant" data-ai-jump="adu">Review ADU</a></article>
         </div>
       </div>
     </section>
@@ -875,8 +890,6 @@
       <svg viewBox="0 0 24 24"><path d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10ZM4 8h16V6H4v2Zm4.5 6.8 1.4-1.4 1.6 1.6 4.6-4.6 1.4 1.4-6 6-3-3Z"/></svg>
     </a>
   </div>
-  <script src="assets/js/calculator.js" defer></script>
-  <script src="assets/js/properties.js" defer></script>
 </body>
 </html>
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Portal Access | DLCAO</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="../index.html" class="logo">
+        <span class="logo-mark">DO</span>
+        <span class="logo-text"><strong>DLCAO</strong><small>Construction · Real Estate · Investments</small></span>
+      </a>
+      <a class="btn gold" href="../index.html">Return Home</a>
+    </div>
+  </header>
+  <main>
+    <section class="container" style="padding:80px 0;max-width:850px">
+      <p class="eyebrow dark">Client Portal</p>
+      <h1 style="font-size:clamp(2.4rem,6vw,5rem);line-height:.95;text-transform:uppercase">Request portal access</h1>
+      <div class="portal-notice">
+        <strong>Portal accounts are created only for approved DLCAO clients and active projects.</strong>
+        <p style="margin-top:10px;line-height:1.7">Submit the project address and your contact information. DLCAO will verify the request before issuing access. Never send passwords or sensitive financial information through WhatsApp.</p>
+      </div>
+      <form id="portalAccessForm" class="smart-form">
+        <label>Full Name<input name="Name" required /></label>
+        <label>Phone<input name="Phone" required /></label>
+        <label>Email<input name="Email" type="email" required /></label>
+        <label>Project Address<input name="Project Address" required /></label>
+        <label class="full">Message<textarea name="Message" placeholder="Project name, contract number or reason for access"></textarea></label>
+        <button class="btn gold full" type="submit">Request Access via WhatsApp</button>
+      </form>
+    </section>
+  </main>
+  <script>
+    document.getElementById("portalAccessForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const lines = ["DLCAO Client Portal Access Request"];
+      new FormData(this).forEach((value, key) => {
+        if (String(value).trim()) lines.push(key + ": " + String(value).trim());
+      });
+      window.open("https://wa.me/17473674447?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
+    });
+  </script>
+</body>
+</html>

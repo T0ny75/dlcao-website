@@ -1,95 +1,57 @@
-const COMPANY_PHONE = "17473674447";
 
-const menuBtn = document.getElementById("menuBtn");
-const navMenu = document.getElementById("navMenu");
+"use strict";
 
-menuBtn?.addEventListener("click", () => navMenu.classList.toggle("show"));
-
-document.querySelectorAll("#navMenu a").forEach(link => {
-  link.addEventListener("click", () => navMenu.classList.remove("show"));
-});
-
-function formMessage(form) {
-  const data = new FormData(form);
-  return [...data.entries()]
-    .filter(([key, value]) => String(value).trim() !== "")
-    .map(([key, value]) => `${key}: ${value}`)
-    .join("\n");
-}
-
-function sendWhatsApp(message) {
-  window.open(`https://wa.me/${COMPANY_PHONE}?text=${encodeURIComponent(message)}`, "_blank");
-}
-
-["estimateForm", "buyForm", "contactForm", "propertyForm"].forEach(id => {
-  document.getElementById(id)?.addEventListener("submit", function(e) {
-    e.preventDefault();
-    sendWhatsApp("Hello DLCAO:\n\n" + formMessage(this));
-  });
+const DLCAO_PHONE = "17473674447";
+const USD = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0
 });
 
 function money(value) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value || 0);
+  return USD.format(Number.isFinite(Number(value)) ? Number(value) : 0);
 }
 
-
-
-
-function initFlipAnalyzer() {
-  document.querySelectorAll(".step").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = document.getElementById(btn.dataset.target);
-      const step = Number(btn.dataset.step || 0);
-      if (!target) return;
-      const value = Number(target.value || 0) + step;
-      target.value = Math.max(0, value);
-      calcFlip();
-    });
-  });
-
-  document.querySelectorAll("[data-set]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = document.getElementById(btn.dataset.set);
-      if (!target) return;
-      target.value = btn.dataset.value;
-      calcFlip();
-    });
-  });
-
-  document.querySelectorAll(".calc-tabs .tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".calc-tabs .tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      const preset = tab.dataset.preset;
-      if (preset === "conservative") {
-        setValue("sellingPercent", 8);
-        setValue("profit", 100000);
-        setValue("holdingCosts", 35000);
-      }
-      if (preset === "balanced") {
-        setValue("sellingPercent", 7);
-        setValue("profit", 75000);
-        setValue("holdingCosts", 25000);
-      }
-      if (preset === "aggressive") {
-        setValue("sellingPercent", 5);
-        setValue("profit", 50000);
-        setValue("holdingCosts", 15000);
-      }
-      calcFlip();
-    });
-  });
-
-  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id => {
-    document.getElementById(id)?.addEventListener("input", calcFlip);
-  });
-
-  calcFlip();
+function openWhatsApp(message) {
+  window.open(
+    `https://wa.me/${DLCAO_PHONE}?text=${encodeURIComponent(message)}`,
+    "_blank",
+    "noopener"
+  );
 }
 
-function setValue(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.value = value;
+function formMessage(form, heading = "DLCAO Request") {
+  const data = new FormData(form);
+  const lines = [heading];
+  for (const [key, rawValue] of data.entries()) {
+    const value = String(rawValue).trim();
+    if (value) lines.push(`${key}: ${value}`);
+  }
+  return lines.join("\n");
+}
+
+function initializeNavigation() {
+  const menuBtn = document.getElementById("menuBtn");
+  const navMenu = document.getElementById("navMenu");
+  menuBtn?.addEventListener("click", () => navMenu?.classList.toggle("show"));
+  document.querySelectorAll("#navMenu a").forEach((link) => {
+    link.addEventListener("click", () => navMenu?.classList.remove("show"));
+  });
+}
+
+function initializeForms() {
+  const forms = {
+    estimateForm: "DLCAO Estimate Request",
+    buyForm: "DLCAO Buyer Request",
+    contactForm: "DLCAO Contact Request",
+    propertyForm: "DLCAO Property Request"
+  };
+  Object.entries(forms).forEach(([id, heading]) => {
+    document.getElementById(id)?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      openWhatsApp(formMessage(event.currentTarget, heading));
+    });
+  });
 }
 
 function calcFlip() {
@@ -97,469 +59,350 @@ function calcFlip() {
   const purchase = Number(document.getElementById("purchasePrice")?.value || 0);
   const repairs = Number(document.getElementById("repairs")?.value || 0);
   const holding = Number(document.getElementById("holdingCosts")?.value || 0);
-  const sellingPercent = Number(document.getElementById("sellingPercent")?.value || 0) / 100;
+  const sellingRate = Number(document.getElementById("sellingPercent")?.value || 0) / 100;
   const targetProfit = Number(document.getElementById("profit")?.value || 0);
 
-  const sellingCosts = arv * sellingPercent;
+  const sellingCosts = arv * sellingRate;
   const maxOffer = arv - repairs - holding - sellingCosts - targetProfit;
-  const rule70 = (arv * 0.70) - repairs;
   const projectedProfit = arv - purchase - repairs - holding - sellingCosts;
-  const totalInvested = purchase + repairs + holding;
-  const roi = totalInvested > 0 ? (projectedProfit / totalInvested) * 100 : 0;
+  const totalInvestment = purchase + repairs + holding;
+  const roi = totalInvestment > 0 ? (projectedProfit / totalInvestment) * 100 : 0;
+  const rule70 = arv * 0.70 - repairs;
 
-  updateText("flipResult", money(maxOffer));
-  updateText("projectedProfit", money(projectedProfit));
-  updateText("roiResult", roi.toFixed(1) + "%");
-  updateText("rule70Result", money(rule70));
-  updateText("totalInvested", money(totalInvested));
-  updateText("sellingCostResult", money(sellingCosts));
-
-  const statusEl = document.getElementById("dealStatus");
-  const adviceEl = document.getElementById("dealAdvice");
-  if (statusEl) {
-    statusEl.classList.remove("good", "warn", "bad");
-    if (projectedProfit >= targetProfit && roi >= 15) {
-      statusEl.textContent = "Strong Deal";
-      statusEl.classList.add("good");
-      if (adviceEl) adviceEl.textContent = "This deal meets or beats your target profit and shows a strong estimated ROI. Review comps, permits and repair scope before moving forward.";
-    } else if (projectedProfit > 0 && roi >= 8) {
-      statusEl.textContent = "Review Deal";
-      statusEl.classList.add("warn");
-      const gap = Math.max(0, targetProfit - projectedProfit);
-      if (adviceEl) adviceEl.textContent = gap > 0 ? `Consider negotiating approximately ${money(gap)} lower or reducing costs to hit your target profit.` : "Profit is positive, but ROI is moderate. Review risk, timeline and repair budget.";
-    } else {
-      statusEl.textContent = "Risky Deal";
-      statusEl.classList.add("bad");
-      if (adviceEl) adviceEl.textContent = "This deal may not leave enough margin. Consider a lower purchase price, lower repair budget, or passing on the deal.";
-    }
-  }
-}
-
-function updateText(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
-}
-
-document.addEventListener("DOMContentLoaded", initFlipAnalyzer);
-
-
-/* V13 premium motion */
-document.addEventListener("DOMContentLoaded", () => {
-  const backTop = document.getElementById("backTop");
-  if (backTop) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 500) backTop.classList.add("show");
-      else backTop.classList.remove("show");
-    });
-    backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  }
-
-  const revealItems = document.querySelectorAll("[data-reveal='true'], .reveal-section");
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealItems.forEach(item => observer.observe(item));
-  } else {
-    revealItems.forEach(item => item.classList.add("revealed"));
-  }
-});
-
-
-/* V14 visible floating actions */
-document.addEventListener("DOMContentLoaded", () => {
-  const backTop = document.getElementById("backTop");
-  if (backTop) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 450) backTop.classList.add("show");
-      else backTop.classList.remove("show");
-    });
-    backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  }
-});
-
-
-/* V15 back to top visibility */
-document.addEventListener("DOMContentLoaded", () => {
-  const backTop = document.getElementById("backTop");
-  if (!backTop) return;
-  const toggleTop = () => {
-    if (window.scrollY > 450) backTop.classList.add("show");
-    else backTop.classList.remove("show");
+  const set = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
   };
-  window.addEventListener("scroll", toggleTop);
-  toggleTop();
-  backTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
-});
+  set("flipResult", money(maxOffer));
+  set("projectedProfit", money(projectedProfit));
+  set("roiResult", `${roi.toFixed(1)}%`);
+  set("rule70Result", money(rule70));
 
+  const status = document.getElementById("dealStatus");
+  const advice = document.getElementById("dealAdvice");
+  if (!status) return;
 
-/* V16 compact flip analyzer controls */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-adjust]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const input = document.getElementById(btn.dataset.adjust);
-      if (!input) return;
-      input.value = Math.max(0, Number(input.value || 0) + Number(btn.dataset.step || 0));
-      calcFlip();
-    });
-  });
-
-  document.querySelectorAll(".preset").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".preset").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      if (btn.dataset.preset === "safe") {
-        setCalc("sellingPercent", 8); setCalc("profit", 100000); setCalc("holdingCosts", 35000);
-      } else if (btn.dataset.preset === "fast") {
-        setCalc("sellingPercent", 5); setCalc("profit", 50000); setCalc("holdingCosts", 15000);
-      } else {
-        setCalc("sellingPercent", 7); setCalc("profit", 70000); setCalc("holdingCosts", 25000);
-      }
-      calcFlip();
-    });
-  });
-
-  document.querySelectorAll("[data-set]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      setCalc(btn.dataset.set, btn.dataset.value);
-      calcFlip();
-    });
-  });
-
-  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id => {
-    document.getElementById(id)?.addEventListener("input", calcFlip);
-  });
-
-  calcFlip();
-
-  const backTop = document.getElementById("backTop");
-  if (backTop) {
-    const showTop = () => backTop.classList.toggle("show", window.scrollY > 450);
-    window.addEventListener("scroll", showTop);
-    showTop();
-    backTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
-  }
-});
-
-function setCalc(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.value = value;
-}
-
-
-/* V17 professional contact rail back-top */
-document.addEventListener("DOMContentLoaded", () => {
-  const topBtn = document.getElementById("backTop");
-  if (!topBtn) return;
-  const toggleTop = () => topBtn.classList.toggle("show", window.scrollY > 500);
-  window.addEventListener("scroll", toggleTop);
-  toggleTop();
-  topBtn.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
-});
-
-
-/* Enterprise v20 calculator */
-function resetFlipDefaults(){
-  setV20("arv",750000);
-  setV20("purchasePrice",450000);
-  setV20("repairs",85000);
-  setV20("holdingCosts",25000);
-  setV20("sellingPercent",7);
-  setV20("profit",70000);
-  calcFlip();
-}
-function setV20(id,value){
-  const el=document.getElementById(id);
-  if(el) el.value=value;
-}
-function calcFlip(){
-  const arv=Number(document.getElementById("arv")?.value||0);
-  const purchase=Number(document.getElementById("purchasePrice")?.value||0);
-  const repairs=Number(document.getElementById("repairs")?.value||0);
-  const holding=Number(document.getElementById("holdingCosts")?.value||0);
-  const sellingPct=Number(document.getElementById("sellingPercent")?.value||0)/100;
-  const target=Number(document.getElementById("profit")?.value||0);
-  const selling=arv*sellingPct;
-  const maxOffer=arv-repairs-holding-selling-target;
-  const profit=arv-purchase-repairs-holding-selling;
-  const rule70=(arv*.70)-repairs;
-  const invested=purchase+repairs+holding;
-  const roi=invested>0?(profit/invested)*100:0;
-  setTxt("flipResult",money(maxOffer));
-  setTxt("projectedProfit",money(profit));
-  setTxt("roiResult",roi.toFixed(1)+"%");
-  setTxt("rule70Result",money(rule70));
-  const status=document.getElementById("dealStatus");
-  const advice=document.getElementById("dealAdvice");
-  if(status){
-    status.classList.remove("good","warn","bad");
-    if(profit>=target && roi>=15){
-      status.textContent="Strong Deal";
-      status.classList.add("good");
-      if(advice) advice.textContent="This deal meets the target profit and shows strong ROI. Verify comps and repair scope before moving forward.";
-    }else if(profit>0 && roi>=8){
-      status.textContent="Review Deal";
-      status.classList.add("warn");
-      if(advice) advice.textContent="The deal has profit, but margin may be tight. Negotiate price, reduce repairs, or confirm ARV carefully.";
-    }else{
-      status.textContent="Pass / High Risk";
-      status.classList.add("bad");
-      if(advice) advice.textContent="The deal does not leave enough margin. Consider a lower purchase price or passing on the opportunity.";
-    }
-  }
-}
-function setTxt(id,value){
-  const el=document.getElementById(id);
-  if(el) el.textContent=value;
-}
-document.addEventListener("DOMContentLoaded",()=>{
-  ["arv","purchasePrice","repairs","holdingCosts","sellingPercent","profit"].forEach(id=>{
-    document.getElementById(id)?.addEventListener("input",calcFlip);
-    document.getElementById(id)?.addEventListener("change",calcFlip);
-  });
-  calcFlip();
-});
-
-
-/* Enterprise v22 polish */
-document.addEventListener("DOMContentLoaded", () => {
-  const sections = document.querySelectorAll(".reveal-section, [data-reveal='true']");
-  if ("IntersectionObserver" in window) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          obs.unobserve(entry.target);
-        }
-      });
-    }, {threshold:.12});
-    sections.forEach(s => obs.observe(s));
+  status.classList.remove("good", "warn", "bad");
+  if (projectedProfit >= targetProfit && roi >= 15) {
+    status.textContent = "Strong Deal";
+    status.classList.add("good");
+    if (advice) advice.textContent =
+      "The model meets the selected profit target and estimated ROI threshold. Verify comparable sales, permits, financing and scope before proceeding.";
+  } else if (projectedProfit > 0 && roi >= 8) {
+    status.textContent = "Review / Negotiate";
+    status.classList.add("warn");
+    if (advice) advice.textContent =
+      "The deal is positive but the margin may be thin. Negotiate the purchase price or confirm a stronger ARV.";
   } else {
-    sections.forEach(s => s.classList.add("revealed"));
+    status.textContent = "High Risk";
+    status.classList.add("bad");
+    if (advice) advice.textContent =
+      "The current assumptions do not leave enough margin. Reduce cost, increase verified value, or consider passing.";
   }
-  const menu = document.getElementById("navMenu");
-  document.querySelectorAll("#navMenu a").forEach(a => {
-    a.addEventListener("click", () => menu?.classList.remove("show"));
-  });
-});
-
-
-/* V23 estimate dock smooth scroll */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('a[href="#estimate"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const target = document.getElementById("estimate");
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({behavior:"smooth", block:"center"});
-    });
-  });
-});
-
-
-/* V25 platform hooks */
-const DLCAO_PLATFORM = {
-  version: "v25",
-  crmReady: true,
-  futureIntegrations: ["Google Sheets", "CRM", "Calendly", "Client Portal", "Investor Dashboard"]
-};
-
-
-/* DLCAO Enterprise v26 App */
-const DLCAO = {
-  version: "Enterprise v26",
-  phone: "+17473674447",
-  email: "DLCAO@mail.com",
-  instagram: "https://www.instagram.com/dlcaoholding"
-};
-
-
-/* DLCAO Enterprise v27 Production Release */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('a[href="#estimate"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const target = document.getElementById("estimate");
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({behavior:"smooth", block:"center"});
-    });
-  });
-});
-
-
-/* V28 Lead Machine */
-function addChatMessage(text,type="bot"){
-  const win=document.getElementById("chatWindow");
-  if(!win)return;
-  const div=document.createElement("div");
-  div.className=type==="user"?"user-msg":"bot-msg";
-  div.textContent=text;
-  win.appendChild(div);
-  win.scrollTop=win.scrollHeight;
-}
-function sendAIMessage(){
-  const input=document.getElementById("aiInput");
-  const text=input?.value?.trim();
-  if(!text)return;
-  addChatMessage(text,"user");
-  input.value="";
-  setTimeout(()=>addChatMessage("Great. Please send your property address, timeline, budget range, and best contact. DLCAO can review and follow up directly.","bot"),350);
-}
-document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelectorAll("[data-chat]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const input=document.getElementById("aiInput");
-      if(input)input.value=btn.dataset.chat;
-      sendAIMessage();
-    });
-  });
-});
-function submitSmartEstimate(e){
-  e.preventDefault();
-  const msg=[
-    "DLCAO Project Request",
-    "Project: "+document.getElementById("projectType")?.value,
-    "City: "+document.getElementById("projectCity")?.value,
-    "Budget: "+document.getElementById("budgetRange")?.value,
-    "Timeline: "+document.getElementById("timeline")?.value,
-    "Address: "+document.getElementById("propertyAddress")?.value,
-    "Contact: "+document.getElementById("contactInfo")?.value,
-    "Details: "+document.getElementById("projectDetails")?.value
-  ].join("\n");
-  window.open("https://wa.me/17473674447?text="+encodeURIComponent(msg),"_blank");
 }
 
-/* DLCAO V30 Guided AI Assistant */
-const aiState={flow:null,step:0,data:{},flows:{flip:["property address","purchase price","repair budget","expected ARV","holding costs","target profit"],adu:["property address","city","lot size","detached or attached ADU","budget range","best contact"],remodel:["property address","project type","square footage or rooms","budget range","timeline","best contact"],sell:["property address","reason for selling","occupied or vacant","desired timeline","price expectation","best contact"],rental:["property address","rental goal","repairs needed","target rent","timeline","best contact"]}};
-function aiAdd(text,type="bot"){const win=document.getElementById("chatWindow");if(!win)return;const div=document.createElement("div");div.className=type==="user"?"user-msg":"bot-msg";div.textContent=text;win.appendChild(div);win.scrollTop=win.scrollHeight;}
-function setAIProgress(){const label=document.getElementById("aiStepLabel");const bar=document.getElementById("aiProgressBar");const total=6;const step=Math.min(aiState.step+1,total);if(label)label.textContent="Step "+step+" of "+total;if(bar)bar.style.width=((step/total)*100)+"%";}
-function startAIFlow(flow){aiState.flow=flow;aiState.step=0;aiState.data={};setAIProgress();const names={flip:"Fix & Flip",adu:"ADU",remodel:"Remodel",sell:"Sell",rental:"Rental"};aiAdd("Great. Let's start a "+names[flow]+" review. What is the "+aiState.flows[flow][0]+"?");}
-function sendAIMessage(){const input=document.getElementById("aiInput");const text=input?.value?.trim();if(!text)return;aiAdd(text,"user");input.value="";if(!aiState.flow){const lower=text.toLowerCase();if(lower.includes("adu"))return startAIFlow("adu");if(lower.includes("flip")||lower.includes("arv"))return startAIFlow("flip");if(lower.includes("sell"))return startAIFlow("sell");if(lower.includes("rent"))return startAIFlow("rental");return startAIFlow("remodel");}const key=aiState.flows[aiState.flow][aiState.step];aiState.data[key]=text;aiState.step++;setAIProgress();if(aiState.step<aiState.flows[aiState.flow].length){aiAdd("Thanks. What is the "+aiState.flows[aiState.flow][aiState.step]+"?");}else{aiAdd(generateAIRecommendation());}}
-function generateAIRecommendation(){if(aiState.flow==="flip"){const purchase=Number((aiState.data["purchase price"]||"").replace(/[^0-9.]/g,""));const repairs=Number((aiState.data["repair budget"]||"").replace(/[^0-9.]/g,""));const arv=Number((aiState.data["expected ARV"]||"").replace(/[^0-9.]/g,""));const holding=Number((aiState.data["holding costs"]||"").replace(/[^0-9.]/g,""));const target=Number((aiState.data["target profit"]||"").replace(/[^0-9.]/g,""))||70000;const selling=arv*.07;const profit=arv-purchase-repairs-holding-selling;const roi=(purchase+repairs+holding)>0?(profit/(purchase+repairs+holding))*100:0;const rating=profit>=target&&roi>=15?"Strong Deal":profit>0?"Review Deal":"High Risk";return "DLCAO Investment Review: Estimated profit "+money(profit)+", ROI "+roi.toFixed(1)+"%, Rating: "+rating+". Tap Send AI Summary to DLCAO to send this report.";}return "DLCAO Review Complete. I have enough information to create a project summary. Tap Send AI Summary to DLCAO.";}
-function sendAIReport(){const lines=["DLCAO AI Lead Summary","Type: "+(aiState.flow||"General")];Object.keys(aiState.data).forEach(k=>lines.push(k+": "+aiState.data[k]));if(lines.length<3)lines.push("Client started a conversation but did not complete full intake.");window.open("https://wa.me/17473674447?text="+encodeURIComponent(lines.join("\n")),"_blank");}
-document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-flow]").forEach(btn=>{btn.addEventListener("click",()=>startAIFlow(btn.dataset.flow));});});
+function initializeCalculator() {
+  ["arv", "purchasePrice", "repairs", "holdingCosts", "sellingPercent", "profit"]
+    .forEach((id) => {
+      const element = document.getElementById(id);
+      element?.addEventListener("input", calcFlip);
+      element?.addEventListener("change", calcFlip);
+    });
+  if (document.getElementById("arv")) calcFlip();
+}
 
-
-/* DLCAO V31 AI Analyzer - not a questionnaire */
-function parseMoneyFromText(text, keywords){
+function numberNearKeywords(text, keywords) {
   const lower = text.toLowerCase();
-  for(const key of keywords){
-    const idx = lower.indexOf(key);
-    if(idx >= 0){
-      const slice = lower.slice(idx, idx + 80);
-      const match = slice.match(/\$?\s*([0-9][0-9,\.]*)(\s*k)?/);
-      if(match){
-        let n = Number(match[1].replace(/,/g,""));
-        if(match[2]) n *= 1000;
-        return n;
-      }
-    }
+  for (const keyword of keywords) {
+    const position = lower.indexOf(keyword);
+    if (position === -1) continue;
+    const segment = lower.slice(position, position + 90);
+    const match = segment.match(/\$?\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*(k|m)?/i);
+    if (!match) continue;
+    let value = Number(match[1].replace(/,/g, ""));
+    if (match[2]?.toLowerCase() === "k") value *= 1_000;
+    if (match[2]?.toLowerCase() === "m") value *= 1_000_000;
+    return value;
   }
   return null;
 }
-function extractAddressLike(text){
-  const cleaned = text.replace(/\bfix\s*&?\s*flip\b/ig,"").replace(/\barv\b/ig,"").trim();
-  const match = cleaned.match(/\d{3,6}\s+[a-zA-Z0-9\s\.]+?(?:ave|avenue|st|street|rd|road|dr|drive|blvd|way|ct|court|ln|lane)?(?:\s+[a-zA-Z\s]+)?(?:\s+ca)?(?:\s+\d{5})?/i);
-  return match ? match[0].trim() : cleaned.slice(0,80);
+
+function extractAddress(text) {
+  const cleaned = text
+    .replace(/\b(fix\s*&?\s*flip|rental|rent|adu|remodel|sell|buy|construction)\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const match = cleaned.match(
+    /\b\d{2,6}\s+[A-Za-z0-9.' -]+?(?:Ave(?:nue)?|St(?:reet)?|Rd|Road|Dr(?:ive)?|Blvd|Way|Ct|Court|Ln|Lane)\b(?:[,\s]+[A-Za-z .'-]+)?(?:[,\s]+CA)?(?:[,\s]+\d{5})?/i
+  );
+  return match?.[0]?.trim() || cleaned.slice(0, 100) || "Address not confirmed";
 }
-function aiAnalyzeFreeText(text){
+
+function analysisHeader(title, address) {
+  return [
+    title,
+    "",
+    `Property: ${address}`,
+    "",
+    "PRELIMINARY MODEL — figures below are illustrative assumptions unless the client supplied them. They are not live MLS, Zillow, appraisal, permit or lending data.",
+    ""
+  ];
+}
+
+function analyzeFlip(text, address) {
+  const purchase = numberNearKeywords(text, ["purchase", "buy", "offer", "price", "precio"]) ?? 650_000;
+  const arv = numberNearKeywords(text, ["arv", "after repair", "resale", "value"]) ?? Math.round(purchase * 1.30);
+  const repairs = numberNearKeywords(text, ["repair", "repairs", "rehab", "renovation"]) ?? Math.round(arv * 0.10);
+  const holding = numberNearKeywords(text, ["holding", "closing", "carry"]) ?? Math.round(arv * 0.035);
+  const selling = Math.round(arv * 0.07);
+  const target = numberNearKeywords(text, ["target profit", "profit"]) ?? 70_000;
+  const maxOffer = arv - repairs - holding - selling - target;
+  const projectedProfit = arv - purchase - repairs - holding - selling;
+  const invested = purchase + repairs + holding;
+  const roi = invested > 0 ? projectedProfit / invested * 100 : 0;
+  const rating = projectedProfit >= target && roi >= 15
+    ? "STRONG DEAL"
+    : projectedProfit > 0 && roi >= 8
+      ? "REVIEW / NEGOTIATE"
+      : "HIGH RISK";
+
+  return [
+    ...analysisHeader("DLCAO FIX & FLIP ANALYSIS", address),
+    `Purchase / offer assumption: ${money(purchase)}`,
+    `ARV assumption: ${money(arv)}`,
+    `Repairs / rehab: ${money(repairs)}`,
+    `Holding + closing: ${money(holding)}`,
+    `Selling costs (7%): ${money(selling)}`,
+    `Target profit: ${money(target)}`,
+    "",
+    `Maximum allowable offer: ${money(maxOffer)}`,
+    `Projected profit: ${money(projectedProfit)}`,
+    `Estimated ROI: ${roi.toFixed(1)}%`,
+    `Rating: ${rating}`,
+    "",
+    "Confirm these inputs for a property-specific review: purchase price, verified comparable ARV, repair scope, financing, timeline and permits."
+  ].join("\n");
+}
+
+function analyzeRental(text, address) {
+  const monthlyRent = numberNearKeywords(text, ["monthly rent", "rent"]) ?? 3_500;
+  const propertyValue = numberNearKeywords(text, ["property value", "purchase", "price", "value"]) ?? 750_000;
+  const vacancyRate = 0.05;
+  const operatingRate = 0.30;
+  const grossAnnual = monthlyRent * 12;
+  const vacancy = grossAnnual * vacancyRate;
+  const operating = grossAnnual * operatingRate;
+  const noi = grossAnnual - vacancy - operating;
+  const capRate = propertyValue > 0 ? noi / propertyValue * 100 : 0;
+
+  return [
+    ...analysisHeader("DLCAO RENTAL PROPERTY ANALYSIS", address),
+    `Monthly rent assumption: ${money(monthlyRent)}`,
+    `Annual gross rent: ${money(grossAnnual)}`,
+    `Vacancy allowance (5%): ${money(vacancy)}`,
+    `Operating expenses (30%): ${money(operating)}`,
+    `Estimated NOI before debt service: ${money(noi)}`,
+    `Property value assumption: ${money(propertyValue)}`,
+    `Illustrative cap rate: ${capRate.toFixed(2)}%`,
+    "",
+    "Cash flow cannot be finalized without mortgage payment, taxes, insurance, HOA, utilities, maintenance and management costs.",
+    "Confirm actual rent/comps and all expenses before making an investment or listing decision."
+  ].join("\n");
+}
+
+function analyzeADU(text, address) {
+  const budget = numberNearKeywords(text, ["budget", "cost"]) ?? 220_000;
+  return [
+    ...analysisHeader("DLCAO ADU PRELIMINARY REVIEW", address),
+    `Planning budget assumption: ${money(budget)}`,
+    "Illustrative construction range: $120,000–$350,000+",
+    "Typical variables: size, attached/detached design, site access, utilities, grading, plans, permits and finish level.",
+    "",
+    "Required verification: zoning, lot dimensions, setbacks, utility capacity, fire access, parking rules and city plan-check requirements.",
+    "Next step: send property address, desired square footage, photos and budget to DLCAO."
+  ].join("\n");
+}
+
+function analyzeRemodel(text, address) {
+  return [
+    ...analysisHeader("DLCAO REMODEL PRELIMINARY REVIEW", address),
+    "Illustrative ranges:",
+    "Bathroom: $12,000–$35,000+",
+    "Kitchen: $25,000–$75,000+",
+    "Full renovation: scope-dependent",
+    "",
+    "Major cost drivers: demolition, structural changes, electrical, plumbing, HVAC, permits, finish selections and access.",
+    "Send photos, approximate square footage, desired finish level, timeline and budget for a closer review."
+  ].join("\n");
+}
+
+function analyzeSale(text, address) {
+  return [
+    ...analysisHeader("DLCAO SALE STRATEGY REVIEW", address),
+    "DLCAO can evaluate:",
+    "• As-is sale versus renovation before listing",
+    "• Repair priorities and likely buyer objections",
+    "• Rental or investor alternatives",
+    "• Timeline, carrying cost and preparation strategy",
+    "",
+    "A market value or net-proceeds estimate requires current comparable sales, liens/mortgage payoff, commissions, closing costs and confirmed property condition."
+  ].join("\n");
+}
+
+
+function analyzeBuy(text, address) {
+  const price = numberNearKeywords(text, ["purchase price", "price", "budget"]) ?? 750000;
+  const downPercent = numberNearKeywords(text, ["down percent", "down payment percent"]) ?? 20;
+  const downPayment = numberNearKeywords(text, ["down payment"]) ?? price * downPercent / 100;
+  const loan = Math.max(price - downPayment, 0);
+  const rate = numberNearKeywords(text, ["interest rate", "rate"]) ?? 7;
+  const term = numberNearKeywords(text, ["term"]) ?? 30;
+  const monthlyRate = rate / 100 / 12;
+  const count = term * 12;
+  const pi = monthlyRate > 0 ? loan * monthlyRate * Math.pow(1 + monthlyRate, count) / (Math.pow(1 + monthlyRate, count) - 1) : loan / count;
+  const taxes = price * 0.0125 / 12;
+  const insurance = 175;
+  const closing = price * 0.03;
+  const payment = pi + taxes + insurance;
+  return [
+    ...analysisHeader("DLCAO BUYER PRELIMINARY REVIEW", address),
+    `Purchase price assumption: ${money(price)}`,
+    `Down payment: ${money(downPayment)}`,
+    `Estimated loan: ${money(loan)}`,
+    `Interest rate assumption: ${rate.toFixed(2)}%`,
+    `Term: ${term} years`,
+    `Principal + interest: ${money(pi)}/month`,
+    `Taxes + insurance assumption: ${money(taxes + insurance)}/month`,
+    `Illustrative payment: ${money(payment)}/month`,
+    `Closing costs assumption (3%): ${money(closing)}`,
+    `Estimated cash needed: ${money(downPayment + closing)}`,
+    "",
+    "This is not a loan quote. Confirm credit, income, reserves, HOA, lender fees, taxes and insurance with licensed professionals."
+  ].join("\\n");
+}
+
+function analyzeGeneral(text) {
+  const address = extractAddress(text);
   const lower = text.toLowerCase();
-  const isFlip = lower.includes("flip") || lower.includes("fix") || lower.includes("arv") || lower.includes("investment");
-  const isADU = lower.includes("adu") || lower.includes("garage conversion");
-  const isSell = lower.includes("sell") || lower.includes("venta") || lower.includes("vender");
-  const isRemodel = lower.includes("remodel") || lower.includes("kitchen") || lower.includes("bath") || lower.includes("repair");
-
-  if(isFlip){
-    const address = extractAddressLike(text) || "Property address not confirmed";
-    const purchase = parseMoneyFromText(text, ["purchase","buy","offer","precio","price"]) || 650000;
-    const arv = parseMoneyFromText(text, ["arv","after repair","resale","value"]) || Math.round(purchase * 1.32);
-    const repairs = parseMoneyFromText(text, ["repair","rehab","renovation","repairs"]) || Math.round(arv * 0.10);
-    const holding = parseMoneyFromText(text, ["holding","closing","costs"]) || Math.round(arv * 0.035);
-    const selling = Math.round(arv * 0.07);
-    const targetProfit = parseMoneyFromText(text, ["profit","target"]) || 70000;
-    const maxOffer = arv - repairs - holding - selling - targetProfit;
-    const profit = arv - purchase - repairs - holding - selling;
-    const roi = (profit / (purchase + repairs + holding)) * 100;
-    const rating = profit >= targetProfit && roi >= 15 ? "🟢 STRONG DEAL" : profit > 0 && roi >= 8 ? "🟡 REVIEW / NEGOTIATE" : "🔴 HIGH RISK";
-    const negotiate = Math.max(0, purchase - maxOffer);
-
-    return [
-      "DLCAO Fix & Flip AI Analysis",
-      "",
-      "Property: " + address,
-      "",
-      "Estimated numbers based on professional assumptions:",
-      "• Purchase / Offer: " + money(purchase),
-      "• Estimated ARV: " + money(arv),
-      "• Repairs / Rehab: " + money(repairs),
-      "• Holding + Closing: " + money(holding),
-      "• Selling Costs (7%): " + money(selling),
-      "• Target Profit: " + money(targetProfit),
-      "",
-      "Deal Results:",
-      "• Maximum Allowable Offer: " + money(maxOffer),
-      "• Estimated Profit: " + money(profit),
-      "• Estimated ROI: " + roi.toFixed(1) + "%",
-      "• Rating: " + rating,
-      "",
-      negotiate > 0 ? "Recommendation: Try to negotiate about " + money(negotiate) + " lower, or verify a higher ARV before moving forward." : "Recommendation: This appears within investment range, but DLCAO should verify comps, scope of work, permits and timeline.",
-      "",
-      "Next step: Send this report to DLCAO for a personal review."
-    ].join("\n");
-  }
-
-  if(isADU){
-    const address = extractAddressLike(text);
-    return "DLCAO ADU AI Review\n\nProperty: " + address + "\n\nInitial estimate range: $120,000 - $350,000 depending on size, utilities, access, plans, permits and finish level.\n\nKey items to verify:\n• City and zoning\n• Lot size\n• Detached or attached ADU\n• Utility access\n• Parking and setbacks\n\nNext step: Send this to DLCAO for a property-specific ADU review.";
-  }
-
-  if(isSell){
-    const address = extractAddressLike(text);
-    return "DLCAO Property Sale Review\n\nProperty: " + address + "\n\nDLCAO can review selling strategy, needed repairs, rental potential, investor offer options and market preparation.\n\nRecommendation: Before listing, evaluate repairs that increase value without over-improving the property.";
-  }
-
-  if(isRemodel){
-    const address = extractAddressLike(text);
-    return "DLCAO Remodel AI Review\n\nProperty: " + address + "\n\nInitial ranges:\n• Bathroom: $12,000 - $35,000+\n• Kitchen: $25,000 - $75,000+\n• Full renovation: depends on square footage, scope, permits and finishes.\n\nRecommendation: DLCAO should review photos, scope, timeline and budget before creating a detailed estimate.";
-  }
-
-  return "I can analyze this for construction, ADU, remodel, sale, rental or Fix & Flip. Example: “7024 Eton Canoga Park CA 91303 Fix & Flip purchase 650k ARV 850k repairs 85k.”";
+  if (/(fix|flip|arv|rehab)/.test(lower)) return analyzeFlip(text, address);
+  if (/(rental|rent|cash flow|cap rate)/.test(lower)) return analyzeRental(text, address);
+  if (/(adu|garage conversion)/.test(lower)) return analyzeADU(text, address);
+  if (/(remodel|kitchen|bath|repair|renovation)/.test(lower)) return analyzeRemodel(text, address);
+  if (/(sell|sale|vender|venta)/.test(lower)) return analyzeSale(text, address);
+  if (/(buy|purchase|buyer|comprar)/.test(lower)) return analyzeBuy(text, address);
+  return [
+    "DLCAO PROPERTY ASSISTANT",
+    "",
+    "Enter an address and a goal such as:",
+    "• 7024 Eton Ave, Canoga Park — Fix & Flip",
+    "• 18657 Runnymede St, Reseda — Rental",
+    "• [address] — ADU",
+    "• [address] — Remodel",
+    "• [address] — Sell",
+    "",
+    "Add known numbers—purchase price, ARV, repairs, rent or budget—for a more useful preliminary model."
+  ].join("\n");
 }
 
-/* override previous sendAIMessage */
-function sendAIMessage(){
-  const input=document.getElementById("aiInput");
-  const text=input?.value?.trim();
-  if(!text)return;
-  aiAdd(text,"user");
-  input.value="";
-  const response = aiAnalyzeFreeText(text);
-  setTimeout(()=>aiAdd(response,"bot"),350);
-  if(typeof aiState !== "undefined"){
-    aiState.flow = "ai-analyzer";
-    aiState.data = { "AI Analysis Input": text, "AI Analysis Result": response };
-  }
+let lastAIInput = "";
+let lastAIAnalysis = "";
+
+function addAIMessage(text, type = "bot") {
+  const windowElement = document.getElementById("chatWindow");
+  if (!windowElement) return;
+  const message = document.createElement("div");
+  message.className = type === "user" ? "user-msg" : "bot-msg";
+  message.textContent = text;
+  windowElement.appendChild(message);
+  windowElement.scrollTop = windowElement.scrollHeight;
 }
 
-/* override quick buttons to act like prompts */
-document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelectorAll("[data-flow]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const prompts = {
-        flip: "7024 Eton Canoga Park CA 91303 Fix & Flip",
-        adu: "I want to build an ADU",
-        remodel: "I need a remodel estimate",
-        sell: "I want to sell my property",
-        rental: "I need help with a rental property"
-      };
-      const input=document.getElementById("aiInput");
-      if(input){ input.value = prompts[btn.dataset.flow] || btn.dataset.flow; }
+function sendAIMessage() {
+  const input = document.getElementById("aiInput");
+  const text = input?.value?.trim();
+  if (!text) return;
+  lastAIInput = text;
+  addAIMessage(text, "user");
+  input.value = "";
+  lastAIAnalysis = analyzeGeneral(text);
+  window.setTimeout(() => addAIMessage(lastAIAnalysis, "bot"), 250);
+}
+
+function sendAIReport() {
+  const message = lastAIAnalysis
+    ? `DLCAO AI Lead\n\nClient input:\n${lastAIInput}\n\n${lastAIAnalysis}`
+    : "DLCAO AI Lead\n\nThe client opened the analyzer but has not entered a request.";
+  openWhatsApp(message);
+}
+
+function initializeAI() {
+  const prompts = {
+    adu: "18659 Runnymede St, Reseda CA 91335 — ADU",
+    remodel: "I need a remodel estimate at my property",
+    sell: "I want to sell my property, expected price 750k, repairs 15k",
+    buy: "I want to buy a property, budget 750k, down payment 20%, rate 7%",
+    flip: "7024 Eton Ave, Canoga Park CA 91303 — Fix & Flip",
+    rental: "18657 Runnymede St, Reseda CA 91335 — Rental"
+  };
+  document.querySelectorAll("[data-flow]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const input = document.getElementById("aiInput");
+      if (input) input.value = prompts[button.dataset.flow] || "";
       sendAIMessage();
     });
   });
+  document.querySelectorAll("[data-ai-jump]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const input = document.getElementById("aiInput");
+      if (input) input.value = prompts[link.dataset.aiJump] || "";
+      window.setTimeout(() => input?.focus(), 300);
+    });
+  });
+
+  document.getElementById("aiInput")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendAIMessage();
+    }
+  });
+}
+
+function submitSmartEstimate(event) {
+  event.preventDefault();
+  const get = (id) => document.getElementById(id)?.value?.trim() || "Not provided";
+  openWhatsApp([
+    "DLCAO Smart Estimate Request",
+    `Project: ${get("projectType")}`,
+    `City: ${get("projectCity")}`,
+    `Budget: ${get("budgetRange")}`,
+    `Timeline: ${get("timeline")}`,
+    `Address: ${get("propertyAddress")}`,
+    `Contact: ${get("contactInfo")}`,
+    `Details: ${get("projectDetails")}`
+  ].join("\n"));
+}
+
+function initializeReveals() {
+  const elements = document.querySelectorAll(".reveal-section, [data-reveal='true']");
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach((element) => element.classList.add("revealed"));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  elements.forEach((element) => observer.observe(element));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
+  initializeForms();
+  initializeCalculator();
+  initializeAI();
+  initializeReveals();
 });
