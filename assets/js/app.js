@@ -443,3 +443,123 @@ function sendAIMessage(){const input=document.getElementById("aiInput");const te
 function generateAIRecommendation(){if(aiState.flow==="flip"){const purchase=Number((aiState.data["purchase price"]||"").replace(/[^0-9.]/g,""));const repairs=Number((aiState.data["repair budget"]||"").replace(/[^0-9.]/g,""));const arv=Number((aiState.data["expected ARV"]||"").replace(/[^0-9.]/g,""));const holding=Number((aiState.data["holding costs"]||"").replace(/[^0-9.]/g,""));const target=Number((aiState.data["target profit"]||"").replace(/[^0-9.]/g,""))||70000;const selling=arv*.07;const profit=arv-purchase-repairs-holding-selling;const roi=(purchase+repairs+holding)>0?(profit/(purchase+repairs+holding))*100:0;const rating=profit>=target&&roi>=15?"Strong Deal":profit>0?"Review Deal":"High Risk";return "DLCAO Investment Review: Estimated profit "+money(profit)+", ROI "+roi.toFixed(1)+"%, Rating: "+rating+". Tap Send AI Summary to DLCAO to send this report.";}return "DLCAO Review Complete. I have enough information to create a project summary. Tap Send AI Summary to DLCAO.";}
 function sendAIReport(){const lines=["DLCAO AI Lead Summary","Type: "+(aiState.flow||"General")];Object.keys(aiState.data).forEach(k=>lines.push(k+": "+aiState.data[k]));if(lines.length<3)lines.push("Client started a conversation but did not complete full intake.");window.open("https://wa.me/17473674447?text="+encodeURIComponent(lines.join("\n")),"_blank");}
 document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-flow]").forEach(btn=>{btn.addEventListener("click",()=>startAIFlow(btn.dataset.flow));});});
+
+
+/* DLCAO V31 AI Analyzer - not a questionnaire */
+function parseMoneyFromText(text, keywords){
+  const lower = text.toLowerCase();
+  for(const key of keywords){
+    const idx = lower.indexOf(key);
+    if(idx >= 0){
+      const slice = lower.slice(idx, idx + 80);
+      const match = slice.match(/\$?\s*([0-9][0-9,\.]*)(\s*k)?/);
+      if(match){
+        let n = Number(match[1].replace(/,/g,""));
+        if(match[2]) n *= 1000;
+        return n;
+      }
+    }
+  }
+  return null;
+}
+function extractAddressLike(text){
+  const cleaned = text.replace(/\bfix\s*&?\s*flip\b/ig,"").replace(/\barv\b/ig,"").trim();
+  const match = cleaned.match(/\d{3,6}\s+[a-zA-Z0-9\s\.]+?(?:ave|avenue|st|street|rd|road|dr|drive|blvd|way|ct|court|ln|lane)?(?:\s+[a-zA-Z\s]+)?(?:\s+ca)?(?:\s+\d{5})?/i);
+  return match ? match[0].trim() : cleaned.slice(0,80);
+}
+function aiAnalyzeFreeText(text){
+  const lower = text.toLowerCase();
+  const isFlip = lower.includes("flip") || lower.includes("fix") || lower.includes("arv") || lower.includes("investment");
+  const isADU = lower.includes("adu") || lower.includes("garage conversion");
+  const isSell = lower.includes("sell") || lower.includes("venta") || lower.includes("vender");
+  const isRemodel = lower.includes("remodel") || lower.includes("kitchen") || lower.includes("bath") || lower.includes("repair");
+
+  if(isFlip){
+    const address = extractAddressLike(text) || "Property address not confirmed";
+    const purchase = parseMoneyFromText(text, ["purchase","buy","offer","precio","price"]) || 650000;
+    const arv = parseMoneyFromText(text, ["arv","after repair","resale","value"]) || Math.round(purchase * 1.32);
+    const repairs = parseMoneyFromText(text, ["repair","rehab","renovation","repairs"]) || Math.round(arv * 0.10);
+    const holding = parseMoneyFromText(text, ["holding","closing","costs"]) || Math.round(arv * 0.035);
+    const selling = Math.round(arv * 0.07);
+    const targetProfit = parseMoneyFromText(text, ["profit","target"]) || 70000;
+    const maxOffer = arv - repairs - holding - selling - targetProfit;
+    const profit = arv - purchase - repairs - holding - selling;
+    const roi = (profit / (purchase + repairs + holding)) * 100;
+    const rating = profit >= targetProfit && roi >= 15 ? "🟢 STRONG DEAL" : profit > 0 && roi >= 8 ? "🟡 REVIEW / NEGOTIATE" : "🔴 HIGH RISK";
+    const negotiate = Math.max(0, purchase - maxOffer);
+
+    return [
+      "DLCAO Fix & Flip AI Analysis",
+      "",
+      "Property: " + address,
+      "",
+      "Estimated numbers based on professional assumptions:",
+      "• Purchase / Offer: " + money(purchase),
+      "• Estimated ARV: " + money(arv),
+      "• Repairs / Rehab: " + money(repairs),
+      "• Holding + Closing: " + money(holding),
+      "• Selling Costs (7%): " + money(selling),
+      "• Target Profit: " + money(targetProfit),
+      "",
+      "Deal Results:",
+      "• Maximum Allowable Offer: " + money(maxOffer),
+      "• Estimated Profit: " + money(profit),
+      "• Estimated ROI: " + roi.toFixed(1) + "%",
+      "• Rating: " + rating,
+      "",
+      negotiate > 0 ? "Recommendation: Try to negotiate about " + money(negotiate) + " lower, or verify a higher ARV before moving forward." : "Recommendation: This appears within investment range, but DLCAO should verify comps, scope of work, permits and timeline.",
+      "",
+      "Next step: Send this report to DLCAO for a personal review."
+    ].join("\n");
+  }
+
+  if(isADU){
+    const address = extractAddressLike(text);
+    return "DLCAO ADU AI Review\n\nProperty: " + address + "\n\nInitial estimate range: $120,000 - $350,000 depending on size, utilities, access, plans, permits and finish level.\n\nKey items to verify:\n• City and zoning\n• Lot size\n• Detached or attached ADU\n• Utility access\n• Parking and setbacks\n\nNext step: Send this to DLCAO for a property-specific ADU review.";
+  }
+
+  if(isSell){
+    const address = extractAddressLike(text);
+    return "DLCAO Property Sale Review\n\nProperty: " + address + "\n\nDLCAO can review selling strategy, needed repairs, rental potential, investor offer options and market preparation.\n\nRecommendation: Before listing, evaluate repairs that increase value without over-improving the property.";
+  }
+
+  if(isRemodel){
+    const address = extractAddressLike(text);
+    return "DLCAO Remodel AI Review\n\nProperty: " + address + "\n\nInitial ranges:\n• Bathroom: $12,000 - $35,000+\n• Kitchen: $25,000 - $75,000+\n• Full renovation: depends on square footage, scope, permits and finishes.\n\nRecommendation: DLCAO should review photos, scope, timeline and budget before creating a detailed estimate.";
+  }
+
+  return "I can analyze this for construction, ADU, remodel, sale, rental or Fix & Flip. Example: “7024 Eton Canoga Park CA 91303 Fix & Flip purchase 650k ARV 850k repairs 85k.”";
+}
+
+/* override previous sendAIMessage */
+function sendAIMessage(){
+  const input=document.getElementById("aiInput");
+  const text=input?.value?.trim();
+  if(!text)return;
+  aiAdd(text,"user");
+  input.value="";
+  const response = aiAnalyzeFreeText(text);
+  setTimeout(()=>aiAdd(response,"bot"),350);
+  if(typeof aiState !== "undefined"){
+    aiState.flow = "ai-analyzer";
+    aiState.data = { "AI Analysis Input": text, "AI Analysis Result": response };
+  }
+}
+
+/* override quick buttons to act like prompts */
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("[data-flow]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const prompts = {
+        flip: "7024 Eton Canoga Park CA 91303 Fix & Flip",
+        adu: "I want to build an ADU",
+        remodel: "I need a remodel estimate",
+        sell: "I want to sell my property",
+        rental: "I need help with a rental property"
+      };
+      const input=document.getElementById("aiInput");
+      if(input){ input.value = prompts[btn.dataset.flow] || btn.dataset.flow; }
+      sendAIMessage();
+    });
+  });
+});

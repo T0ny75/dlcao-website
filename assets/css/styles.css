@@ -1478,3 +1478,16 @@ img{
 .trust-center-section{background:#fff;padding:84px 0}.trust-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}.trust-cards article{border:1px solid #ead8ad;background:#fffaf0;border-radius:16px;padding:24px;min-height:160px;box-shadow:0 16px 42px rgba(0,0,0,.07)}.trust-cards strong{display:block;font-size:1.25rem;text-transform:uppercase;margin-bottom:10px}.trust-cards span{color:#555;line-height:1.6}
 .dashboard-preview-section{background:linear-gradient(135deg,#050505,#16100a);color:#fff;padding:84px 0}.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}.dashboard-grid h2{font-size:clamp(2.4rem,4.8vw,5rem);line-height:.92;text-transform:uppercase}.dashboard-grid p{color:#ddd;line-height:1.7;max-width:560px}.dashboard-card{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.dashboard-card div{border:1px solid #3b2a0d;border-radius:16px;background:#0c0c0c;padding:22px}.dashboard-card span{display:block;color:#aaa;text-transform:uppercase;font-size:.72rem;font-weight:950}.dashboard-card strong{display:block;color:#efcf7e;margin-top:8px;font-size:1.2rem}
 @media(max-width:1000px){.trust-cards,.dashboard-grid{grid-template-columns:1fr}.dashboard-card{grid-template-columns:1fr}.elite-ai .ai-mini-stats{grid-template-columns:1fr}}
+
+
+/* V31 AI Analyzer output */
+.bot-msg{
+  white-space:pre-line;
+  max-width:92%;
+}
+.advanced-ai-card .chat-window{
+  min-height:360px;
+}
+.ai-report-btn::after{
+  content:"";
+}
