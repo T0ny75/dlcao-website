@@ -31,9 +31,22 @@ function formMessage(form, heading = "DLCAO Request") {
 function initializeNavigation() {
   const menuBtn = document.getElementById("menuBtn");
   const navMenu = document.getElementById("navMenu");
-  menuBtn?.addEventListener("click", () => navMenu?.classList.toggle("show"));
+
+  const setMenuState = (open) => {
+    navMenu?.classList.toggle("show", open);
+    menuBtn?.setAttribute("aria-expanded", String(open));
+  };
+
+  menuBtn?.addEventListener("click", () => {
+    setMenuState(!navMenu?.classList.contains("show"));
+  });
+
   document.querySelectorAll("#navMenu a").forEach((link) => {
-    link.addEventListener("click", () => navMenu?.classList.remove("show"));
+    link.addEventListener("click", () => setMenuState(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenuState(false);
   });
 }
 
@@ -97,6 +110,25 @@ function calcFlip() {
     if (advice) advice.textContent =
       "The current assumptions do not leave enough margin. Reduce cost, increase verified value, or consider passing.";
   }
+}
+
+
+function resetFlipDefaults() {
+  const defaults = {
+    arv: 750000,
+    purchasePrice: 450000,
+    repairs: 85000,
+    holdingCosts: 25000,
+    sellingPercent: 7,
+    profit: 70000
+  };
+
+  Object.entries(defaults).forEach(([id, value]) => {
+    const field = document.getElementById(id);
+    if (field) field.value = String(value);
+  });
+
+  calcFlip();
 }
 
 function initializeCalculator() {
@@ -994,3 +1026,20 @@ function initializePhase2Analysis() {
 }
 
 document.addEventListener("DOMContentLoaded", initializePhase2Analysis);
+
+
+function initializeServiceAreaSearch() {
+  const input = document.getElementById("serviceAreaSearch");
+  const cards = document.querySelectorAll("#serviceAreaGrid a");
+  if (!input || !cards.length) return;
+
+  input.addEventListener("input", () => {
+    const query = input.value.trim().toLowerCase();
+    cards.forEach((card) => {
+      const matches = card.textContent.toLowerCase().includes(query);
+      card.hidden = !matches;
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initializeServiceAreaSearch);
