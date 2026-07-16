@@ -31,22 +31,9 @@ function formMessage(form, heading = "DLCAO Request") {
 function initializeNavigation() {
   const menuBtn = document.getElementById("menuBtn");
   const navMenu = document.getElementById("navMenu");
-
-  const setMenuState = (open) => {
-    navMenu?.classList.toggle("show", open);
-    menuBtn?.setAttribute("aria-expanded", String(open));
-  };
-
-  menuBtn?.addEventListener("click", () => {
-    setMenuState(!navMenu?.classList.contains("show"));
-  });
-
+  menuBtn?.addEventListener("click", () => navMenu?.classList.toggle("show"));
   document.querySelectorAll("#navMenu a").forEach((link) => {
-    link.addEventListener("click", () => setMenuState(false));
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setMenuState(false);
+    link.addEventListener("click", () => navMenu?.classList.remove("show"));
   });
 }
 
@@ -114,21 +101,45 @@ function calcFlip() {
 
 
 function resetFlipDefaults() {
-  const defaults = {
-    arv: 750000,
-    purchasePrice: 450000,
-    repairs: 85000,
-    holdingCosts: 25000,
-    sellingPercent: 7,
-    profit: 70000
-  };
+  const fieldIds = [
+    "arv",
+    "purchasePrice",
+    "repairs",
+    "holdingCosts",
+    "sellingPercent",
+    "profit"
+  ];
 
-  Object.entries(defaults).forEach(([id, value]) => {
+  fieldIds.forEach((id) => {
     const field = document.getElementById(id);
-    if (field) field.value = String(value);
+    if (field) field.value = "";
   });
 
-  calcFlip();
+  const values = {
+    flipResult: "$0",
+    projectedProfit: "$0",
+    roiResult: "0.0%",
+    rule70Result: "$0"
+  };
+
+  Object.entries(values).forEach(([id, value]) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  });
+
+  const status = document.getElementById("dealStatus");
+  if (status) {
+    status.textContent = "Enter Deal Information";
+    status.classList.remove("good", "warn", "bad");
+  }
+
+  const advice = document.getElementById("dealAdvice");
+  if (advice) {
+    advice.textContent =
+      "Enter the property numbers above to generate a preliminary deal review.";
+  }
+
+  document.getElementById("arv")?.focus();
 }
 
 function initializeCalculator() {
@@ -1030,16 +1041,84 @@ document.addEventListener("DOMContentLoaded", initializePhase2Analysis);
 
 function initializeServiceAreaSearch() {
   const input = document.getElementById("serviceAreaSearch");
-  const cards = document.querySelectorAll("#serviceAreaGrid a");
-  if (!input || !cards.length) return;
+  const grid = document.getElementById("serviceAreaGrid");
+  if (!input || !grid) return;
 
-  input.addEventListener("input", () => {
-    const query = input.value.trim().toLowerCase();
+  const cards = Array.from(grid.querySelectorAll("a"));
+
+  const filterAreas = () => {
+    const query = input.value.trim().toLocaleLowerCase();
+    let visibleCount = 0;
+
     cards.forEach((card) => {
-      const matches = card.textContent.toLowerCase().includes(query);
-      card.hidden = !matches;
+      const match = card.textContent.toLocaleLowerCase().includes(query);
+      card.hidden = !match;
+      if (match) visibleCount += 1;
+    });
+
+    let message = document.getElementById("serviceAreaNoResults");
+    if (!message) {
+      message = document.createElement("p");
+      message.id = "serviceAreaNoResults";
+      message.setAttribute("role", "status");
+      message.style.marginTop = "16px";
+      message.style.fontWeight = "800";
+      message.style.color = "#76500f";
+      grid.insertAdjacentElement("afterend", message);
+    }
+
+    message.textContent =
+      query && visibleCount === 0
+        ? "No exact match was found. Contact DLCAO to confirm service availability."
+        : "";
+  };
+
+  input.addEventListener("input", filterAreas);
+  input.addEventListener("search", filterAreas);
+  filterAreas();
+}
+
+function initializeOperationsDashboard() {
+  const cards = Array.from(
+    document.querySelectorAll("#dashboard-preview .dashboard-card > div")
+  );
+  if (!cards.length) return;
+
+  const destinations = [
+    { selector: "#estimate", label: "Open new lead intake" },
+    { selector: "#projects", label: "Open project showcase" },
+    { selector: "#investor-access, #investors, #investor-center", label: "Open investor center" },
+    { selector: "#platform, #contact", label: "Open automation and operations information" }
+  ];
+
+  cards.forEach((card, index) => {
+    const destination = destinations[index];
+    if (!destination) return;
+
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", destination.label);
+    card.style.cursor = "pointer";
+
+    const activate = () => {
+      const target = document.querySelector(destination.selector);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+    };
+
+    card.addEventListener("click", activate);
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        activate();
+      }
     });
   });
 }
 
-document.addEventListener("DOMContentLoaded", initializeServiceAreaSearch);
+document.addEventListener("DOMContentLoaded", () => {
+  initializeServiceAreaSearch();
+  initializeOperationsDashboard();
+});
