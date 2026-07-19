@@ -1762,6 +1762,9 @@ img{
   margin-top:7px;
   line-height:1.3;
 }
+#reportDataStatus{
+  color:#8a5714;
+}
 .report-section{
   background:#fff;
   border:1px solid #e2d4ae;
