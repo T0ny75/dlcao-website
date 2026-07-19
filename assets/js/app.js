@@ -143,13 +143,35 @@ function resetFlipDefaults() {
 }
 
 function initializeCalculator() {
-  ["arv", "purchasePrice", "repairs", "holdingCosts", "sellingPercent", "profit"]
-    .forEach((id) => {
-      const element = document.getElementById(id);
-      element?.addEventListener("input", calcFlip);
-      element?.addEventListener("change", calcFlip);
+  const fieldIds = [
+    "arv",
+    "purchasePrice",
+    "repairs",
+    "holdingCosts",
+    "sellingPercent",
+    "profit"
+  ];
+
+  const updateCalculator = () => {
+    const hasDealInformation = fieldIds.some((id) => {
+      const field = document.getElementById(id);
+      return String(field?.value || "").trim() !== "";
     });
-  if (document.getElementById("arv")) calcFlip();
+
+    if (hasDealInformation) {
+      calcFlip();
+    } else {
+      resetFlipDefaults();
+    }
+  };
+
+  fieldIds.forEach((id) => {
+    const element = document.getElementById(id);
+    element?.addEventListener("input", updateCalculator);
+    element?.addEventListener("change", updateCalculator);
+  });
+
+  if (document.getElementById("arv")) resetFlipDefaults();
 }
 
 function numberNearKeywords(text, keywords) {
