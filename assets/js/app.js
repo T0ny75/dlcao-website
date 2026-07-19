@@ -668,6 +668,7 @@ function p2Base(text, type) {
     type,
     address:p2Address(text),
     reference:p2Reference(text),
+    dataStatus:"User data + disclosed assumptions",
     provided:{},
     assumptions:[],
     metrics:[],
@@ -678,6 +679,94 @@ function p2Base(text, type) {
     nextStep:"",
     nextStepNote:""
   };
+}
+
+function p2IsSpanish(text) {
+  return /\b(quiero|necesito|propiedad|direcci[oó]n|presupuesto|renta|alquiler|vender|comprar|remodelar|reparaciones|hipoteca|impuestos|seguro|enganche|tasa|plazo)\b/i.test(text);
+}
+
+function p2ApplyDataGuardrails(result, text) {
+  const requirements = {
+    "Fix & Flip": {
+      all: ["purchase", "arv", "repairs"],
+      names: ["purchase price / precio de compra", "ARV", "repair budget / presupuesto de reparaciones"]
+    },
+    Rental: {
+      all: ["rent", "value"],
+      names: ["monthly rent / renta mensual", "property value / valor de la propiedad"]
+    },
+    Sell: {
+      all: ["price"],
+      names: ["expected sale price / precio esperado de venta"]
+    },
+    Buy: {
+      all: ["price"],
+      names: ["purchase price or budget / precio de compra o presupuesto"]
+    },
+    Remodel: {
+      any: ["sqft", "budget"],
+      names: ["project area / área del proyecto", "verified budget / presupuesto verificado"]
+    },
+    ADU: {
+      any: ["sqft", "budget"],
+      names: ["planned ADU size / tamaño del ADU", "verified budget / presupuesto verificado"]
+    }
+  };
+  const requirement = requirements[result.type];
+  if (!requirement) return result;
+
+  const provided = result.provided;
+  const hasRequiredData = requirement.all
+    ? requirement.all.every(key => provided[key] != null)
+    : requirement.any.some(key => provided[key] != null);
+
+  if (hasRequiredData) return result;
+
+  const spanish = p2IsSpanish(text);
+  result.dataStatus = spanish
+    ? "Sin fuente de datos en vivo"
+    : "Live property data not connected";
+  result.confidence = { label: spanish ? "No verificado" : "Unverified", className: "confidence-low" };
+  result.assumptions = [];
+  result.metrics = [];
+  result.summary = spanish
+    ? `DLCAO reconoció la dirección y el patrón ${result.type}, pero no generó valores de la propiedad. La website todavía no tiene una fuente inmobiliaria en vivo y no usará cifras inventadas como si fueran datos reales.`
+    : `DLCAO recognized the address and ${result.type} pattern, but did not generate property values. The website does not yet have a live property-data source and will not present invented figures as real property facts.`;
+  result.risks = spanish
+    ? [
+        "Precio, pies cuadrados, habitaciones y baños no verificados",
+        "No se consultaron MLS, registros públicos ni comparables en vivo",
+        "No debe tomarse una decisión financiera con información incompleta"
+      ]
+    : [
+        "Price, square footage, bedrooms and bathrooms are unverified",
+        "No live MLS, public-record or comparable-property source was queried",
+        "A financial decision should not be made from incomplete information"
+      ];
+  result.opportunities = spanish
+    ? [
+        `Completar los datos requeridos para el análisis ${result.type}`,
+        "Verificar registros, comparables y condición de la propiedad",
+        "Solicitar una revisión personal de DLCAO"
+      ]
+    : [
+        `Complete the required inputs for the ${result.type} analysis`,
+        "Verify property records, comparables and physical condition",
+        "Request a personal DLCAO review"
+      ];
+  result.missing = [
+    ...requirement.names,
+    ...(spanish
+      ? ["pies cuadrados, habitaciones, baños y año de construcción verificados", "fuentes y fecha de actualización"]
+      : ["verified square footage, bedrooms, bathrooms and year built", "sources and last-updated date"])
+  ];
+  result.nextStep = spanish
+    ? "Agregar datos verificados o solicitar revisión de DLCAO"
+    : "Add verified inputs or request a DLCAO review";
+  result.nextStepNote = spanish
+    ? "Cuando se conecte la fuente de datos en vivo, este reporte separará datos externos, datos del cliente, estimaciones y supuestos."
+    : "When the live data source is connected, this report will separate external facts, client inputs, estimates and assumptions.";
+  return result;
 }
 
 function p2AnalyzeFlip(text) {
@@ -965,12 +1054,14 @@ function p2AnalyzeBuy(text) {
 
 function p2Analyze(text, preferredType = null) {
   const type = preferredType || p2ProjectType(text);
-  if (type === "Fix & Flip") return p2AnalyzeFlip(text);
-  if (type === "Rental") return p2AnalyzeRental(text);
-  if (type === "ADU") return p2AnalyzeADU(text);
-  if (type === "Remodel") return p2AnalyzeRemodel(text);
-  if (type === "Sell") return p2AnalyzeSell(text);
-  if (type === "Buy") return p2AnalyzeBuy(text);
+  let result = null;
+  if (type === "Fix & Flip") result = p2AnalyzeFlip(text);
+  if (type === "Rental") result = p2AnalyzeRental(text);
+  if (type === "ADU") result = p2AnalyzeADU(text);
+  if (type === "Remodel") result = p2AnalyzeRemodel(text);
+  if (type === "Sell") result = p2AnalyzeSell(text);
+  if (type === "Buy") result = p2AnalyzeBuy(text);
+  if (result) return p2ApplyDataGuardrails(result, text);
   const r = p2Base(text, "General Project");
   r.confidence = {label:"Low",className:"confidence-low"};
   r.summary = "DLCAO needs one clear goal to create a useful project review.";
@@ -1022,6 +1113,7 @@ function p2Render(result) {
   document.getElementById("projectReference").textContent = result.reference;
   document.getElementById("reportProjectType").textContent = result.type;
   document.getElementById("reportAddress").textContent = result.address;
+  document.getElementById("reportDataStatus").textContent = result.dataStatus;
   const confidence = document.getElementById("reportConfidence");
   confidence.textContent = result.confidence.label;
   confidence.className = result.confidence.className;
@@ -1037,7 +1129,9 @@ function p2Render(result) {
   p2List("reportMissing", result.missing, "No additional information requested.");
 
   const metrics = document.getElementById("reportMetrics");
+  const financialSection = document.getElementById("reportFinancialSection");
   metrics.innerHTML = "";
+  financialSection.hidden = result.metrics.length === 0;
   result.metrics.forEach(([label,value]) => {
     const card = document.createElement("div");
     card.className = "report-metric";
