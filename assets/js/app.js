@@ -1140,6 +1140,58 @@ function initializeServiceAreaSearch() {
   filterAreas();
 }
 
+function initializePartnerProtectionDetails() {
+  const details = document.getElementById("partnerProtectionDetails");
+  const buttons = Array.from(
+    document.querySelectorAll("[data-partner-info]")
+  );
+  if (!details || !buttons.length) return;
+
+  const protectionInformation = {
+    approval: {
+      title: "Manual partner approval",
+      description:
+        "Applications are reviewed by DLCAO before a company receives access to project opportunities. Submitting the form does not create automatic approval or access."
+    },
+    verification: {
+      title: "Company verification",
+      description:
+        "DLCAO reviews the legal company name, corporate contact, business domain, markets served and applicable licensing information before establishing a capital relationship."
+    },
+    access: {
+      title: "Controlled project access",
+      description:
+        "Approved partners receive only the project information authorized for their role. Private client, borrower and project documents are not published on the public website."
+    },
+    risk: {
+      title: "Clear risk disclosures",
+      description:
+        "Project summaries distinguish known information from assumptions and risks. DLCAO does not promise funding, approval, property values or investment returns."
+    }
+  };
+
+  buttons.forEach((button) => {
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => {
+      const information = protectionInformation[button.dataset.partnerInfo];
+      if (!information) return;
+
+      buttons.forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+
+      details.replaceChildren();
+      const title = document.createElement("strong");
+      const description = document.createElement("p");
+      title.textContent = information.title;
+      description.textContent = information.description;
+      details.append(title, description);
+    });
+  });
+}
+
 function initializeOperationsDashboard() {
   const cards = Array.from(
     document.querySelectorAll("#dashboard-preview .dashboard-card > div")
@@ -1182,5 +1234,6 @@ function initializeOperationsDashboard() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeServiceAreaSearch();
+  initializePartnerProtectionDetails();
   initializeOperationsDashboard();
 });

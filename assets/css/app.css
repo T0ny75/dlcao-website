@@ -2006,14 +2006,40 @@ img{
   gap:9px;
   margin-top:22px;
 }
-.investor-trust-points span{
+.investor-trust-points button{
   border:1px solid #6b5222;
   border-radius:999px;
   padding:9px 12px;
+  background:transparent;
   color:#efcf7e;
   font-size:.75rem;
   font-weight:900;
   text-transform:uppercase;
+}
+.investor-trust-points button:hover,
+.investor-trust-points button:focus-visible,
+.investor-trust-points button.active{
+  border-color:#efcf7e;
+  background:#efcf7e;
+  color:#111;
+  outline:none;
+}
+.partner-protection-details{
+  min-height:128px;
+  margin-top:18px;
+  padding:20px;
+  border:1px solid #6b5222;
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+}
+.partner-protection-details strong{
+  color:#efcf7e;
+  font-size:1rem;
+  text-transform:uppercase;
+}
+.partner-protection-details p{
+  margin-top:8px;
+  color:#e5e5e5;
 }
 .investor-access-card{
   padding:26px;
@@ -2238,7 +2264,13 @@ a:focus-visible{
   border:1px solid #cfb776;
   border-radius:12px;
   background:#fff;
+  color:#111;
+  caret-color:#111;
   font:inherit;
+}
+.service-area-search input::placeholder{
+  color:#6b6b6b;
+  opacity:1;
 }
 .service-area-grid{
   display:grid;
@@ -2256,6 +2288,9 @@ a:focus-visible{
   border-radius:13px;
   background:#fff;
   transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.service-area-grid a[hidden]{
+  display:none;
 }
 .service-area-grid a:hover{
   transform:translateY(-3px);
