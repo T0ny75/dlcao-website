@@ -81,7 +81,8 @@ function initializeForms() {
     estimateForm: "DLCAO Estimate Request",
     buyForm: "DLCAO Buyer Request",
     contactForm: "DLCAO Contact Request",
-    propertyForm: "DLCAO Property Request"
+    propertyForm: "DLCAO Property Request",
+    capitalPartnerForm: "DLCAO Capital Partner Application"
   };
   Object.entries(forms).forEach(([id, heading]) => {
     document.getElementById(id)?.addEventListener("submit", (event) => {

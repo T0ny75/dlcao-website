@@ -2037,6 +2037,40 @@ img{
   line-height:1.5;
   margin-top:12px;
 }
+.partnership-options{
+  display:grid;
+  gap:18px;
+}
+.capital-partner-card{
+  background:#fffaf0;
+}
+.capital-partner-form{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+.capital-partner-form label{
+  color:#4d3a16;
+  font-size:.72rem;
+  font-weight:950;
+  text-transform:uppercase;
+}
+.capital-partner-form input,
+.capital-partner-form select{
+  width:100%;
+  margin-top:6px;
+  border:1px solid #d7c18b;
+  border-radius:8px;
+  background:#fff;
+  color:#111;
+  padding:11px;
+  font:inherit;
+  text-transform:none;
+}
+.capital-partner-form .full{
+  grid-column:1/-1;
+}
 .faq-section{
   background:#f8f4ec;
 }
@@ -2089,6 +2123,9 @@ a:focus-visible{
 @media(max-width:650px){
   .local-area-list,
   .faq-grid{
+    grid-template-columns:1fr;
+  }
+  .capital-partner-form{
     grid-template-columns:1fr;
   }
   .local-seo-section,
