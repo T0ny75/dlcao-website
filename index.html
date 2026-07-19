@@ -351,7 +351,7 @@
 <div class="container icon-grid">
 <a href="#construction"><span class="line-icon">⌂</span><strong>Construction</strong><small>Build · Remodel</small></a>
 <a href="#adu"><span class="line-icon">＋</span><strong>Additions / ADU</strong><small>Expand value</small></a>
-<a href="#repairs"><span class="line-icon">◆</span><strong>Repairs</strong><small>Fix it right</small></a>
+<a href="#repairs-service"><span class="line-icon">◆</span><strong>Repairs</strong><small>Fix it right</small></a>
 <a href="#investors"><span class="line-icon">↻</span><strong>Fix &amp; Flip</strong><small>Analyze deals</small></a>
 <a href="#buy"><span class="line-icon">$</span><strong>Buy &amp; Sell</strong><small>Real estate</small></a>
 <a href="#rental"><span class="line-icon">⌁</span><strong>Rental Property</strong><small>Cash flow</small></a>
@@ -475,7 +475,7 @@
 <div class="detail-grid">
 <article><h3>Construction</h3><p>Design, build, remodel and value-add improvements for residential properties.</p><a href="#estimate">Request estimate</a></article>
 <article id="adu"><h3>Additions / ADU</h3><p>Expand usable space and increase property utility with additions or ADU planning.</p><a href="#estimate">Start ADU request</a></article>
-<article id="repairs"><h3>Repairs</h3><p>Professional repairs for owners, sellers, buyers, rentals and investment projects.</p><a href="#estimate">Request repair</a></article>
+<article id="repairs-service"><h3>Repairs</h3><p>Professional repairs for owners, sellers, buyers, rentals and investment projects.</p><a href="#estimate">Request repair</a></article>
 <article><h3>Pre-Sale Prep</h3><p>Strategic repairs and updates before listing a property for sale.</p><a href="#sell">Sell smarter</a></article>
 </div>
 </div>
@@ -654,22 +654,60 @@
 <section aria-labelledby="investorAccessTitle" class="investor-trust-section" id="investor-access">
 <div class="container investor-trust-grid">
 <div>
-<p class="eyebrow">For Investors</p>
-<h2 id="investorAccessTitle">Structured project information. Controlled access.</h2>
-<p>DLCAO is building a secure investor experience for authorized project information, progress updates, documents and reporting. Opportunities and projected returns will always identify assumptions, risks and the fact that results are not guaranteed.</p>
+<p class="eyebrow">Investment &amp; Capital Partnerships</p>
+<h2 id="investorAccessTitle">Two ways to build opportunities with DLCAO.</h2>
+<p>Investors can discuss equity and project opportunities. Qualified lending companies can apply to finance construction, rehabilitation and business-purpose real estate projects through a direct B2B relationship with DLCAO.</p>
 <div class="investor-trust-points">
-<span>Authorized users only</span>
-<span>Project-level permissions</span>
-<span>Private documents</span>
+<span>Manual partner approval</span>
+<span>Company verification</span>
+<span>Controlled project access</span>
 <span>Clear risk disclosures</span>
 </div>
 </div>
-<div class="investor-access-card">
+<div class="partnership-options">
+<article class="investor-access-card">
 <span class="pill">Investor Access</span>
-<h3>Request an investor conversation</h3>
-<p>Tell DLCAO what type of opportunity, project or partnership you are evaluating.</p>
-<a class="btn gold full" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20to%20discuss%20an%20investment%20or%20partnership%20opportunity." rel="noopener" target="_blank">Contact DLCAO</a>
+<h3>Invest With DLCAO</h3>
+<p>Discuss equity, joint venture or project opportunities directly with DLCAO.</p>
+<a class="btn gold full" href="https://wa.me/17473674447?text=Hello%20DLCAO%2C%20I%20want%20to%20discuss%20an%20investment%20opportunity." rel="noopener" target="_blank">Start Investor Conversation</a>
 <small>Investment opportunities involve risk. No return is promised or guaranteed.</small>
+</article>
+<article class="investor-access-card capital-partner-card">
+<span class="pill">B2B Capital Partners</span>
+<h3>Finance DLCAO Projects</h3>
+<p>For hard money, private, bridge, construction, renovation and other qualified business-purpose lenders.</p>
+<form class="capital-partner-form" id="capitalPartnerForm">
+<label>Company
+<input autocomplete="organization" name="Company" placeholder="Legal company name" required=""/>
+</label>
+<label>Business contact
+<input autocomplete="name" name="Contact" placeholder="Full name and title" required=""/>
+</label>
+<label>Corporate email
+<input autocomplete="email" name="Email" placeholder="name@company.com" required="" type="email"/>
+</label>
+<label>Lender type
+<select name="Lender Type" required="">
+<option value="">Select lender type</option>
+<option>Hard Money</option>
+<option>Private Lending</option>
+<option>Bridge Lending</option>
+<option>Construction Lending</option>
+<option>Renovation Lending</option>
+<option>Debt Fund</option>
+<option>Other Business-Purpose Lending</option>
+</select>
+</label>
+<label>Markets served
+<input name="Markets" placeholder="States or service areas" required=""/>
+</label>
+<label>Loan range
+<input name="Loan Range" placeholder="Minimum and maximum"/>
+</label>
+<button class="btn black full" type="submit">Apply as a Capital Partner</button>
+</form>
+<small>Initial business inquiry only. Do not submit Social Security numbers, banking information, borrower documents, passwords or wire instructions. Approval and access are not automatic.</small>
+</article>
 </div>
 </div>
 </section>
@@ -1017,15 +1055,15 @@
 <div class="section-head">
 <div>
 <p class="eyebrow">Investor Center</p>
-<h2>Tools for smarter property decisions.</h2>
+<h2>Property tools and capital relationships.</h2>
 </div>
-<p>Built for owners, investors and clients who want to understand the numbers before moving forward.</p>
+<p>Built for owners and investors evaluating property opportunities, and for qualified lenders seeking a direct B2B relationship with DLCAO.</p>
 </div>
 <div class="investor-tools-grid">
 <a href="#investors"><strong>Fix &amp; Flip Analyzer</strong><span>ARV, MAO, ROI and profit.</span></a>
 <a href="#smart-estimate"><strong>Construction Estimate</strong><span>Project scope and budget intake.</span></a>
 <a href="#properties"><strong>Property Review</strong><span>Buy, sell and rental opportunities.</span></a>
-<a href="#contact"><strong>Book Consultation</strong><span>Start with a DLCAO review.</span></a>
+<a href="#investor-access"><strong>Capital Partnerships</strong><span>Invest with DLCAO or apply to finance qualified projects.</span></a>
 </div>
 </div>
 </section>
