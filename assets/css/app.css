@@ -1633,7 +1633,8 @@ img{
   letter-spacing:.03em;
 }
 .analysis-paths button:hover,
-.analysis-paths button:focus-visible{
+.analysis-paths button:focus-visible,
+.analysis-paths button.is-active{
   background:#efcf7e;
   color:#111;
 }
@@ -2174,7 +2175,8 @@ a:focus-visible{
   align-items:start;
 }
 .about-dlcao-copy h2{
-  font-size:clamp(2.6rem,5.5vw,5.7rem);
+  max-width:100%;
+  font-size:clamp(2.6rem,4.2vw,5.1rem);
   line-height:.93;
   letter-spacing:-.045em;
   text-transform:uppercase;

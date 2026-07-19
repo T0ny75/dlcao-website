@@ -571,6 +571,7 @@ window.addEventListener("pageshow", initializeEntryPosition);
 /* DLCAO Phase 2 — Professional Project Review */
 const DLCAO_PHASE2 = {
   current: null,
+  selectedType: null,
   prompts: {
     remodel: "I want to remodel my property. Address: 18657 Runnymede St, Reseda CA 91335. Area: 1,000 sqft. Budget: $125,000.",
     sell: "I want to sell my property. Address: 18657 Runnymede St, Reseda CA 91335. Expected price: $750,000. Repairs: $15,000. Mortgage payoff: $300,000.",
@@ -607,19 +608,30 @@ function p2Number(text, labels) {
 }
 
 function p2Address(text) {
-  const match = text.match(/\b\d{2,6}\s+[A-Za-z0-9.' -]+?(?:Ave(?:nue)?|St(?:reet)?|Rd|Road|Dr(?:ive)?|Blvd|Way|Ct|Court|Ln|Lane)\b(?:[,\s]+[A-Za-z .'-]+)?(?:[,\s]+CA)?(?:[,\s]+\d{5})?/i);
+  const match = text.match(/\b\d{2,6}\s+[A-Za-zÀ-ÿ0-9.' -]+?(?:Ave(?:nue)?|Avenida|St(?:reet)?|Calle|Rd|Road|Camino|Dr(?:ive)?|Blvd|Boulevard|Way|Ct|Court|Ln|Lane)\b(?:[,\s]+[A-Za-zÀ-ÿ .'-]+)?(?:[,\s]+CA)?(?:[,\s]+\d{5})?/i);
   return match ? match[0].trim() : "Address not provided";
 }
 
 function p2ProjectType(text) {
   const lower = text.toLowerCase();
-  if (/(fix\s*&?\s*flip|\bflip\b|arv|rehab)/.test(lower)) return "Fix & Flip";
-  if (/(rental|rent|cash flow|cap rate)/.test(lower)) return "Rental";
-  if (/(adu|garage conversion)/.test(lower)) return "ADU";
-  if (/(remodel|renovation|kitchen|bathroom|bath|repair)/.test(lower)) return "Remodel";
-  if (/(sell|sale|seller|vender|venta)/.test(lower)) return "Sell";
-  if (/(buy|buyer|purchase|comprar)/.test(lower)) return "Buy";
+  if (/(fix\s*&?\s*flip|\bflip\b|arv|rehab|reparar\s+y\s+vender|reventa)/.test(lower)) return "Fix & Flip";
+  if (/(rental|\brent\b|cash flow|cap rate|renta|rentar|alquiler|flujo de caja|tasa de capitalizaci[oó]n)/.test(lower)) return "Rental";
+  if (/(\badu\b|garage conversion|conversi[oó]n (?:de )?(?:garage|garaje)|unidad adicional)/.test(lower)) return "ADU";
+  if (/(\bsell\b|\bsale\b|seller|vender|venta)/.test(lower)) return "Sell";
+  if (/(\bbuy\b|buyer|purchase|comprar|compra)/.test(lower)) return "Buy";
+  if (/(remodel|renovation|kitchen|bathroom|\bbath\b|repair|remodelar|remodelaci[oó]n|renovar|renovaci[oó]n|cocina|ba[ñn]o|reparaci[oó]n)/.test(lower)) return "Remodel";
   return "General Project";
+}
+
+function p2TypeFromKey(key) {
+  return {
+    remodel: "Remodel",
+    sell: "Sell",
+    buy: "Buy",
+    flip: "Fix & Flip",
+    rental: "Rental",
+    adu: "ADU"
+  }[key] || null;
 }
 
 function p2Reference(text) {
@@ -658,11 +670,11 @@ function p2Base(text, type) {
 function p2AnalyzeFlip(text) {
   const r = p2Base(text, "Fix & Flip");
   const p = r.provided;
-  p.purchase = p2Number(text, ["purchase", "offer", "buy price", "price"]);
-  p.arv = p2Number(text, ["arv", "after repair value", "resale value"]);
-  p.repairs = p2Number(text, ["repairs", "repair", "rehab", "renovation"]);
-  p.holding = p2Number(text, ["holding costs", "holding", "carrying costs"]);
-  p.targetProfit = p2Number(text, ["target profit", "profit target"]);
+  p.purchase = p2Number(text, ["purchase", "offer", "buy price", "purchase price", "precio de compra", "oferta", "compra", "price"]);
+  p.arv = p2Number(text, ["arv", "after repair value", "resale value", "valor después de reparar", "valor de reventa"]);
+  p.repairs = p2Number(text, ["repairs", "repair", "rehab", "renovation", "reparaciones", "reparación", "rehabilitación", "renovación"]);
+  p.holding = p2Number(text, ["holding costs", "holding", "carrying costs", "costos de tenencia", "costos de mantenimiento"]);
+  p.targetProfit = p2Number(text, ["target profit", "profit target", "ganancia objetivo", "utilidad objetivo"]);
 
   const purchase = p.purchase ?? 650000;
   const arv = p.arv ?? Math.round(purchase * 1.30);
@@ -711,13 +723,13 @@ function p2AnalyzeFlip(text) {
 function p2AnalyzeRental(text) {
   const r = p2Base(text, "Rental");
   const p = r.provided;
-  p.rent = p2Number(text, ["monthly rent", "rent"]);
-  p.value = p2Number(text, ["property value", "purchase price", "value", "price"]);
-  p.mortgage = p2Number(text, ["mortgage payment", "mortgage", "debt service"]);
-  p.taxes = p2Number(text, ["property taxes", "taxes", "tax"]);
-  p.insurance = p2Number(text, ["insurance"]);
+  p.rent = p2Number(text, ["monthly rent", "renta mensual", "alquiler mensual", "renta", "rent", "alquiler"]);
+  p.value = p2Number(text, ["property value", "valor de la propiedad", "purchase price", "precio de compra", "value", "valor", "price", "precio"]);
+  p.mortgage = p2Number(text, ["mortgage payment", "pago de hipoteca", "mortgage", "hipoteca", "debt service", "servicio de deuda"]);
+  p.taxes = p2Number(text, ["property taxes", "impuestos de la propiedad", "taxes", "impuestos", "tax"]);
+  p.insurance = p2Number(text, ["insurance", "seguro"]);
   p.hoa = p2Number(text, ["hoa"]);
-  p.utilities = p2Number(text, ["utilities"]);
+  p.utilities = p2Number(text, ["utilities", "servicios"]);
 
   const rent = p.rent ?? 3500;
   const value = p.value ?? 750000;
@@ -770,10 +782,10 @@ function p2AnalyzeRental(text) {
 function p2AnalyzeADU(text) {
   const r = p2Base(text, "ADU");
   const p = r.provided;
-  p.sqft = p2Number(text, ["square feet", "sqft", "size"]);
-  p.costPerSqft = p2Number(text, ["cost per sqft", "per sqft"]);
-  p.rent = p2Number(text, ["expected rent", "monthly rent", "rent"]);
-  p.budget = p2Number(text, ["budget"]);
+  p.sqft = p2Number(text, ["square feet", "pies cuadrados", "sqft", "size", "tamaño"]);
+  p.costPerSqft = p2Number(text, ["cost per sqft", "costo por pie cuadrado", "per sqft"]);
+  p.rent = p2Number(text, ["expected rent", "renta esperada", "monthly rent", "renta mensual", "rent", "renta"]);
+  p.budget = p2Number(text, ["budget", "presupuesto"]);
 
   const sqft = p.sqft ?? 750;
   const cpsf = p.costPerSqft ?? 300;
@@ -815,8 +827,8 @@ function p2AnalyzeADU(text) {
 function p2AnalyzeRemodel(text) {
   const r = p2Base(text, "Remodel");
   const p = r.provided;
-  p.sqft = p2Number(text, ["square feet", "sqft", "area"]);
-  p.budget = p2Number(text, ["budget", "cost"]);
+  p.sqft = p2Number(text, ["square feet", "pies cuadrados", "sqft", "area", "área"]);
+  p.budget = p2Number(text, ["budget", "presupuesto", "cost", "costo"]);
   const sqft = p.sqft ?? 1000;
   const base = p.budget ?? sqft * 125;
   const contingency = base * .12;
@@ -850,9 +862,9 @@ function p2AnalyzeRemodel(text) {
 function p2AnalyzeSell(text) {
   const r = p2Base(text, "Sell");
   const p = r.provided;
-  p.price = p2Number(text, ["expected price", "sale price", "sell price", "value"]);
-  p.repairs = p2Number(text, ["repairs", "repair", "renovation"]);
-  p.payoff = p2Number(text, ["mortgage payoff", "payoff", "loan balance"]);
+  p.price = p2Number(text, ["expected price", "precio esperado", "sale price", "precio de venta", "sell price", "value", "valor"]);
+  p.repairs = p2Number(text, ["repairs", "repair", "renovation", "reparaciones", "reparación", "renovación"]);
+  p.payoff = p2Number(text, ["mortgage payoff", "saldo de hipoteca", "liquidación de hipoteca", "payoff", "loan balance", "saldo del préstamo"]);
 
   const price = p.price ?? 750000;
   const repairs = p.repairs ?? 15000;
@@ -890,10 +902,10 @@ function p2AnalyzeSell(text) {
 function p2AnalyzeBuy(text) {
   const r = p2Base(text, "Buy");
   const p = r.provided;
-  p.price = p2Number(text, ["purchase price", "budget", "price"]);
-  p.down = p2Number(text, ["down payment"]);
-  p.rate = p2Number(text, ["interest rate", "rate"]);
-  p.term = p2Number(text, ["term"]);
+  p.price = p2Number(text, ["purchase price", "precio de compra", "budget", "presupuesto", "price", "precio"]);
+  p.down = p2Number(text, ["down payment", "pago inicial", "enganche"]);
+  p.rate = p2Number(text, ["interest rate", "tasa de interés", "rate", "tasa"]);
+  p.term = p2Number(text, ["loan term", "plazo del préstamo", "term", "plazo"]);
 
   const price = p.price ?? 750000;
   let down = p.down ?? 20;
@@ -938,8 +950,8 @@ function p2AnalyzeBuy(text) {
   return r;
 }
 
-function p2Analyze(text) {
-  const type = p2ProjectType(text);
+function p2Analyze(text, preferredType = null) {
+  const type = preferredType || p2ProjectType(text);
   if (type === "Fix & Flip") return p2AnalyzeFlip(text);
   if (type === "Rental") return p2AnalyzeRental(text);
   if (type === "ADU") return p2AnalyzeADU(text);
@@ -1062,15 +1074,38 @@ function p2ProjectMessage() {
   ].join("\n");
 }
 
+function p2ResetReport() {
+  DLCAO_PHASE2.current = null;
+  const reportContent = document.getElementById("reportContent");
+  const reportEmpty = document.getElementById("reportEmpty");
+  if (reportContent) reportContent.hidden = true;
+  if (reportEmpty) reportEmpty.hidden = false;
+}
+
 function initializePhase2Analysis() {
   const input = document.getElementById("analysisInput");
   const run = document.getElementById("runAnalysisBtn");
   const clear = document.getElementById("clearAnalysisBtn");
   const send = document.getElementById("sendProjectBtn");
+  const promptButtons = Array.from(
+    document.querySelectorAll("[data-analysis-prompt]")
+  );
+  const defaultPlaceholder = input?.getAttribute("placeholder") || "";
 
-  document.querySelectorAll("[data-analysis-prompt]").forEach(button => {
+  promptButtons.forEach(button => {
+    button.setAttribute("aria-pressed", "false");
     button.addEventListener("click", () => {
-      input.value = DLCAO_PHASE2.prompts[button.dataset.analysisPrompt] || "";
+      const promptKey = button.dataset.analysisPrompt;
+      DLCAO_PHASE2.selectedType = p2TypeFromKey(promptKey);
+      promptButtons.forEach(item => {
+        const isActive = item === button;
+        item.classList.toggle("is-active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+      p2ResetReport();
+      input.value = "";
+      const example = DLCAO_PHASE2.prompts[promptKey] || "";
+      input.placeholder = `Enter a new ${DLCAO_PHASE2.selectedType} project in English or Spanish. Example: ${example}`;
       input.focus();
     });
   });
@@ -1081,18 +1116,26 @@ function initializePhase2Analysis() {
       input?.focus();
       return;
     }
-    p2Render(p2Analyze(text));
+    p2Render(p2Analyze(text, DLCAO_PHASE2.selectedType));
   });
 
   clear?.addEventListener("click", () => {
     if (input) input.value = "";
-    DLCAO_PHASE2.current = null;
-    document.getElementById("reportContent").hidden = true;
-    document.getElementById("reportEmpty").hidden = false;
+    if (input) input.placeholder = defaultPlaceholder;
+    DLCAO_PHASE2.selectedType = null;
+    p2ResetReport();
+    promptButtons.forEach(button => {
+      button.classList.remove("is-active");
+      button.setAttribute("aria-pressed", "false");
+    });
     ["leadName","leadPhone","leadEmail"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = "";
     });
+  });
+
+  input?.addEventListener("input", () => {
+    if (DLCAO_PHASE2.current) p2ResetReport();
   });
 
   input?.addEventListener("keydown", event => {
