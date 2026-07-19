@@ -591,12 +591,19 @@ function p2Money(value) {
 }
 
 function p2Number(text, labels) {
-  const lower = text.toLowerCase();
-  for (const label of labels) {
-    const index = lower.indexOf(label.toLowerCase());
-    if (index < 0) continue;
-    const segment = text.slice(index + label.length, index + label.length + 80);
-    const match = segment.match(/[:\s$]*([0-9][0-9,]*(?:\.[0-9]+)?)\s*(k|m|%)?/i);
+  const numberPattern = "([0-9][0-9,]*(?:\\.[0-9]+)?)\\s*(k|m|%)?";
+  const orderedLabels = [...labels].sort((a, b) => b.length - a.length);
+  for (const label of orderedLabels) {
+    const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const afterLabel = new RegExp(
+      `${escapedLabel}\\s*(?:is|of)?\\s*[:=]?\\s*\\$?${numberPattern}`,
+      "i"
+    );
+    const beforeLabel = new RegExp(
+      `\\$?${numberPattern}\\s*${escapedLabel}`,
+      "i"
+    );
+    const match = text.match(afterLabel) || text.match(beforeLabel);
     if (!match) continue;
     let value = Number(match[1].replace(/,/g,""));
     const suffix = (match[2] || "").toLowerCase();
@@ -608,7 +615,13 @@ function p2Number(text, labels) {
 }
 
 function p2Address(text) {
-  const match = text.match(/\b\d{2,6}\s+[A-Za-zÀ-ÿ0-9.' -]+?(?:Ave(?:nue)?|Avenida|St(?:reet)?|Calle|Rd|Road|Camino|Dr(?:ive)?|Blvd|Boulevard|Way|Ct|Court|Ln|Lane)\b(?:[,\s]+[A-Za-zÀ-ÿ .'-]+)?(?:[,\s]+CA)?(?:[,\s]+\d{5})?/i);
+  const streetPattern = "\\b\\d{2,6}\\s+[A-Za-zÀ-ÿ0-9.' -]+?(?:Ave(?:nue)?|Avenida|St(?:reet)?|Calle|Rd|Road|Camino|Dr(?:ive)?|Blvd|Boulevard|Way|Ct|Court|Ln|Lane)\\b";
+  const patterns = [
+    new RegExp(`${streetPattern}\\s*,?\\s*[A-Za-zÀ-ÿ .'-]+?\\s*,?\\s*CA\\s+\\d{5}\\b`, "i"),
+    new RegExp(`${streetPattern}\\s*,?\\s*[A-Za-zÀ-ÿ .'-]+?\\s*,?\\s*CA\\b`, "i"),
+    new RegExp(streetPattern, "i")
+  ];
+  const match = patterns.map(pattern => text.match(pattern)).find(Boolean);
   return match ? match[0].trim() : "Address not provided";
 }
 
