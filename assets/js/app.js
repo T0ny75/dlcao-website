@@ -1,6 +1,10 @@
 
 "use strict";
 
+if ("scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
 const DLCAO_PHONE = "17473674447";
 const USD = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -74,6 +78,14 @@ function initializeNavigation() {
   });
 
   setMenuState(false);
+}
+
+function initializeEntryPosition() {
+  if (window.location.hash) return;
+
+  window.requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  });
 }
 
 function initializeForms() {
@@ -545,12 +557,15 @@ function initializeReveals() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeEntryPosition();
   initializeNavigation();
   initializeForms();
   initializeCalculator();
   initializeAI();
   initializeReveals();
 });
+
+window.addEventListener("pageshow", initializeEntryPosition);
 
 
 /* DLCAO Phase 2 — Professional Project Review */
