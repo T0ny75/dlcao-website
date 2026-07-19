@@ -31,10 +31,49 @@ function formMessage(form, heading = "DLCAO Request") {
 function initializeNavigation() {
   const menuBtn = document.getElementById("menuBtn");
   const navMenu = document.getElementById("navMenu");
-  menuBtn?.addEventListener("click", () => navMenu?.classList.toggle("show"));
-  document.querySelectorAll("#navMenu a").forEach((link) => {
-    link.addEventListener("click", () => navMenu?.classList.remove("show"));
+  if (!menuBtn || !navMenu) return;
+
+  const setMenuState = (isOpen, returnFocus = false) => {
+    navMenu.classList.toggle("show", isOpen);
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+    menuBtn.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation menu" : "Open navigation menu"
+    );
+    menuBtn.textContent = isOpen ? "×" : "☰";
+    if (returnFocus) menuBtn.focus();
+  };
+
+  menuBtn.addEventListener("click", () => {
+    setMenuState(!navMenu.classList.contains("show"));
   });
+
+  navMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuState(false));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      navMenu.classList.contains("show") &&
+      !navMenu.contains(event.target) &&
+      !menuBtn.contains(event.target)
+    ) {
+      setMenuState(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navMenu.classList.contains("show")) {
+      setMenuState(false, true);
+    }
+  });
+
+  const mobileNavigation = window.matchMedia("(max-width: 1050px)");
+  mobileNavigation.addEventListener("change", (event) => {
+    if (!event.matches) setMenuState(false);
+  });
+
+  setMenuState(false);
 }
 
 function initializeForms() {
