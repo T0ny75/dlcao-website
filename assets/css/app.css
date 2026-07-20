@@ -10,9 +10,10 @@ button{font:inherit;cursor:pointer}
 .topbar-inner div{display:flex;gap:18px;flex-wrap:wrap}
 .header{position:sticky;top:0;z-index:100;background:rgba(4,4,4,.96);border-bottom:1px solid #161616;backdrop-filter:blur(12px)}
 .nav{display:flex;justify-content:space-between;align-items:center;padding:15px 0}
-.logo{display:flex;align-items:center;gap:14px;color:#fff}
+.logo{display:flex;align-items:center;gap:14px;color:#fff;min-width:max-content;overflow:visible}
 .logo-mark{width:56px;height:56px;border:1.6px solid var(--gold);color:var(--gold2);display:grid;place-items:center;font-weight:950;clip-path:polygon(25% 4%,75% 4%,100% 50%,75% 96%,25% 96%,0 50%)}
-.logo strong{font-family:Georgia,serif;font-size:2.35rem;letter-spacing:.03em;line-height:1}
+.logo-text{display:block;visibility:visible;opacity:1;white-space:nowrap}
+.logo strong{display:block;font-family:Georgia,serif;font-size:2.35rem;letter-spacing:.03em;line-height:1}
 .logo small{display:block;color:#ddd;text-transform:uppercase;font-size:.56rem;letter-spacing:.07em}
 nav{display:flex;align-items:center;gap:18px}
 nav a{color:#fff;text-transform:uppercase;font-weight:850;font-size:.78rem}
@@ -139,6 +140,7 @@ footer a{display:block;color:#ddd;margin:8px 0}
   .trust-grid,.icon-grid,.property-grid,.detail-grid,.project-grid,.footer-grid,.values{grid-template-columns:1fr}
   .logo strong{font-size:1.8rem}
   .logo-mark{width:48px;height:48px}
+  .logo small{display:none}
   .hero h1{font-size:3.1rem}
   .section-head{align-items:flex-start;flex-direction:column}
 }
