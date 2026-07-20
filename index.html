@@ -25,7 +25,7 @@
 <link href="assets/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
 <meta content="DLCAO Stable" name="dlcao-version"/>
 <meta content="#050505" name="theme-color"/>
-<link href="https://t0ny75.github.io/dlcao-website/" rel="canonical">
+<link href="https://t0ny75.github.io/dlcao-website/" rel="canonical"/>
 <meta content="Phase 2" name="dlcao-release"/>
 <script type="application/ld+json">
 {
@@ -261,7 +261,7 @@
   ]
 }
 </script>
-</link></head>
+</head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="topbar">
@@ -585,7 +585,7 @@
 <span>DLCAO Deal Tool</span>
 <h3>Analyze the deal</h3>
 </div>
-<button aria-label="Reset Fix and Flip calculator to default values" class="mini-reset" onclick="resetFlipDefaults()" type="button">Reset</button>
+<button aria-label="Reset Fix and Flip calculator to default values" class="mini-reset" id="resetFlipBtn" type="button">Reset</button>
 </div>
 <div class="simple-fields">
 <label>
@@ -623,7 +623,7 @@
 </select>
 </label>
 </div>
-<button class="btn gold full" onclick="calcFlip()" type="button">Calculate Deal</button>
+<button class="btn gold full" id="calculateFlipBtn" type="button">Calculate Deal</button>
 <div class="executive-results">
 <div class="result-main">
 <span>Max Allowable Offer</span>
@@ -657,6 +657,13 @@
 <p class="eyebrow">Investment &amp; Capital Partnerships</p>
 <h2 id="investorAccessTitle">Two ways to build opportunities with DLCAO.</h2>
 <p>Investors can discuss equity and project opportunities. Qualified lending companies can apply to finance construction, rehabilitation and business-purpose real estate projects through a direct B2B relationship with DLCAO.</p>
+<ol aria-label="Capital partner onboarding process" class="partner-onboarding-steps">
+<li><span>01</span><strong>Apply</strong><small>Submit business information</small></li>
+<li><span>02</span><strong>Verify</strong><small>Company and representative review</small></li>
+<li><span>03</span><strong>Approve</strong><small>Manual DLCAO decision</small></li>
+<li><span>04</span><strong>Access</strong><small>Role-based project visibility</small></li>
+<li><span>05</span><strong>Collaborate</strong><small>Private B2B communication</small></li>
+</ol>
 <div class="investor-trust-points">
 <button aria-controls="partnerProtectionDetails" data-partner-info="approval" type="button">Manual partner approval</button>
 <button aria-controls="partnerProtectionDetails" data-partner-info="verification" type="button">Company verification</button>
@@ -681,6 +688,10 @@
 <h3>Finance DLCAO Projects</h3>
 <p>For hard money, private, bridge, construction, renovation and other qualified business-purpose lenders.</p>
 <form class="capital-partner-form" id="capitalPartnerForm">
+<div aria-live="polite" class="partner-application-status full" id="partnerApplicationStatus">
+<strong>Application readiness</strong>
+<span>Complete the required business fields to request manual review.</span>
+</div>
 <label>Company
 <input autocomplete="organization" name="Company" placeholder="Legal company name" required=""/>
 </label>
@@ -689,6 +700,12 @@
 </label>
 <label>Corporate email
 <input autocomplete="email" name="Email" placeholder="name@company.com" required="" type="email"/>
+</label>
+<label>Business website
+<input autocomplete="url" name="Website" placeholder="https://company.com" required="" type="url"/>
+</label>
+<label>Business phone
+<input autocomplete="tel" inputmode="tel" name="Phone" placeholder="Company phone number" required="" type="tel"/>
 </label>
 <label>Lender type
 <select name="Lender Type" required="">
@@ -705,8 +722,43 @@
 <label>Markets served
 <input name="Markets" placeholder="States or service areas" required=""/>
 </label>
-<label>Loan range
-<input name="Loan Range" placeholder="Minimum and maximum"/>
+<label>Financing focus
+<select name="Financing Focus" required="">
+<option value="">Select primary focus</option>
+<option>Fix &amp; Flip</option>
+<option>Ground-Up Construction</option>
+<option>Renovation</option>
+<option>Bridge Financing</option>
+<option>Rental / DSCR</option>
+<option>Commercial Real Estate</option>
+<option>Multiple Programs</option>
+</select>
+</label>
+<label>Minimum loan
+<input inputmode="numeric" min="0" name="Minimum Loan" placeholder="$100,000" type="number"/>
+</label>
+<label>Maximum loan
+<input inputmode="numeric" min="0" name="Maximum Loan" placeholder="$5,000,000" type="number"/>
+</label>
+<label>License / NMLS / regulator ID
+<input name="License or ID" placeholder="If applicable to your programs"/>
+</label>
+<label>Typical closing timeline
+<select name="Closing Timeline" required="">
+<option value="">Select timeline</option>
+<option>5–10 business days</option>
+<option>11–15 business days</option>
+<option>16–30 business days</option>
+<option>More than 30 days</option>
+</select>
+</label>
+<label class="partner-consent full">
+<input name="Verification Consent" required="" type="checkbox" value="Authorized"/>
+<span>I am authorized to represent this company and consent to business and licensing verification.</span>
+</label>
+<label class="partner-consent full">
+<input name="Sensitive Data Acknowledgment" required="" type="checkbox" value="Acknowledged"/>
+<span>I understand this public form must not include borrower files, SSNs, banking credentials, passwords or wire instructions.</span>
 </label>
 <button class="btn black full" type="submit">Apply as a Capital Partner</button>
 </form>
@@ -1009,7 +1061,7 @@
 <h2>Get a faster project review.</h2>
 <p>Answer a few questions and DLCAO will receive a clean project summary.</p>
 </div>
-<form class="smart-form" onsubmit="submitSmartEstimate(event)">
+<form class="smart-form" id="smartEstimateForm">
 <label>Project Type
             <select id="projectType">
 <option>ADU / Garage Conversion</option>
@@ -1022,8 +1074,8 @@
 </select>
 </label>
 <label>City
-            <input id="projectCity" placeholder="Los Angeles, Winnetka, North Hills...">
-</input></label>
+            <input id="projectCity" placeholder="Los Angeles, Winnetka, North Hills..."/>
+</label>
 <label>Budget Range
             <select id="budgetRange">
 <option>$10k - $25k</option>
@@ -1042,11 +1094,11 @@
 </select>
 </label>
 <label>Property Address
-            <input id="propertyAddress" placeholder="Property address">
-</input></label>
+            <input id="propertyAddress" placeholder="Property address"/>
+</label>
 <label>Contact
-            <input id="contactInfo" placeholder="Name, phone, email">
-</input></label>
+            <input id="contactInfo" placeholder="Name, phone, email"/>
+</label>
 <label class="full">Project Details
             <textarea id="projectDetails" placeholder="Tell us what you want to do..."></textarea>
 </label>
