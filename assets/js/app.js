@@ -114,18 +114,34 @@ function initializeCapitalPartnerApplication() {
     "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"
   ]);
   const requiredFields = Array.from(form.querySelectorAll("[required]"));
+  const emailField = form.elements.Email;
+  const minimumLoanField = form.elements["Minimum Loan"];
+  const maximumLoanField = form.elements["Maximum Loan"];
+  const emailDomain = () => String(emailField?.value || "")
+    .trim().toLowerCase().split("@")[1] || "";
+  const hasCorporateEmail = () =>
+    Boolean(emailDomain()) && !freeEmailDomains.has(emailDomain());
+  const hasValidLoanRange = () => {
+    const minimum = Number(minimumLoanField?.value || 0);
+    const maximum = Number(maximumLoanField?.value || 0);
+    return !minimum || !maximum || minimum <= maximum;
+  };
 
   const updateStatus = () => {
     const completed = requiredFields.filter((field) => {
       if (field.type === "checkbox") return field.checked;
+      if (field === emailField) return field.checkValidity() && hasCorporateEmail();
       return String(field.value || "").trim() !== "" && field.checkValidity();
     }).length;
     const percent = Math.round((completed / requiredFields.length) * 100);
     const message = status.querySelector("span");
+    const isReady = percent === 100 && hasValidLoanRange();
     status.style.setProperty("--partner-progress", `${percent}%`);
-    status.dataset.ready = String(percent === 100);
+    status.dataset.ready = String(isReady);
     if (message) {
-      message.textContent = percent === 100
+      message.textContent = !hasValidLoanRange()
+        ? "The minimum loan amount cannot be greater than the maximum loan amount."
+        : isReady
         ? "Ready to request manual DLCAO review. Approval and project access are not automatic."
         : `${percent}% complete — finish all required business and consent fields.`;
     }
@@ -137,13 +153,20 @@ function initializeCapitalPartnerApplication() {
     event.preventDefault();
     if (!form.reportValidity()) return;
 
-    const email = String(new FormData(form).get("Email") || "").trim().toLowerCase();
-    const domain = email.split("@")[1] || "";
-    if (freeEmailDomains.has(domain)) {
-      const emailField = form.elements.Email;
+    if (!hasCorporateEmail()) {
       emailField.setCustomValidity("Use a corporate email connected to the company domain.");
       emailField.reportValidity();
       emailField.addEventListener("input", () => emailField.setCustomValidity(""), { once: true });
+      return;
+    }
+    if (!hasValidLoanRange()) {
+      maximumLoanField.setCustomValidity(
+        "Maximum loan must be equal to or greater than the minimum loan."
+      );
+      maximumLoanField.reportValidity();
+      maximumLoanField.addEventListener(
+        "input", () => maximumLoanField.setCustomValidity(""), { once: true }
+      );
       return;
     }
 
