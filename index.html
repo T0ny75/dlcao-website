@@ -657,6 +657,13 @@
 <p class="eyebrow">Investment &amp; Capital Partnerships</p>
 <h2 id="investorAccessTitle">Two ways to build opportunities with DLCAO.</h2>
 <p>Investors can discuss equity and project opportunities. Qualified lending companies can apply to finance construction, rehabilitation and business-purpose real estate projects through a direct B2B relationship with DLCAO.</p>
+<ol aria-label="Capital partner onboarding process" class="partner-onboarding-steps">
+<li><span>01</span><strong>Apply</strong><small>Submit business information</small></li>
+<li><span>02</span><strong>Verify</strong><small>Company and representative review</small></li>
+<li><span>03</span><strong>Approve</strong><small>Manual DLCAO decision</small></li>
+<li><span>04</span><strong>Access</strong><small>Role-based project visibility</small></li>
+<li><span>05</span><strong>Collaborate</strong><small>Private B2B communication</small></li>
+</ol>
 <div class="investor-trust-points">
 <button aria-controls="partnerProtectionDetails" data-partner-info="approval" type="button">Manual partner approval</button>
 <button aria-controls="partnerProtectionDetails" data-partner-info="verification" type="button">Company verification</button>
@@ -681,6 +688,10 @@
 <h3>Finance DLCAO Projects</h3>
 <p>For hard money, private, bridge, construction, renovation and other qualified business-purpose lenders.</p>
 <form class="capital-partner-form" id="capitalPartnerForm">
+<div aria-live="polite" class="partner-application-status full" id="partnerApplicationStatus">
+<strong>Application readiness</strong>
+<span>Complete the required business fields to request manual review.</span>
+</div>
 <label>Company
 <input autocomplete="organization" name="Company" placeholder="Legal company name" required=""/>
 </label>
@@ -689,6 +700,12 @@
 </label>
 <label>Corporate email
 <input autocomplete="email" name="Email" placeholder="name@company.com" required="" type="email"/>
+</label>
+<label>Business website
+<input autocomplete="url" name="Website" placeholder="https://company.com" required="" type="url"/>
+</label>
+<label>Business phone
+<input autocomplete="tel" inputmode="tel" name="Phone" placeholder="Company phone number" required="" type="tel"/>
 </label>
 <label>Lender type
 <select name="Lender Type" required="">
@@ -705,8 +722,43 @@
 <label>Markets served
 <input name="Markets" placeholder="States or service areas" required=""/>
 </label>
-<label>Loan range
-<input name="Loan Range" placeholder="Minimum and maximum"/>
+<label>Financing focus
+<select name="Financing Focus" required="">
+<option value="">Select primary focus</option>
+<option>Fix &amp; Flip</option>
+<option>Ground-Up Construction</option>
+<option>Renovation</option>
+<option>Bridge Financing</option>
+<option>Rental / DSCR</option>
+<option>Commercial Real Estate</option>
+<option>Multiple Programs</option>
+</select>
+</label>
+<label>Minimum loan
+<input inputmode="numeric" min="0" name="Minimum Loan" placeholder="$100,000" type="number"/>
+</label>
+<label>Maximum loan
+<input inputmode="numeric" min="0" name="Maximum Loan" placeholder="$5,000,000" type="number"/>
+</label>
+<label>License / NMLS / regulator ID
+<input name="License or ID" placeholder="If applicable to your programs"/>
+</label>
+<label>Typical closing timeline
+<select name="Closing Timeline" required="">
+<option value="">Select timeline</option>
+<option>5–10 business days</option>
+<option>11–15 business days</option>
+<option>16–30 business days</option>
+<option>More than 30 days</option>
+</select>
+</label>
+<label class="partner-consent full">
+<input name="Verification Consent" required="" type="checkbox" value="Authorized"/>
+<span>I am authorized to represent this company and consent to business and licensing verification.</span>
+</label>
+<label class="partner-consent full">
+<input name="Sensitive Data Acknowledgment" required="" type="checkbox" value="Acknowledged"/>
+<span>I understand this public form must not include borrower files, SSNs, banking credentials, passwords or wire instructions.</span>
 </label>
 <button class="btn black full" type="submit">Apply as a Capital Partner</button>
 </form>

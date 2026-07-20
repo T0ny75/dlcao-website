@@ -93,8 +93,7 @@ function initializeForms() {
     estimateForm: "DLCAO Estimate Request",
     buyForm: "DLCAO Buyer Request",
     contactForm: "DLCAO Contact Request",
-    propertyForm: "DLCAO Property Request",
-    capitalPartnerForm: "DLCAO Capital Partner Application"
+    propertyForm: "DLCAO Property Request"
   };
   Object.entries(forms).forEach(([id, heading]) => {
     document.getElementById(id)?.addEventListener("submit", (event) => {
@@ -104,6 +103,55 @@ function initializeForms() {
   });
 
   document.getElementById("smartEstimateForm")?.addEventListener("submit", submitSmartEstimate);
+}
+
+function initializeCapitalPartnerApplication() {
+  const form = document.getElementById("capitalPartnerForm");
+  const status = document.getElementById("partnerApplicationStatus");
+  if (!form || !status) return;
+
+  const freeEmailDomains = new Set([
+    "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"
+  ]);
+  const requiredFields = Array.from(form.querySelectorAll("[required]"));
+
+  const updateStatus = () => {
+    const completed = requiredFields.filter((field) => {
+      if (field.type === "checkbox") return field.checked;
+      return String(field.value || "").trim() !== "" && field.checkValidity();
+    }).length;
+    const percent = Math.round((completed / requiredFields.length) * 100);
+    const message = status.querySelector("span");
+    status.style.setProperty("--partner-progress", `${percent}%`);
+    status.dataset.ready = String(percent === 100);
+    if (message) {
+      message.textContent = percent === 100
+        ? "Ready to request manual DLCAO review. Approval and project access are not automatic."
+        : `${percent}% complete — finish all required business and consent fields.`;
+    }
+  };
+
+  form.addEventListener("input", updateStatus);
+  form.addEventListener("change", updateStatus);
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const email = String(new FormData(form).get("Email") || "").trim().toLowerCase();
+    const domain = email.split("@")[1] || "";
+    if (freeEmailDomains.has(domain)) {
+      const emailField = form.elements.Email;
+      emailField.setCustomValidity("Use a corporate email connected to the company domain.");
+      emailField.reportValidity();
+      emailField.addEventListener("input", () => emailField.setCustomValidity(""), { once: true });
+      return;
+    }
+
+    openWhatsApp(formMessage(form,
+      "DLCAO Capital Partner Application — Manual Review Required"));
+  });
+
+  updateStatus();
 }
 
 function calcFlip() {
@@ -1106,5 +1154,6 @@ function initializeOperationsDashboard() {
 document.addEventListener("DOMContentLoaded", () => {
   initializeServiceAreaSearch();
   initializePartnerProtectionDetails();
+  initializeCapitalPartnerApplication();
   initializeOperationsDashboard();
 });

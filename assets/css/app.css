@@ -2010,6 +2010,27 @@ img{
   gap:9px;
   margin-top:22px;
 }
+.partner-onboarding-steps{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin:26px 0 4px;
+  padding:0;
+  list-style:none;
+}
+.partner-onboarding-steps li{
+  min-height:112px;
+  padding:14px 12px;
+  border:1px solid #5f491e;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+}
+.partner-onboarding-steps span,
+.partner-onboarding-steps strong,
+.partner-onboarding-steps small{display:block}
+.partner-onboarding-steps span{color:#efcf7e;font-size:.72rem;font-weight:950}
+.partner-onboarding-steps strong{margin-top:10px;text-transform:uppercase}
+.partner-onboarding-steps small{margin-top:6px;color:#aaa;line-height:1.35}
 .investor-trust-points button{
   border:1px solid #6b5222;
   border-radius:999px;
@@ -2101,6 +2122,49 @@ img{
 .capital-partner-form .full{
   grid-column:1/-1;
 }
+.partner-application-status{
+  position:relative;
+  overflow:hidden;
+  padding:14px;
+  border:1px solid #d7c18b;
+  border-radius:10px;
+  background:#fff;
+}
+.partner-application-status::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:var(--partner-progress,0%);
+  height:4px;
+  background:#b98626;
+  transition:width .2s ease;
+}
+.partner-application-status[data-ready="true"]{border-color:#6b8f55;background:#f6fbf2}
+.partner-application-status[data-ready="true"]::after{background:#6b8f55}
+.partner-application-status strong,
+.partner-application-status span{display:block}
+.partner-application-status strong{color:#4d3a16;text-transform:uppercase}
+.partner-application-status span{margin-top:5px;color:#666;font-size:.82rem;line-height:1.45}
+.capital-partner-form .partner-consent{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:12px;
+  border:1px solid #e0d3b2;
+  border-radius:10px;
+  background:#fff;
+  color:#555;
+  font-size:.76rem;
+  line-height:1.5;
+  text-transform:none;
+}
+.capital-partner-form .partner-consent input{
+  width:18px;
+  height:18px;
+  flex:0 0 auto;
+  margin:1px 0 0;
+}
 .faq-section{
   background:#f8f4ec;
 }
@@ -2149,6 +2213,7 @@ a:focus-visible{
   .investor-trust-grid{
     grid-template-columns:1fr;
   }
+  .partner-onboarding-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:650px){
   .local-area-list,
@@ -2158,6 +2223,7 @@ a:focus-visible{
   .capital-partner-form{
     grid-template-columns:1fr;
   }
+  .partner-onboarding-steps{grid-template-columns:1fr}
   .local-seo-section,
   .faq-section,
   .investor-trust-section{
